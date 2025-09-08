@@ -1,0 +1,8 @@
+%p{:style => "color: green"}= notice
+- content_for :title, "Posts"
+#posts
+  - @posts.each do |post|
+    = render post
+    %p
+      = link_to "Show this post", post
+= link_to "New post", new_post_path
