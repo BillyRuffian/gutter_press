@@ -1,8 +1,33 @@
-%p{:style => "color: green"}= notice
-- content_for :title, "Posts"
-#posts
-  - @posts.each do |post|
-    = render post
-    %p
-      = link_to "Show this post", post
-= link_to "New post", new_post_path
+- content_for :title, 'Posts'
+
+.row
+  .col-lg-8.mx-auto
+    .d-flex.justify-content-between.align-items-center.mb-4
+      %h1.display-5.fw-bold Latest Posts
+      - if Current.user
+        = link_to new_post_path, class: 'btn btn-primary' do
+          %i.bi.bi-plus-circle.me-2
+          New Post
+
+    - if @posts.any?
+      .posts
+        - @posts.each_with_index do |post, index|
+          %article.py-4{class: (index > 0 ? 'border-top' : '')}
+            %h2.h4.mb-3
+              = link_to post.title, post, class: 'text-decoration-none text-dark'
+            .text-muted.small.mb-3
+              %i.bi.bi-calendar.me-2
+              = post.published_at.strftime('%B %d, %Y')
+              %span.mx-2 •
+              %i.bi.bi-person.me-2
+              = post.user.email_address
+            %p.mb-3
+              = truncate(strip_tags(post.content.to_s), length: 200)
+            = link_to 'Read more', post, class: 'btn btn-outline-primary btn-sm'
+    - else
+      .text-center.py-5
+        %i.bi.bi-journal-text.display-1.text-muted.mb-3
+        %h3.text-muted No posts yet
+        %p.text-muted Start writing your first blog post!
+        - if Current.user
+          = link_to 'Create your first post', new_post_path, class: 'btn btn-primary'

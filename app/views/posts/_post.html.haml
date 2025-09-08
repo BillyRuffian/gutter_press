@@ -1,8 +1,12 @@
-%div{:id => "#{dom_id post}"}
-  %h2
-    = post.title
-  %div
+%article{id: dom_id(post), class: 'post'}
+  %header.mb-4
+    %h1.display-6.fw-bold.mb-3= post.title
+    .post-meta.text-muted.border-bottom.pb-3.mb-4
+      %i.bi.bi-calendar.me-2
+      = post.published_at.strftime('%B %d, %Y at %l:%M %p')
+      %span.mx-2 •
+      %i.bi.bi-person.me-2
+      = post.user.email_address
+  
+  .post-content.lh-lg
     = post.content
-  %div
-    Published at:
-    \#{post.published_at.to_formatted_s(:long)}

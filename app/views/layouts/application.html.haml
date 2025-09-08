@@ -17,4 +17,43 @@
     = stylesheet_link_tag "lexxy"
     = javascript_importmap_tags
   %body
-    = yield
+    %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.shadow-sm
+      .container
+        = link_to "Gutter Press", root_path, class: "navbar-brand fw-bold"
+        %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-bs-target" => "#navbarNav", "data-bs-toggle" => "collapse", :type => "button"}
+          %span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse
+          %ul.navbar-nav.me-auto
+            %li.nav-item
+              = link_to "Posts", posts_path, class: "nav-link"
+          %ul.navbar-nav
+            - if Current.user
+              %li.nav-item
+                = link_to "New Post", new_post_path, class: "nav-link"
+              %li.nav-item
+                = link_to "Sign Out", session_path, method: :delete, class: "nav-link"
+            - else
+              %li.nav-item
+                = link_to "Sign In", new_session_path, class: "nav-link"
+
+    %main.container.my-4
+      - if notice
+        .alert.alert-success.alert-dismissible.fade.show{"role" => "alert"}
+          = notice
+          %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "alert", :type => "button"}
+      - if alert
+        .alert.alert-danger.alert-dismissible.fade.show{"role" => "alert"}
+          = alert
+          %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "alert", :type => "button"}
+      
+      = yield
+
+    %footer.bg-light.border-top.mt-5
+      .container.py-4
+        .row
+          .col-md-6
+            %h5 Gutter Press
+            %p.text-muted A clean, professional blog platform
+          .col-md-6.text-md-end
+            %p.text-muted
+              &copy; #{Date.current.year} Gutter Press. All rights reserved.
