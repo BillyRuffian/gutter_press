@@ -1,0 +1,7 @@
+class Manage::PostsController < ApplicationController
+  layout 'manage'
+
+  def index
+    @posts = Post.order(created_at: :desc)
+  end
+end

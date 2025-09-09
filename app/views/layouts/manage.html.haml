@@ -1,0 +1,49 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title= content_for(:title) ? "#{content_for(:title)} - Gutter Press Admin" : "Gutter Press Admin"
+    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    = yield :head
+    %link{:href => "/icon.png", :rel => "icon", :type => "image/png"}/
+    %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
+    %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
+    = stylesheet_link_tag :app, "data-turbo-track": "reload"
+    = stylesheet_link_tag "lexxy"
+    = javascript_importmap_tags
+  %body.bg-light
+    %nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.shadow-sm
+      .container-fluid
+        = link_to "Gutter Press Admin", manage_root_path, class: "navbar-brand fw-bold"
+        .navbar-nav.ms-auto
+          = link_to "View Site", root_path, class: "nav-link text-light", target: "_blank"
+          = link_to "Sign Out", session_path, method: :delete, class: "nav-link text-light"
+
+    .container-fluid
+      .row
+        %nav.col-md-3.col-lg-2.d-md-block.bg-white.sidebar.border-end.shadow-sm{style: "min-height: calc(100vh - 56px);"}
+          .position-sticky.pt-3
+            %ul.nav.flex-column
+              %li.nav-item
+                = link_to manage_root_path, class: "nav-link d-flex align-items-center #{'active' if controller_name == 'gutter_press'}" do
+                  %i.bi.bi-speedometer2.me-2
+                  Dashboard
+              %li.nav-item
+                = link_to manage_posts_path, class: "nav-link d-flex align-items-center #{'active' if controller_name == 'posts'}" do
+                  %i.bi.bi-file-text.me-2
+                  Posts
+        
+        %main.col-md-9.ms-sm-auto.col-lg-10.px-md-4
+          - if notice
+            .alert.alert-success.alert-dismissible.fade.show.mt-3{"role" => "alert"}
+              = notice
+              %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "alert", :type => "button"}
+          - if alert
+            .alert.alert-danger.alert-dismissible.fade.show.mt-3{"role" => "alert"}
+              = alert
+              %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "alert", :type => "button"}
+          
+          .py-4
+            = yield
