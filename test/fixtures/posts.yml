@@ -1,11 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  published_at: 2025-09-08 17:44:34
+  title: "First Blog Post"
+  published_at: <%= 2.days.ago %>
   user: one
 
 two:
-  title: MyString
-  published_at: 2025-09-08 17:44:34
+  title: "Second Blog Post"
+  published_at: <%= 1.day.ago %>
+  user: two
+
+three:
+  title: "Draft Post"
+  published_at: <%= 1.day.from_now %>
+  user: one
+
+four:
+  title: "Unpublished Draft"
+  published_at: 
   user: two
