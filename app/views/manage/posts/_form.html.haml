@@ -1,0 +1,19 @@
+= form_with(model: [:manage, post]) do |form|
+  - if post.errors.any?
+    %div{:style => "color: red"}
+      %h2
+        = pluralize(post.errors.count, "error")
+        prohibited this post from being saved:
+      %ul
+        - post.errors.each do |error|
+          %li= error.full_message
+  %div
+    = form.rich_text_area :content
+  %div
+    = form.label :title, style: "display: block"
+    = form.text_field :title
+  %div
+    = form.label :published_at, style: "display: block"
+    = form.datetime_field :published_at
+  %div
+    = form.submit

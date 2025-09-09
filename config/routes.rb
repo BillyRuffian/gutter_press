@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :posts
+  resources :posts, only: %i[index show]
   resource :session
   resources :passwords, param: :token
 

@@ -44,12 +44,12 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   test 'should create post when authenticated' do
     sign_in_as(@user)
     assert_difference('Post.count') do
-      post posts_url, params: { 
-        post: { 
+      post posts_url, params: {
+        post: {
           title: 'New Test Post',
           published_at: Time.current,
           content: 'Test content'
-        } 
+        }
       }
     end
 
@@ -59,12 +59,12 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not create post without authentication' do
     assert_no_difference('Post.count') do
-      post posts_url, params: { 
-        post: { 
+      post posts_url, params: {
+        post: {
           title: 'New Test Post',
           published_at: Time.current,
           content: 'Test content'
-        } 
+        }
       }
     end
     assert_redirected_to new_session_url
@@ -84,11 +84,11 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update post when authenticated as owner' do
     sign_in_as(@post.user)
-    patch post_url(@post), params: { 
-      post: { 
+    patch post_url(@post), params: {
+      post: {
         title: 'Updated Title',
         published_at: @post.published_at
-      } 
+      }
     }
     assert_redirected_to post_url(@post)
     assert_equal 'Updated Title', @post.reload.title

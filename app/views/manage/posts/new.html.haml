@@ -1,0 +1,6 @@
+- content_for :title, "New post"
+%h1 New post
+= render "form", post: @post
+%br/
+%div
+  = link_to "Back to posts", manage_posts_path

@@ -1,0 +1,8 @@
+- content_for :title, "Editing post"
+%h1 Editing post
+= render "form", post: @post
+%br/
+%div
+  = link_to "Show this post", manage_post_path(@post)
+  |
+  \#{link_to "Back to posts", manage_posts_path}

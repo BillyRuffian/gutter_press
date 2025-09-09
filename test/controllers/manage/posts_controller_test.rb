@@ -22,7 +22,7 @@ class Manage::PostsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@user)
     get manage_posts_url
     assert_response :success
-    
+
     # Check for table headers
     assert_select 'th', text: 'Title'
     assert_select 'th', text: 'Published Date'
@@ -34,21 +34,21 @@ class Manage::PostsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@user)
     get manage_posts_url
     assert_response :success
-    
+
     # Check that pagination elements might be present
     assert_select 'table.table'
   end
 
   test 'should show post status indicators' do
     sign_in_as(@user)
-    
+
     # Create published and unpublished posts
     Post.create!(title: 'Published Post', user: @user, published_at: 1.hour.ago)
     Post.create!(title: 'Draft Post', user: @user, published_at: nil)
-    
+
     get manage_posts_url
     assert_response :success
-    
+
     # Should show different status indicators
     assert_select 'span.badge', text: 'Draft'
   end
