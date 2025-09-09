@@ -69,5 +69,7 @@ end
 
 gem 'lexxy', '~> 0.1.4.beta'
 
-gem "haml-rails", "~> 2.1"
-gem "html2haml", "~> 2.3"
+gem 'haml-rails', '~> 2.1'
+gem 'html2haml', '~> 2.3'
+
+gem 'pagy', '~> 9.0'

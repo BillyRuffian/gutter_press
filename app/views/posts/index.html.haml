@@ -24,6 +24,10 @@
             %p.mb-3.lexxy-content
               = truncate(strip_tags(post.content.to_s), length: 200)
             = link_to 'Read more', post, class: 'btn btn-outline-primary btn-sm'
+      
+      - if @pagy.pages > 1
+        .mt-5
+          = raw pagy_bootstrap_nav(@pagy)
     - else
       .text-center.py-5
         %i.bi.bi-journal-text.display-1.text-muted.mb-3
