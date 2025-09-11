@@ -34,7 +34,7 @@ class PostsTest < ApplicationSystemTestCase
 
   test 'should sign in and access manage interface' do
     sign_in_as(@user)
-    
+
     # Now navigate to manage interface
     visit manage_root_url
     assert_selector 'h1', text: 'Dashboard'
@@ -43,12 +43,12 @@ class PostsTest < ApplicationSystemTestCase
 
   test 'should manage posts when authenticated' do
     sign_in_as(@user)
-    
+
     # Visit manage posts
     visit manage_posts_url
     assert_selector 'h1', text: 'Posts'
     assert_selector 'table'
-    
+
     # Check that posts are listed
     assert_selector 'td', text: @post.title
   end
