@@ -25,8 +25,8 @@ class Manage::PostsControllerTest < ActionDispatch::IntegrationTest
 
     # Check for table headers
     assert_select 'th', text: 'Title'
-    assert_select 'th', text: 'Published Date'
-    assert_select 'th', text: 'Published'
+    assert_select 'th', text: 'Publish'
+    assert_select 'th', text: 'Live'
     assert_select 'th', text: 'Actions'
   end
 
