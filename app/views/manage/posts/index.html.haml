@@ -25,7 +25,7 @@
                   %span.badge.bg-secondary.ms-2 Draft
               %td
                 - if post.published_at
-                  = post.published_at.to_formatted_s(:short)
+                  = post.published_at.to_formatted_s(:long)
                 - else
                   %span.text-muted Not set
               %td.text-center
