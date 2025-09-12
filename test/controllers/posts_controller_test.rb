@@ -71,6 +71,12 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_select 'article', minimum: 1
   end
 
+  test 'should include atom feed discovery link in head' do
+    get posts_url
+    assert_response :success
+    assert_select 'link[rel="alternate"][type="application/atom+xml"][href="/feed.xml"]'
+  end
+
   private
 
   def sign_in_as(user)

@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   # SEO sitemap
   get 'sitemap.xml' => 'sitemap#show', defaults: { format: 'xml' }, as: :sitemap
 
+  # Atom feed
+  get 'feed.xml' => 'feeds#show', defaults: { format: 'xml' }, as: :feed
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get 'up' => 'rails/health#show', as: :rails_health_check

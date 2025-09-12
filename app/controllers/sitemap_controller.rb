@@ -4,7 +4,7 @@ class SitemapController < ApplicationController
   def show
     @posts = Post.where('published_at <= ?', Time.current)
                  .order(:published_at)
-    
+
     respond_to do |format|
       format.xml { render layout: false }
     end

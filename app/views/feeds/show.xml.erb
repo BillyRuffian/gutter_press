@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>GutterPress Blog</title>
+  <link href="<%= request.base_url %>/feed.xml" rel="self"/>
+  <link href="<%= request.base_url %>"/>
+  <updated><%= @posts.first&.updated_at&.iso8601 || Time.current.iso8601 %></updated>
+  <id><%= request.base_url %>/</id>
+  <author>
+    <name>GutterPress</name>
+  </author>
+
+  <% @posts.each do |post| %>
+  <entry>
+    <title><%= post.title %></title>
+    <link href="<%= post_url(post) %>"/>
+    <updated><%= post.updated_at.iso8601 %></updated>
+    <id><%= post_url(post) %></id>
+    <content type="html"><![CDATA[<%= post.content.to_s %>]]></content>
+    <author>
+      <name><%= post.user.email_address %></name>
+    </author>
+    <% if post.published_at %>
+    <published><%= post.published_at.iso8601 %></published>
+    <% end %>
+  </entry>
+  <% end %>
+</feed>
