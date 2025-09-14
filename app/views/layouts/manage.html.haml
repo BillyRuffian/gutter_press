@@ -18,7 +18,22 @@
         = link_to "Gutter Press Admin", manage_root_path, class: "navbar-brand fw-bold"
         .navbar-nav.ms-auto
           = link_to "View Site", root_path, class: "nav-link text-light", target: "_blank"
-          = link_to "Sign Out", session_path, method: :delete, class: "nav-link text-light"
+          
+          .nav-item.dropdown
+            %a.nav-link.dropdown-toggle.text-light{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
+              %i.bi.bi-person-circle.me-1
+              = Current.user.email_address.split('@').first.capitalize
+            %ul.dropdown-menu.dropdown-menu-end
+              %li
+                = link_to manage_profile_path, class: "dropdown-item" do
+                  %i.bi.bi-person.me-2
+                  Profile
+              %li
+                %hr.dropdown-divider
+              %li
+                = link_to session_path, method: :delete, class: "dropdown-item text-danger" do
+                  %i.bi.bi-box-arrow-right.me-2
+                  Sign Out
 
     .container-fluid
       .row
@@ -37,6 +52,13 @@
                 = link_to manage_pages_path, class: "nav-link d-flex align-items-center #{'active' if controller_name == 'pages'}" do
                   %i.bi.bi-file-earmark-text.me-2
                   Pages
+              
+              %hr.my-3
+              
+              %li.nav-item
+                = link_to manage_profile_path, class: "nav-link d-flex align-items-center #{'active' if controller_name == 'profiles'}" do
+                  %i.bi.bi-person-circle.me-2
+                  Profile
         
         %main.col-md-9.ms-sm-auto.col-lg-10.px-md-4
           - if notice

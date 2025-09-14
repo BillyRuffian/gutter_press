@@ -1,0 +1,82 @@
+- content_for :title, "Edit Profile"
+
+= form_with(model: [:manage, @user], url: manage_profile_path, local: true, class: "h-100") do |form|
+  - if @user.errors.any?
+    .alert.alert-danger.mb-4
+      %h5.alert-heading
+        %i.bi.bi-exclamation-triangle.me-2
+        = pluralize(@user.errors.count, "error")
+        prohibited this profile from being saved:
+      %ul.mb-0
+        - @user.errors.each do |error|
+          %li= error.full_message
+
+  .row.h-100
+    / Main content area
+    .col-lg-8.h-100
+      .card.h-100.border-0.shadow-sm
+        .card-body.p-4.d-flex.flex-column
+          %h2.card-title.text-dark.mb-4
+            %i.bi.bi-person-circle.me-2
+            Edit Profile
+          
+          / Email Address Section
+          .mb-5
+            %h5.text-dark.mb-3 Email Address
+            .mb-3
+              = form.label :email_address, class: "form-label"
+              = form.email_field :email_address, class: "form-control", placeholder: "your@email.com"
+              .form-text.text-muted.small
+                This email will be used for login and notifications.
+
+          %hr.my-4
+
+          / Password Section
+          .mb-4
+            %h5.text-dark.mb-3 Change Password
+            %p.text-muted.small.mb-3
+              Leave password fields blank if you don't want to change your password.
+            
+            .mb-3
+              = form.label :current_password, "Current Password", class: "form-label"
+              = form.password_field :current_password, class: "form-control", placeholder: "Enter your current password"
+              .form-text.text-muted.small
+                Required to change password or email address.
+            
+            .mb-3
+              = form.label :password, "New Password", class: "form-label"
+              = form.password_field :password, class: "form-control", placeholder: "Enter new password"
+            
+            .mb-3
+              = form.label :password_confirmation, "Confirm New Password", class: "form-label"
+              = form.password_field :password_confirmation, class: "form-control", placeholder: "Confirm new password"
+
+    / Sidebar
+    .col-lg-4.h-100
+      .sticky-lg-top{style: "top: 2rem;"}
+        / Security Notice
+        .card.border-0.shadow-sm.mb-4
+          .card-header.bg-white.border-0.pb-0
+            %h6.card-title.text-dark.mb-0
+              %i.bi.bi-shield-exclamation.me-2
+              Security Notice
+          .card-body.pt-3
+            %p.text-muted.small.mb-3
+              For your security, you'll need to enter your current password to make any changes to your account.
+            
+            %p.text-muted.small.mb-0
+              If you've forgotten your password, you can 
+              = link_to "reset it here", new_password_path, class: "text-decoration-none"
+
+        / Action buttons
+        .card.border-0.shadow-sm
+          .card-body.p-3
+            .d-grid.gap-2
+              = form.submit "Update Profile", class: "btn btn-primary btn-lg"
+              = link_to "Cancel", manage_profile_path, class: "btn btn-outline-secondary"
+              
+              %hr.my-3
+              
+              = link_to manage_profile_path, class: "btn btn-outline-info btn-sm" do
+                %i.bi.bi-arrow-left.me-1
+                Back to Profile

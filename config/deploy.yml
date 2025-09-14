@@ -2,7 +2,7 @@
 service: gutter_press
 
 # Name of the container image.
-image: your-user/gutter_press
+image: nrbrookes/gutter_press
 
 # Deploy to these servers.
 servers:

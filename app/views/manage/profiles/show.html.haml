@@ -1,0 +1,52 @@
+- content_for :title, "Profile"
+
+.row
+  .col-lg-8
+    .card.border-0.shadow-sm
+      .card-header.bg-white.border-0.pb-0
+        %h2.card-title.text-dark.mb-0
+          %i.bi.bi-person-circle.me-2
+          Profile
+      .card-body.p-4
+        .row.mb-4
+          .col-sm-3
+            %strong Email Address:
+          .col-sm-9
+            = @user.email_address
+        
+        .row.mb-4
+          .col-sm-3
+            %strong Member Since:
+          .col-sm-9
+            = @user.created_at.strftime("%B %d, %Y")
+        
+        .row.mb-4
+          .col-sm-3
+            %strong Posts Created:
+          .col-sm-9
+            = @user.posts.count
+        
+        .row.mb-4
+          .col-sm-3
+            %strong Pages Created:
+          .col-sm-9
+            = @user.pages.count
+        
+        .d-flex.gap-2
+          = link_to "Edit Profile", edit_manage_profile_path, class: "btn btn-primary"
+          = link_to "Back to Dashboard", manage_root_path, class: "btn btn-outline-secondary"
+
+  .col-lg-4
+    .card.border-0.shadow-sm
+      .card-header.bg-white.border-0.pb-0
+        %h6.card-title.text-dark.mb-0
+          %i.bi.bi-shield-check.me-2
+          Account Security
+      .card-body.pt-3
+        %p.text-muted.small
+          Keep your account secure by using a strong password and updating your email address if needed.
+        
+        .d-grid
+          = link_to edit_manage_profile_path, class: "btn btn-outline-primary btn-sm" do
+            %i.bi.bi-key.me-1
+            Change Password

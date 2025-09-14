@@ -52,15 +52,15 @@ class Manage::PagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create page with slug' do
     sign_in_as(@user)
-    
+
     assert_difference('Page.count') do
-      post manage_pages_url, params: { 
-        page: { 
+      post manage_pages_url, params: {
+        page: {
           title: 'New Test Page',
           content: 'New content',
           publish: true,
           published_at: 1.hour.ago
-        } 
+        }
       }
     end
 
@@ -71,16 +71,16 @@ class Manage::PagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create page with custom slug' do
     sign_in_as(@user)
-    
+
     assert_difference('Page.count') do
-      post manage_pages_url, params: { 
-        page: { 
+      post manage_pages_url, params: {
+        page: {
           title: 'New Test Page',
           slug: 'custom-page-slug',
           content: 'New content',
           publish: true,
           published_at: 1.hour.ago
-        } 
+        }
       }
     end
 
@@ -97,13 +97,13 @@ class Manage::PagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update page' do
     sign_in_as(@user)
-    patch manage_page_url(@page), params: { 
-      page: { 
+    patch manage_page_url(@page), params: {
+      page: {
         title: 'Updated Page Title',
         content: 'Updated content'
-      } 
+      }
     }
-    
+
     @page.reload
     assert_equal 'Updated Page Title', @page.title
     assert_redirected_to manage_page_url(@page)
@@ -111,7 +111,7 @@ class Manage::PagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should destroy page' do
     sign_in_as(@user)
-    
+
     assert_difference('Page.count', -1) do
       delete manage_page_url(@page)
     end

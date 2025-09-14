@@ -1,0 +1,67 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Script to count tests and generate badge info
+# Usage: bin/test_count
+
+require 'bundler/setup'
+
+# Parse test output to count tests
+def count_tests
+  # Run tests and capture output
+  output = `cd #{Dir.pwd} && bin/rails test 2>&1`
+  
+  # Extract test counts from output
+  if output.match(/(\d+) runs, (\d+) assertions, (\d+) failures, (\d+) errors, (\d+) skips/)
+    runs = $1.to_i
+    assertions = $2.to_i  
+    failures = $3.to_i
+    errors = $4.to_i
+    skips = $5.to_i
+    
+    {
+      runs: runs,
+      assertions: assertions,
+      failures: failures,
+      errors: errors,
+      skips: skips,
+      status: (failures + errors).zero? ? 'passing' : 'failing'
+    }
+  else
+    { error: 'Could not parse test output' }
+  end
+end
+
+# Generate badge URL
+def generate_badge_url(test_info)
+  if test_info[:error]
+    "https://img.shields.io/badge/Tests-error-red.svg"
+  else
+    status = test_info[:status]
+    color = status == 'passing' ? 'green' : 'red'
+    count = test_info[:runs]
+    
+    "https://img.shields.io/badge/Tests-#{count}%20#{status}-#{color}.svg"
+  end
+end
+
+if __FILE__ == $0
+  puts "Counting tests..."
+  test_info = count_tests
+  
+  if test_info[:error]
+    puts "Error: #{test_info[:error]}"
+    exit 1
+  end
+  
+  puts "Test Results:"
+  puts "  Runs: #{test_info[:runs]}"
+  puts "  Assertions: #{test_info[:assertions]}"
+  puts "  Failures: #{test_info[:failures]}"
+  puts "  Errors: #{test_info[:errors]}"
+  puts "  Skips: #{test_info[:skips]}"
+  puts "  Status: #{test_info[:status]}"
+  puts
+  puts "Badge URL:"
+  puts generate_badge_url(test_info)
+end
