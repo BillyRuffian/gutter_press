@@ -140,7 +140,7 @@ class PagesTest < ApplicationSystemTestCase
     check 'Ready to publish'
     click_button 'Create Page'
 
-    # Wait for successful second page creation 
+    # Wait for successful second page creation
     assert_selector 'h1', text: 'Duplicate Slug Test'
 
     # Verify both pages exist with correct slugs

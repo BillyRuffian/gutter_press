@@ -55,6 +55,4 @@ class Manage::MfasController < ApplicationController
   def set_user
     @user = Current.user
   end
-
-
 end
