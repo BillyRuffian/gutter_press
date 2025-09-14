@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Run Brakeman with no pager and exit on warnings
+bundle exec brakeman --no-pager --exit-on-warn "$@"

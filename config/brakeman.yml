@@ -1,0 +1,11 @@
+# Brakeman configuration file
+# https://brakemanscanner.org/docs/options/
+
+# Disable pager for output
+:pager: false
+
+# Other common options you might want to set:
+# :exit_on_warn: true
+# :exit_on_error: true
+# :format: :text
+# :output_file: 'brakeman_report.txt'

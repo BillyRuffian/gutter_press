@@ -3,50 +3,6 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "39c7533d5d6c338d1fe1f9739b51824e49f2334c2d4917d2a0fcf52a52481932",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/posts/_post.html.haml",
-      "line": 2,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "::Haml::AttributeBuilder.build_id(true, dom_id(Post.find(params.expect(:id))))",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "PostsController",
-          "method": "show",
-          "line": 12,
-          "file": "app/controllers/posts_controller.rb",
-          "rendered": {
-            "name": "posts/show",
-            "file": "app/views/posts/show.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "posts/show",
-          "line": 5,
-          "file": "app/views/posts/show.html.haml",
-          "rendered": {
-            "name": "posts/_post",
-            "file": "app/views/posts/_post.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "posts/_post"
-      },
-      "user_input": "Post.find(params.expect(:id))",
-      "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": "dom_id helper is safe for HTML attributes and generates properly escaped IDs"
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
       "fingerprint": "55d357b0f4709935eadcaa1afd8cd034f1ca2444d329d9de64a1e72858accdb0",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
@@ -87,8 +43,52 @@
         79
       ],
       "note": "dom_id helper is safe for HTML attributes and generates properly escaped IDs"
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "a85fb4b6d86093d4e30743c0eb289d8e14a456618729e2198f26784fa7bfa1c3",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/manage/pages/_page.html.haml",
+      "line": 2,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, dom_id(Page.new(page_params)))",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Manage::PagesController",
+          "method": "create",
+          "line": 24,
+          "file": "app/controllers/manage/pages_controller.rb",
+          "rendered": {
+            "name": "manage/pages/show",
+            "file": "app/views/manage/pages/show.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "manage/pages/show",
+          "line": 5,
+          "file": "app/views/manage/pages/show.html.haml",
+          "rendered": {
+            "name": "manage/pages/_page",
+            "file": "app/views/manage/pages/_page.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "manage/pages/_page"
+      },
+      "user_input": "Page.new(page_params)",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": "dom_id helper is safe for HTML attributes and generates properly escaped IDs"
     }
   ],
-  "updated": "2025-09-11 14:26:00 +0100",
+  "updated": "2025-09-14 15:33:30 +0100",
   "brakeman_version": "7.1.0"
 }
