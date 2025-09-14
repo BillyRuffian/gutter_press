@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+  get 'pages/show'
   resources :posts, only: %i[index show]
+  resources :pages, only: :show
   resource :session
   resources :passwords, param: :token
 
@@ -7,6 +9,7 @@ Rails.application.routes.draw do
   namespace :manage do
     root 'gutter_press#index'
     resources :posts
+    resources :pages
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

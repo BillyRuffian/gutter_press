@@ -1,0 +1,24 @@
+- content_for :title, @page.title
+
+.row
+  .col-lg-8.mx-auto
+    = render @page
+    
+    - if Current.user && Current.user == @page.user
+      %hr.my-4
+      .d-flex.gap-2.flex-wrap
+        = link_to edit_manage_page_path(@page), class: 'btn btn-outline-secondary' do
+          %i.bi.bi-pencil.me-2
+          Edit Page
+        = button_to [:manage, @page], method: :delete, 
+            class: 'btn btn-outline-danger',
+            confirm: 'Are you sure you want to delete this page?',
+            form: { class: 'd-inline' } do
+          %i.bi.bi-trash.me-2
+          Delete Page
+    
+    %hr.my-4
+    .text-center
+      = link_to manage_pages_path, class: 'btn btn-primary' do
+        %i.bi.bi-arrow-left.me-2
+        Back to Pages

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_09_14_123640) do
+ActiveRecord::Schema[8.1].define(version: 2025_09_14_135511) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -53,12 +53,14 @@ ActiveRecord::Schema[8.1].define(version: 2025_09_14_123640) do
     t.datetime "created_at", null: false
     t.boolean "publish"
     t.datetime "published_at"
+    t.string "slug"
     t.string "title"
     t.string "type"
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.index ["publish"], name: "index_postables_on_publish"
     t.index ["published_at"], name: "index_postables_on_published_at"
+    t.index ["slug"], name: "index_postables_on_slug", unique: true
     t.index ["type"], name: "index_postables_on_type"
     t.index ["user_id", "type"], name: "index_postables_on_user_id_and_type"
     t.index ["user_id"], name: "index_postables_on_user_id"

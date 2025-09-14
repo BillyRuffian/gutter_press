@@ -2,6 +2,7 @@
 
 one:
   title: Published Test Post
+  slug: published-test-post
   publish: true
   published_at: <%= 1.day.ago %>
   user: one
@@ -9,7 +10,24 @@ one:
 
 two:
   title: Draft Test Post
+  slug: draft-test-post
   publish: false
   published_at: <%= 1.day.from_now %>
   user: two
-  type: Post 
+  type: Post
+
+three:
+  title: Published Test Page
+  slug: published-test-page
+  publish: true
+  published_at: <%= 1.day.ago %>
+  user: one
+  type: Page
+
+four:
+  title: Draft Test Page
+  slug: draft-test-page
+  publish: false
+  published_at: <%= 1.day.from_now %>
+  user: two
+  type: Page 

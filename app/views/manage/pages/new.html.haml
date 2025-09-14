@@ -1,0 +1,10 @@
+- content_for :title, 'New Page'
+
+.d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+  %h1.h2 New Page
+  = link_to manage_pages_path, class: 'btn btn-outline-secondary' do
+    %i.bi.bi-arrow-left.me-2
+    Back to Pages
+
+.container-fluid.px-0.h-100
+  = render 'form', page: @page

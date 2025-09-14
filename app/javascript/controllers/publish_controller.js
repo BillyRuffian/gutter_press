@@ -14,7 +14,7 @@ export default class extends Controller {
   toggleDateField() {
     if (this.checkboxTarget.checked) {
       this.dateFieldTarget.style.display = ""
-      
+
       // Set default published_at to now if empty
       if (!this.dateInputTarget.value) {
         const now = new Date()

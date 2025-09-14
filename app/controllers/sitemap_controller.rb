@@ -3,6 +3,7 @@ class SitemapController < ApplicationController
 
   def show
     @posts = Post.published.order(:published_at)
+    @pages = Page.published.order(:published_at)
 
     respond_to do |format|
       format.xml { render layout: false }

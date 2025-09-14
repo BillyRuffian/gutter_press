@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   allow_unauthenticated_access only: %i[ index show ]
-  before_action :set_post, only: %i[ show ]
+  before_action :set_post, only: :show
 
   # GET /posts or /posts.json
   def index
@@ -14,7 +14,7 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params.expect(:id))
+      @post = Post.find_by!(slug: params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

@@ -1,0 +1,4 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# Pages inherit from postables and should be created through the postables table
+# No fixtures needed here as they are part of STI - see postables.yml instead

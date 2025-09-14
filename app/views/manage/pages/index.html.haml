@@ -1,0 +1,65 @@
+- content_for :title, 'Manage Pages'
+
+.d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+  %h1.h2 Pages
+  = link_to new_manage_page_path, class: 'btn btn-primary' do
+    %i.bi.bi-plus-circle.me-2
+    New Page
+
+- if @pages.any?
+  .card.border-0.shadow-sm
+    .table-responsive
+      %table.table.table-hover.mb-0
+        %thead.table-light
+          %tr
+            %th{style: 'width: 40%'} Title
+            %th{style: 'width: 15%'} Publish
+            %th{style: 'width: 25%'} Publish Date
+            %th.text-center{style: 'width: 10%'} Live
+            %th.text-end{style: 'width: 10%'} Actions
+        %tbody
+          - @pages.each do |page|
+            %tr
+              %td
+                = link_to page.title, manage_page_path(page)
+                - unless page.published?
+                  %span.badge.bg-secondary.ms-2 Draft
+              %td
+                - if page.publish?
+                  %span.badge.bg-success Yes
+                - else
+                  %span.badge.bg-outline-secondary No
+              %td
+                - if page.publish? && page.published_at
+                  = page.published_at.to_formatted_s(:long)
+                - elsif page.publish?
+                  %span.text-muted Not set
+                - else
+                  %span.text-muted N/A
+              %td.text-center
+                - if page.published?
+                  %i.bi.bi-check-circle.text-success{title: 'Published'}
+                - else
+                  %i.bi.bi-x-square.text-muted{title: 'Not published'}
+              %td.text-end
+                .btn-group{role: 'group'}
+                  = link_to edit_manage_page_path(page), class: 'btn btn-light btn-sm border-0', title: 'Edit' do
+                    %i.bi.bi-pencil.text-muted
+                  = button_to manage_page_path(page), method: :delete, 
+                      class: 'btn btn-light btn-sm border-0',
+                      title: 'Delete',
+                      confirm: 'Are you sure you want to delete this page?',
+                      form: {class: 'd-inline'} do
+                    %i.bi.bi-trash.text-muted
+  
+  .d-flex.justify-content-between.align-items-center.mt-3
+    .text-muted.small
+      Showing #{@pagy.from}-#{@pagy.to} of #{@pagy.count} pages
+    = raw pagy_bootstrap_nav(@pagy) if @pagy.pages > 1
+- else
+  .card.border-0.shadow-sm
+    .card-body.text-center.py-5
+      %i.bi.bi-file-earmark-text.display-1.text-muted.mb-3
+      %h3.text-muted No pages yet
+      %p.text-muted Create your first page here
+      = link_to 'Create your first page', new_manage_page_path, class: 'btn btn-primary'
