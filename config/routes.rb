@@ -5,13 +5,29 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
 
+  # Multi-factor authentication verification (login flow)
+  # Used during sign-in process when user has MFA enabled
+  # /mfa - verification form and code submission
+  resource :mfa, only: %i[show create]
+
   # Management interface
   namespace :manage do
     root 'gutter_press#index'
     resources :posts
     resources :pages
     resources :links, only: :index
-    resource :profile, only: [:show, :edit, :update]
+    resource :profile, only: [ :show, :edit, :update ]
+
+    # Multi-factor authentication management (authenticated user settings)
+    # Used by signed-in users to enable/disable/configure MFA
+    # /manage/mfa - status and settings
+    # /manage/mfa/new - setup wizard with QR codes
+    # /manage/mfa (POST) - enable MFA
+    # /manage/mfa (DELETE) - disable MFA
+    # /manage/mfa/regenerate_backup_codes - generate new backup codes
+    resource :mfa, only: %i[show new create destroy] do
+      post :regenerate_backup_codes, on: :member
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -25,7 +25,7 @@ class Manage::ProfilesController < ApplicationController
 
   def update_profile
     current_password = params[:user][:current_password]
-    
+
     if current_password.blank?
       @user.errors.add(:current_password, 'is required')
       render :edit, status: :unprocessable_entity
@@ -43,7 +43,7 @@ class Manage::ProfilesController < ApplicationController
 
   def update_password
     current_password = params[:user][:current_password]
-    
+
     if current_password.blank?
       @user.errors.add(:current_password, 'is required')
       render :edit, status: :unprocessable_entity

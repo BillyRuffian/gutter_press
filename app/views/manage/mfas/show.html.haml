@@ -1,0 +1,115 @@
+.row
+  .col-md-8
+    .card
+      .card-header
+        %h4
+          %i.bi.bi-shield-check.me-2
+          Two-Factor Authentication
+      .card-body
+        - if @user.mfa_enabled?
+          .alert.alert-success
+            %i.bi.bi-check-circle.me-2
+            %strong Two-factor authentication is enabled.
+            Your account is protected with an additional layer of security.
+          
+          .row.mb-4
+            .col-sm-3
+              %strong Status:
+            .col-sm-9
+              %span.badge.bg-success Enabled
+          
+          .row.mb-4
+            .col-sm-3
+              %strong Backup Codes:
+            .col-sm-9
+              = @user.backup_codes_remaining
+              remaining
+              - if @user.backup_codes_remaining < 3
+                %span.text-warning (Consider regenerating)
+          
+          .row.mb-4
+            .col-sm-12
+              %h6 Actions
+              .btn-group
+                = link_to "Regenerate Backup Codes", "#", class: "btn btn-outline-warning", 
+                          data: { bs_toggle: "modal", bs_target: "#regenerateBackupCodesModal" }
+                = link_to "Disable MFA", "#", class: "btn btn-outline-danger",
+                          data: { bs_toggle: "modal", bs_target: "#disableMfaModal" }
+        
+        - else
+          .alert.alert-warning
+            %i.bi.bi-exclamation-triangle.me-2
+            %strong Two-factor authentication is disabled.
+            Enable MFA to add an extra layer of security to your account.
+          
+          .row.mb-4
+            .col-sm-3
+              %strong Status:
+            .col-sm-9
+              %span.badge.bg-warning Disabled
+          
+          .d-grid.gap-2.d-md-flex.justify-content-md-start
+            = link_to "Enable Two-Factor Authentication", new_manage_mfa_path, class: "btn btn-success"
+
+  .col-md-4
+    .card.bg-light
+      .card-body
+        %h6 About Two-Factor Authentication
+        %p.small
+          Two-factor authentication (2FA) adds an extra layer of security to your account. 
+          Even if someone knows your password, they won't be able to access your account without 
+          the second factor.
+        
+        %h6 Supported Apps
+        %ul.small
+          %li Google Authenticator
+          %li Authy
+          %li 1Password
+          %li Microsoft Authenticator
+          %li Any TOTP-compatible app
+
+// Disable MFA Modal
+.modal.fade#disableMfaModal{ tabindex: -1 }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5.modal-title Disable Two-Factor Authentication
+        %button.btn-close{ type: "button", data: { bs_dismiss: "modal" } }
+      = form_with url: manage_mfa_path, method: :delete, local: true do |form|
+        .modal-body
+          .alert.alert-warning
+            %i.bi.bi-exclamation-triangle.me-2
+            This will disable two-factor authentication for your account.
+          
+          %p Your account will be less secure without two-factor authentication.
+          
+          .mb-3
+            = form.label :current_password, "Enter your password to confirm:", class: "form-label"
+            = form.password_field :current_password, class: "form-control", required: true
+        
+        .modal-footer
+          %button.btn.btn-secondary{ type: "button", data: { bs_dismiss: "modal" } } Cancel
+          = form.submit "Disable MFA", class: "btn btn-danger"
+
+// Regenerate Backup Codes Modal
+.modal.fade#regenerateBackupCodesModal{ tabindex: -1 }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5.modal-title Regenerate Backup Codes
+        %button.btn-close{ type: "button", data: { bs_dismiss: "modal" } }
+      = form_with url: regenerate_backup_codes_manage_mfa_path, method: :post, local: true do |form|
+        .modal-body
+          .alert.alert-info
+            %i.bi.bi-info-circle.me-2
+            This will generate new backup codes and invalidate all existing ones.
+          
+          %p Make sure to save the new backup codes in a secure location.
+          
+          .mb-3
+            = form.label :current_password, "Enter your password to confirm:", class: "form-label"
+            = form.password_field :current_password, class: "form-control", required: true
+        
+        .modal-footer
+          %button.btn.btn-secondary{ type: "button", data: { bs_dismiss: "modal" } } Cancel
+          = form.submit "Generate New Codes", class: "btn btn-warning"

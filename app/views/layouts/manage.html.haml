@@ -29,6 +29,10 @@
                   %i.bi.bi-person.me-2
                   Profile
               %li
+                = link_to manage_mfa_path, class: "dropdown-item" do
+                  %i.bi.bi-shield-check.me-2
+                  Two-Factor Auth
+              %li
                 %hr.dropdown-divider
               %li
                 = link_to session_path, method: :delete, class: "dropdown-item text-danger" do
@@ -59,6 +63,10 @@
                 = link_to manage_profile_path, class: "nav-link d-flex align-items-center #{'active' if controller_name == 'profiles'}" do
                   %i.bi.bi-person-circle.me-2
                   Profile
+              %li.nav-item
+                = link_to manage_mfa_path, class: "nav-link d-flex align-items-center #{'active' if controller_name == 'mfa'}" do
+                  %i.bi.bi-shield-check.me-2
+                  Two-Factor Auth
         
         %main.col-md-9.ms-sm-auto.col-lg-10.px-md-4
           - if notice

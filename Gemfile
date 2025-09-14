@@ -74,3 +74,7 @@ gem 'haml-rails', '~> 2.1'
 gem 'html2haml', '~> 2.3'
 
 gem 'pagy', '~> 9.0'
+
+# Multi-factor authentication
+gem 'rotp', '~> 6.3'      # TOTP generation and verification
+gem 'rqrcode', '~> 2.2'   # QR code generation

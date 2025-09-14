@@ -46,14 +46,14 @@ class Manage::ProfilesControllerTest < ActionDispatch::IntegrationTest
     assert @user.authenticate('newpassword')
   end
 
-  test "should not update without current password" do
+  test 'should not update without current password' do
     sign_in_as(@user)
-    
+
     patch manage_profile_path, params: {
       user: { email: 'new@example.com' },
       action_type: 'profile'
     }
-    
+
     assert_response :unprocessable_entity
     assert_match(/Current password is required/, response.body)
   end

@@ -124,6 +124,10 @@ class PagesTest < ApplicationSystemTestCase
     check 'Ready to publish'
     click_button 'Create Page'
 
+    # Wait for successful page creation (should redirect to show page)
+    assert_selector 'h1', text: 'Duplicate Slug Test'
+
+    # Verify first page was created
     first_page = Page.find_by(title: 'Duplicate Slug Test')
     assert_equal 'duplicate-slug-test', first_page.slug
 
@@ -136,8 +140,14 @@ class PagesTest < ApplicationSystemTestCase
     check 'Ready to publish'
     click_button 'Create Page'
 
-    second_page = Page.where(title: 'Duplicate Slug Test').last
-    assert_equal 'duplicate-slug-test-1', second_page.slug
+    # Wait for successful second page creation 
+    assert_selector 'h1', text: 'Duplicate Slug Test'
+
+    # Verify both pages exist with correct slugs
+    pages = Page.where(title: 'Duplicate Slug Test').order(:created_at)
+    assert_equal 2, pages.count
+    assert_equal 'duplicate-slug-test', pages.first.slug
+    assert_equal 'duplicate-slug-test-1', pages.last.slug
   end
 
   private

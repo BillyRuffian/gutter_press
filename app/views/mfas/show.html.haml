@@ -1,0 +1,40 @@
+.row.justify-content-center
+  .col-md-6
+    .card
+      .card-header.bg-primary.text-white
+        %h4.mb-0
+          %i.bi.bi-shield-lock.me-2
+          Two-Factor Authentication Required
+      .card-body
+        %p Please enter the 6-digit code from your authenticator app to complete sign in.
+        
+        = form_with url: mfa_path, method: :post, local: true, class: "needs-validation", novalidate: true do |form|
+          .mb-4
+            = form.label :mfa_code, "Verification Code", class: "form-label"
+            = form.text_field :mfa_code, class: "form-control form-control-lg text-center", 
+                              placeholder: "000000", maxlength: 6, required: true,
+                              style: "letter-spacing: 0.5em; font-family: monospace;",
+                              autofocus: true
+            .form-text You can also use a backup code if you don't have access to your authenticator app.
+            .invalid-feedback
+              Please enter the 6-digit code from your authenticator app.
+          
+          .d-grid
+            = form.submit "Verify and Sign In", class: "btn btn-primary btn-lg"
+        
+        .text-center.mt-3
+          = link_to "Back to Sign In", new_session_path, class: "btn btn-outline-secondary"
+
+:javascript
+  // Auto-focus and format the MFA code input
+  document.addEventListener('DOMContentLoaded', function() {
+    const mfaInput = document.getElementById('mfa_code');
+    if (mfaInput) {
+      mfaInput.focus();
+      
+      mfaInput.addEventListener('input', function(e) {
+        // Remove any non-numeric characters
+        e.target.value = e.target.value.replace(/\D/g, '');
+      });
+    }
+  });

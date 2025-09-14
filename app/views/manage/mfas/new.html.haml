@@ -1,0 +1,102 @@
+.row
+  .col-md-8
+    .card
+      .card-header
+        %h4
+          %i.bi.bi-shield-plus.me-2
+          Enable Two-Factor Authentication
+      .card-body
+        %p Setup two-factor authentication to add an extra layer of security to your account.
+        
+        .alert.alert-info
+          %i.bi.bi-info-circle.me-2
+          %strong Step 1 of 2:
+          Scan the QR code below with your authenticator app.
+        
+        .row
+          .col-md-6
+            %h6 Scan QR Code
+            .text-center.mb-3
+              = safe_qr_code_svg(@qr_code_uri)
+          
+          .col-md-6
+            %h6 Manual Entry
+            %p.small If you can't scan the QR code, enter this key manually:
+            .card.bg-light
+              .card-body
+                %code.small= @user.mfa_secret
+            
+            %p.small
+              %strong Account:
+              = @user.email_address
+              %br
+              %strong Issuer:
+              GutterPress
+        
+        %hr
+        
+        .alert.alert-warning
+          %i.bi.bi-exclamation-triangle.me-2
+          %strong Step 2 of 2:
+          Enter the 6-digit code from your authenticator app to verify setup.
+        
+        = form_with url: manage_mfa_path, method: :post, local: true, class: "needs-validation", novalidate: true do |form|
+          .row.align-items-end
+            .col-md-6.mb-3
+              = form.label :mfa_code, "Verification Code", class: "form-label"
+              = form.text_field :mfa_code, class: "form-control form-control-lg text-center", 
+                                placeholder: "000000", maxlength: 6, required: true,
+                                style: "letter-spacing: 0.5em; font-family: monospace;"
+              .invalid-feedback
+                Please enter the 6-digit code from your authenticator app.
+            
+            .col-md-6.mb-3
+              .d-grid
+                = form.submit "Enable Two-Factor Authentication", class: "btn btn-success btn-lg"
+        
+        .text-center.mt-3
+          = link_to "Cancel", manage_mfa_path, class: "btn btn-outline-secondary"
+
+  .col-md-4
+    .card.bg-light
+      .card-body
+        %h6 Recommended Apps
+        %ul.small
+          %li
+            %strong Google Authenticator
+            %br
+            %small iOS, Android
+          %li
+            %strong Authy
+            %br
+            %small iOS, Android, Desktop
+          %li
+            %strong 1Password
+            %br
+            %small All platforms
+          %li
+            %strong Microsoft Authenticator
+            %br
+            %small iOS, Android
+        
+        %hr
+        
+        %h6 What happens next?
+        %ol.small
+          %li You'll receive backup codes to save
+          %li Two-factor authentication will be enabled
+          %li You'll need your authenticator app every time you sign in
+
+:javascript
+  // Auto-focus and format the MFA code input
+  document.addEventListener('DOMContentLoaded', function() {
+    const mfaInput = document.getElementById('mfa_code');
+    if (mfaInput) {
+      mfaInput.focus();
+      
+      mfaInput.addEventListener('input', function(e) {
+        // Remove any non-numeric characters
+        e.target.value = e.target.value.replace(/\D/g, '');
+      });
+    }
+  });
