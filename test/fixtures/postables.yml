@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: Published Test Post
+  publish: true
+  published_at: <%= 1.day.ago %>
+  user: one
+  type: Post
+
+two:
+  title: Draft Test Post
+  publish: false
+  published_at: <%= 1.day.from_now %>
+  user: two
+  type: Post 

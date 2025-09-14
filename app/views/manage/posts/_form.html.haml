@@ -1,19 +1,58 @@
-= form_with(model: [:manage, post]) do |form|
+= form_with(model: [:manage, post], local: true, class: "h-100") do |form|
   - if post.errors.any?
-    %div{:style => "color: red"}
-      %h2
+    .alert.alert-danger.mb-4
+      %h5.alert-heading
+        %i.bi.bi-exclamation-triangle.me-2
         = pluralize(post.errors.count, "error")
         prohibited this post from being saved:
-      %ul
+      %ul.mb-0
         - post.errors.each do |error|
           %li= error.full_message
-  %div
-    = form.rich_text_area :content
-  %div
-    = form.label :title, style: "display: block"
-    = form.text_field :title
-  %div
-    = form.label :published_at, style: "display: block"
-    = form.datetime_field :published_at
-  %div
-    = form.submit
+
+  .row.h-100
+    / Main content area
+    .col-lg-8.h-100
+      .card.h-100.border-0.shadow-sm
+        .card-body.p-4.d-flex.flex-column
+          / Title field
+          .mb-4
+            = form.label :title, class: "form-label h5 text-dark mb-3"
+            = form.text_field :title, class: "form-control form-control-lg border-0 bg-light", placeholder: "Enter your post title..."
+          
+          / Content editor
+          .flex-grow-1.d-flex.flex-column
+            = form.label :content, "Content", class: "form-label h6 text-muted mb-3"
+            .flex-grow-1
+              = form.rich_text_area :content, class: "form-control border-0", style: "min-height: 400px;"
+
+    / Sidebar
+    .col-lg-4.h-100
+      .sticky-lg-top{style: "top: 2rem;"}
+        / Publish settings card
+        .card.border-0.shadow-sm.mb-4{"data-controller" => "publish"}
+          .card-header.bg-white.border-0.pb-0
+            %h6.card-title.text-dark.mb-0
+              %i.bi.bi-send.me-2
+              Publish Settings
+          .card-body.pt-3
+            / Publish checkbox
+            .form-check.form-switch.mb-4
+              = form.check_box :publish, class: "form-check-input", role: "switch", id: "publishSwitch", "data-publish-target": "checkbox", "data-action": "change->publish#toggle"
+              = form.label :publish, "Ready to publish", class: "form-check-label", for: "publishSwitch"
+            
+            / Publish date (conditional)
+            %div{"data-publish-target": "dateField", style: post.publish ? "" : "display: none;"}
+              = form.label :published_at, "Publish date & time", class: "form-label small text-muted mb-2"
+              = form.datetime_local_field :published_at, value: post.published_at&.strftime("%Y-%m-%dT%H:%M"), class: "form-control", "data-publish-target": "dateInput"
+              .form-text.text-muted.small
+                Leave empty to publish immediately
+
+        / Action buttons card
+        .card.border-0.shadow-sm
+          .card-body.p-3
+            .d-grid.gap-2
+              = form.submit post.persisted? ? "Update Post" : "Create Post", class: "btn btn-primary btn-lg"
+              - if post.persisted?
+                = link_to "Cancel", manage_post_path(post), class: "btn btn-outline-secondary"
+              - else
+                = link_to "Cancel", manage_posts_path, class: "btn btn-outline-secondary"

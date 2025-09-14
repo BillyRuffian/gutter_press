@@ -3,7 +3,7 @@ require 'test_helper'
 class Manage::PostsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
-    @post = posts(:one)
+    @post = postables(:one)
   end
 
   test 'should redirect to sign in when not authenticated' do
@@ -43,8 +43,8 @@ class Manage::PostsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@user)
 
     # Create published and unpublished posts
-    Post.create!(title: 'Published Post', user: @user, published_at: 1.hour.ago)
-    Post.create!(title: 'Draft Post', user: @user, published_at: nil)
+    Post.create!(title: 'Published Post', user: @user, publish: true, published_at: 1.hour.ago)
+    Post.create!(title: 'Draft Post', user: @user, publish: false, published_at: nil)
 
     get manage_posts_url
     assert_response :success

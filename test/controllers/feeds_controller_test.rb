@@ -33,6 +33,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
       title: 'Published Post',
       content: 'This is published',
       user: user,
+      publish: true,
       published_at: 1.day.ago
     )
 
@@ -41,6 +42,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
       title: 'Unpublished Post',
       content: 'This is not published',
       user: user,
+      publish: false,
       published_at: nil
     )
 
@@ -63,6 +65,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
       title: 'Test Post',
       content: 'Test content with <strong>HTML</strong>',
       user: user,
+      publish: true,
       published_at: 1.day.ago
     )
 
@@ -92,6 +95,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
         title: "Post #{i + 1}",
         content: "Content #{i + 1}",
         user: user,
+        publish: true,
         published_at: (i + 1).days.ago
       )
     end

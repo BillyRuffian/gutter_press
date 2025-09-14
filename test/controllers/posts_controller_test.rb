@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PostsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @post = posts(:one)
+    @post = postables(:one)
     @user = users(:one)
   end
 
@@ -17,17 +17,19 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     Post.create!(
       title: 'Published Post',
       user: @user,
+      publish: true,
       published_at: 1.hour.ago
     )
     Post.create!(
       title: 'Unpublished Post',
       user: @user,
+      publish: false,
       published_at: 1.hour.from_now
     )
 
     get posts_url
     assert_response :success
-    assert_select 'article', count: Post.where('published_at <= ?', Time.current).count
+    assert_select 'article', count: Post.published.count
   end
 
   test 'should redirect to manage interface for new posts' do
@@ -46,7 +48,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show published post content' do
     # Ensure the post is published
-    @post.update!(published_at: 1.hour.ago)
+    @post.update!(publish: true, published_at: 1.hour.ago)
     get post_url(@post)
     assert_response :success
     assert_select 'h1', @post.title

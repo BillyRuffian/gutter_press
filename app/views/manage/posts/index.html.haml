@@ -12,8 +12,9 @@
       %table.table.table-hover.mb-0
         %thead.table-light
           %tr
-            %th{style: 'width: 50%'} Title
-            %th{style: 'width: 30%'} Publish
+            %th{style: 'width: 40%'} Title
+            %th{style: 'width: 15%'} Publish
+            %th{style: 'width: 25%'} Publish Date
             %th.text-center{style: 'width: 10%'} Live
             %th.text-end{style: 'width: 10%'} Actions
         %tbody
@@ -24,13 +25,20 @@
                 - unless post.published?
                   %span.badge.bg-secondary.ms-2 Draft
               %td
-                - if post.published_at
-                  = post.published_at.to_formatted_s(:long)
+                - if post.publish?
+                  %span.badge.bg-success Yes
                 - else
+                  %span.badge.bg-outline-secondary No
+              %td
+                - if post.publish? && post.published_at
+                  = post.published_at.to_formatted_s(:long)
+                - elsif post.publish?
                   %span.text-muted Not set
+                - else
+                  %span.text-muted N/A
               %td.text-center
                 - if post.published?
-                  %i.bi.bi-check-circle.text-secondary{title: 'Published'}
+                  %i.bi.bi-check-circle.text-success{title: 'Published'}
                 - else
                   %i.bi.bi-x-square.text-muted{title: 'Not published'}
               %td.text-end

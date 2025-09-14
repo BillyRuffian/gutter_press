@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @pagy, @posts = pagy(Post.where('published_at <= ?', Time.now).order(published_at: :desc))
+    @pagy, @posts = pagy(Post.published.order(published_at: :desc))
   end
 
   # GET /posts/1 or /posts/1.json

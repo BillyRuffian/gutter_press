@@ -2,12 +2,12 @@ require 'test_helper'
 
 class SitemapControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @published_post = posts(:one)
-    @unpublished_post = posts(:two)
+    @published_post = postables(:one)
+    @unpublished_post = postables(:two)
 
     # Ensure one post is published and one is not
-    @published_post.update!(published_at: 1.hour.ago)
-    @unpublished_post.update!(published_at: 1.hour.from_now)
+    @published_post.update!(publish: true, published_at: 1.hour.ago)
+    @unpublished_post.update!(publish: false, published_at: 1.hour.from_now)
   end
 
   test 'should get sitemap xml' do

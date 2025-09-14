@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class PostsTest < ApplicationSystemTestCase
   setup do
-    @post = posts(:one)
+    @post = postables(:one)
     @user = users(:one)
     # Ensure the post is published for system tests
     @post.update!(published_at: 1.hour.ago)
