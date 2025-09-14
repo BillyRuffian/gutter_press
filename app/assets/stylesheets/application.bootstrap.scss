@@ -1,2 +1,21 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+
+/* Lexxy prompt customizations */
+.lexxy-prompt-menu__item {
+
+  /* Make sure img is properly positioned */
+  img {
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    border-radius: 0% !important;
+  }
+}
+
+
+ol.lexxy-prompt-menu,
+ul.lexxy-prompt-menu {
+
+  padding-left: 0 !important;
+}

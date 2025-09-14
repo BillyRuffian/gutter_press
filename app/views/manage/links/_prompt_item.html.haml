@@ -1,0 +1,16 @@
+-# Determine the type label and URL path
+- if postable.is_a?(Page)
+  - type_label = "Page"
+  - url_path = "/pages/#{postable.slug}"
+- else
+  - type_label = "Post"
+  - url_path = "/posts/#{postable.slug}"
+
+%lexxy-prompt-item{search: "#{postable.title} #{postable.slug}"}
+  %template{type: "menu"}
+    %img{src: "/icons/#{postable.is_a?(Page) ? 'file-earmark-text' : 'file-text'}.svg", alt: type_label}
+    %div
+      %div.fw-medium= postable.title
+      %small.text-muted= "#{type_label} • /#{postable.slug}"
+  %template{type: "editor"}
+    %a{href: url_path}= postable.title

@@ -1,3 +1,4 @@
+
 = form_with(model: [:manage, page], local: true, class: "h-100") do |form|
   - if page.errors.any?
     .alert.alert-danger.mb-4
@@ -19,19 +20,12 @@
             = form.label :title, class: "form-label h5 text-dark mb-3"
             = form.text_field :title, class: "form-control form-control-lg border-0 bg-light", placeholder: "Enter your page title..."
           
-          / Slug field
-          .mb-4
-            = form.label :slug, "URL Slug", class: "form-label h6 text-muted mb-2"
-            = form.text_field :slug, class: "form-control border-0 bg-light", placeholder: "url-slug"
-            .form-text.text-muted.small
-              This will be auto-generated from the title if left blank. Used for the URL: 
-              %code= "/pages/#{page.slug || 'your-slug'}"
-          
           / Content editor
           .flex-grow-1.d-flex.flex-column
             = form.label :content, "Content", class: "form-label h6 text-muted mb-3"
             .flex-grow-1
-              = form.rich_text_area :content, class: "form-control border-0", style: "min-height: 400px;"
+              = form.rich_text_area(:content, class: "form-control border-0", style: "min-height: 400px;") do
+                %lexxy-prompt{trigger: '#', src: manage_links_path, "remote-filtering": true, "insert-editable-text": true, "supports-space-in-searches": true}
 
     / Sidebar
     .col-lg-4.h-100
@@ -54,6 +48,20 @@
               = form.datetime_local_field :published_at, value: page.published_at&.strftime("%Y-%m-%dT%H:%M"), class: "form-control", "data-publish-target": "dateInput"
               .form-text.text-muted.small
                 Leave empty to publish immediately
+
+        / URL Settings card
+        .card.border-0.shadow-sm.mb-4
+          .card-header.bg-white.border-0.pb-0
+            %h6.card-title.text-dark.mb-0
+              %i.bi.bi-link-45deg.me-2
+              URL Settings
+          .card-body.pt-3
+            / Slug field
+            = form.label :slug, "URL Slug", class: "form-label small text-muted mb-2"
+            = form.text_field :slug, class: "form-control", placeholder: "url-slug"
+            .form-text.text-muted.small
+              This will be auto-generated from the title if left blank. Used for the URL: 
+              %code= "/pages/#{page.slug || 'your-slug'}"
 
         / Action buttons card
         .card.border-0.shadow-sm

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     root 'gutter_press#index'
     resources :posts
     resources :pages
+    resources :links, only: :index
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
