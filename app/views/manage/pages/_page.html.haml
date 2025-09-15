@@ -2,6 +2,10 @@
 %article{id: dom_id(page), class: 'page'}
   %header.mb-4
     %h1.display-6.fw-bold.mb-3= page.title
+    - if page.excerpt.present?
+      .alert.alert-info.mb-3
+        %strong Excerpt: 
+        = page.excerpt
     .page-meta.text-muted.border-bottom.pb-3.mb-4
       %i.bi.bi-calendar.me-2
       = page.published_at.strftime('%B %d, %Y at %l:%M %p')

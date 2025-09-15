@@ -22,7 +22,7 @@
               %i.bi.bi-person.me-2
               = post.user.email_address
             %p.mb-3.lexxy-content{"data-controller" => "syntax-highlight"}
-              = truncate(strip_tags(post.content.to_s), length: 200)
+              = post.display_excerpt
             = link_to 'Read more', post, class: 'btn btn-outline-primary btn-sm'
       
       - if @pagy.pages > 1

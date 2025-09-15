@@ -49,6 +49,18 @@
               .form-text.text-muted.small
                 Leave empty to publish immediately
 
+        / Excerpt card
+        .card.border-0.shadow-sm.mb-4
+          .card-header.bg-white.border-0.pb-0
+            %h6.card-title.text-dark.mb-0
+              %i.bi.bi-card-text.me-2
+              Excerpt
+          .card-body.pt-3
+            = form.label :excerpt, "Custom excerpt", class: "form-label small text-muted mb-2"
+            = form.text_area :excerpt, rows: 4, class: "form-control", placeholder: "Enter a custom excerpt..."
+            .form-text.text-muted.small
+              If left blank, the first paragraph of your content will be used automatically.
+
         / URL Settings card
         .card.border-0.shadow-sm.mb-4
           .card-header.bg-white.border-0.pb-0
