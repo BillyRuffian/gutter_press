@@ -20,11 +20,11 @@ class Manage::LinksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should redirect to sign in when not authenticated' do
-    get manage_links_url, params: { query: 'test' }
+    get manage_links_url, params: { filter: 'test' }
     assert_redirected_to new_session_url
   end
 
-  test 'should return empty result when no query provided' do
+  test 'should return empty result when no filter provided' do
     sign_in_as(@user)
     get manage_links_url
     assert_response :success
@@ -33,7 +33,7 @@ class Manage::LinksControllerTest < ActionDispatch::IntegrationTest
 
   test 'should search posts and pages by title' do
     sign_in_as(@user)
-    get manage_links_url, params: { query: 'Test' }
+    get manage_links_url, params: { filter: 'Test' }
     assert_response :success
 
     # Should include both post and page
@@ -43,7 +43,7 @@ class Manage::LinksControllerTest < ActionDispatch::IntegrationTest
 
   test 'should search posts and pages by slug' do
     sign_in_as(@user)
-    get manage_links_url, params: { query: @post.slug }
+    get manage_links_url, params: { filter: @post.slug }
     assert_response :success
 
     assert_includes response.body, @post.title
@@ -51,7 +51,7 @@ class Manage::LinksControllerTest < ActionDispatch::IntegrationTest
 
   test 'should perform case-insensitive search' do
     sign_in_as(@user)
-    get manage_links_url, params: { query: 'TEST' }
+    get manage_links_url, params: { filter: 'TEST' }
     assert_response :success
 
     assert_includes response.body, @post.title
@@ -72,7 +72,7 @@ class Manage::LinksControllerTest < ActionDispatch::IntegrationTest
       )
     end
 
-    get manage_links_url, params: { query: 'Searchable' }
+    get manage_links_url, params: { filter: 'Searchable' }
     assert_response :success
 
     # Should not return more than 10 results (as per controller limit)
@@ -92,7 +92,7 @@ class Manage::LinksControllerTest < ActionDispatch::IntegrationTest
       published_at: 1.hour.ago
     )
 
-    get manage_links_url, params: { query: 'Test' }
+    get manage_links_url, params: { filter: 'Test' }
     assert_response :success
 
     # Pages should come before posts due to ordering
@@ -104,7 +104,7 @@ class Manage::LinksControllerTest < ActionDispatch::IntegrationTest
 
   test 'should render proper prompt item structure' do
     sign_in_as(@user)
-    get manage_links_url, params: { query: @post.title }
+    get manage_links_url, params: { filter: @post.title }
     assert_response :success
 
     # Should contain lexxy-prompt-item elements
@@ -117,7 +117,7 @@ class Manage::LinksControllerTest < ActionDispatch::IntegrationTest
 
   test 'should include proper icons for different types' do
     sign_in_as(@user)
-    get manage_links_url, params: { query: 'Test' }
+    get manage_links_url, params: { filter: 'Test' }
     assert_response :success
 
     # Should include different icons for posts and pages
@@ -127,13 +127,13 @@ class Manage::LinksControllerTest < ActionDispatch::IntegrationTest
 
   test 'should generate correct URLs in editor template' do
     sign_in_as(@user)
-    get manage_links_url, params: { query: @post.title }
+    get manage_links_url, params: { filter: @post.title }
     assert_response :success
 
     # Should generate correct post URL
     assert_includes response.body, "/posts/#{@post.slug}"
 
-    get manage_links_url, params: { query: @page.title }
+    get manage_links_url, params: { filter: @page.title }
     assert_response :success
 
     # Should generate correct page URL

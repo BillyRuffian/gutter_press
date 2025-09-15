@@ -1,6 +1,6 @@
 class Manage::LinksController < ApplicationController
   def index
-    @postables = search_postables(params[:query])
+    @postables = search_postables(params[:filter])
     render layout: false
   end
 
