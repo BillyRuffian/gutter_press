@@ -15,7 +15,7 @@ class PagesCoverImageControllerTest < ActionDispatch::IntegrationTest
 
   test 'can create page with cover image' do
     image_file = fixture_file_upload('test.jpg', 'image/jpeg')
-    
+
     assert_difference('Page.count') do
       post manage_pages_url, params: {
         page: {
@@ -36,7 +36,7 @@ class PagesCoverImageControllerTest < ActionDispatch::IntegrationTest
 
   test 'can update page with cover image' do
     image_file = fixture_file_upload('test.jpg', 'image/jpeg')
-    
+
     patch manage_page_url(@page), params: {
       page: {
         cover_image: image_file,
@@ -71,7 +71,7 @@ class PagesCoverImageControllerTest < ActionDispatch::IntegrationTest
 
   test 'validates cover image format on upload' do
     invalid_file = fixture_file_upload('test.txt', 'text/plain')
-    
+
     patch manage_page_url(@page), params: {
       page: {
         cover_image: invalid_file

@@ -68,14 +68,14 @@ class Postable < ApplicationRecord
 
   def cover_image_thumbnail
     return nil unless has_cover_image?
-    return nil unless cover_image.content_type.in?(['image/jpeg', 'image/png', 'image/webp'])
-    cover_image.variant(resize_to_fill: [300, 200])
+    return nil unless cover_image.content_type.in?([ 'image/jpeg', 'image/png', 'image/webp' ])
+    cover_image.variant(resize_to_fill: [ 300, 200 ])
   end
 
   def cover_image_hero
     return nil unless has_cover_image?
-    return nil unless cover_image.content_type.in?(['image/jpeg', 'image/png', 'image/webp'])
-    cover_image.variant(resize_to_limit: [1920, 1080])
+    return nil unless cover_image.content_type.in?([ 'image/jpeg', 'image/png', 'image/webp' ])
+    cover_image.variant(resize_to_limit: [ 1920, 1080 ])
   end
 
   private
@@ -99,8 +99,8 @@ class Postable < ApplicationRecord
 
   def cover_image_format
     return unless cover_image.attached?
-    
-    unless cover_image.content_type.in?(['image/jpeg', 'image/png', 'image/webp'])
+
+    unless cover_image.content_type.in?([ 'image/jpeg', 'image/png', 'image/webp' ])
       errors.add(:cover_image, 'must be a JPEG, PNG, or WebP image')
     end
 

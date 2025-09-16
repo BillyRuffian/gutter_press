@@ -1,0 +1,12 @@
+- if Current.user && !item.published?
+  .alert.alert-warning.alert-dismissible.fade.show.mb-0.rounded-0{"role" => "alert"}
+    .d-flex.align-items-center
+      %i.bi.bi-exclamation-triangle-fill.me-2
+      %strong Draft Content
+      %span.ms-2 
+        - if item.published_at.present? && item.published_at > Time.current
+          This content is scheduled to be published on
+          %strong= item.published_at.strftime('%B %d, %Y at %l:%M %p')
+        - else
+          This content is not published and is only visible to logged-in users.
+    %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "alert", :type => "button"}

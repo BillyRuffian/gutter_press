@@ -18,13 +18,16 @@ export default class extends Controller {
     const scrolled = window.pageYOffset
     const heroSection = this.element
     const heroRect = heroSection.getBoundingClientRect()
-    
+
     // Only apply parallax when hero section is visible
     if (heroRect.bottom >= 0 && heroRect.top <= window.innerHeight) {
       // Parallax effect: image moves slower than scroll (depth effect)
-      const parallaxSpeed = 0.5
-      const yPos = scrolled * parallaxSpeed
-      
+      // But only start moving after some scroll to keep it connected to navbar initially
+      const parallaxSpeed = 0.3
+      const startOffset = 50 // Don't start parallax until scrolled 50px
+      const adjustedScroll = Math.max(0, scrolled - startOffset)
+      const yPos = adjustedScroll * parallaxSpeed
+
       this.imageTarget.style.transform = `translate3d(0, ${yPos}px, 0)`
     }
   }

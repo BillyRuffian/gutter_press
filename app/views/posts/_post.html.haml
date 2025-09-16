@@ -1,24 +1,25 @@
 - # Using dom_id helper which is safe for HTML attributes
 %article{id: dom_id(post), class: 'post'}
+  = render 'shared/draft_banner', item: post
   - content_for(:hero_section) do
     - if post.has_cover_image?
       .hero-section.position-relative{"data-controller": "parallax"}
-        .hero-image.position-relative
+        .hero-image
           = image_tag post.cover_image_hero, class: "w-100 hero-bg", alt: post.title, "data-parallax-target": "image"
-          .hero-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-end
-            .container-fluid.px-4.pb-4
-              .row
-                .col-lg-8.mx-auto
-                  %h1.display-4.fw-bold.text-white.hero-title.mb-3= post.title
-                  .post-meta.text-white-50.mb-0
-                    %i.bi.bi-calendar.me-2
-                    = post.published_at.strftime('%B %d, %Y at %l:%M %p')
-                    %span.mx-2 •
-                    %i.bi.bi-person.me-2
-                    = post.user.email_address
-          - if post.cover_image_attribution.present?
-            .attribution.position-absolute.bottom-0.end-0.m-3.px-2.py-1.bg-dark.bg-opacity-75.text-white.small.rounded
-              = post.cover_image_attribution
+        .hero-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-end
+          .container-fluid.px-4.pb-4
+            .row
+              .col-lg-8.mx-auto
+                %h1.display-4.fw-bold.text-white.hero-title.mb-3= post.title
+                .post-meta.text-white-50.mb-0
+                  %i.bi.bi-calendar.me-2
+                  = post.published_at.strftime('%B %d, %Y at %l:%M %p')
+                  %span.mx-2 •
+                  %i.bi.bi-person.me-2
+                  = post.user.email_address
+        - if post.cover_image_attribution.present?
+          .attribution.position-absolute.bottom-0.end-0.m-3.px-2.py-1.bg-dark.bg-opacity-75.text-white.small.rounded
+            = post.cover_image_attribution
   
   .container-fluid.px-0
     .row

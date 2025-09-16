@@ -34,7 +34,7 @@ class Manage::PagesController < ApplicationController
     if params.dig(:page, :remove_cover_image) == '1'
       @page.cover_image.purge
     end
-    
+
     respond_to do |format|
       if @page.update(page_params_without_remove_flag)
         format.html { redirect_to manage_page_url(@page), notice: 'Page was successfully updated.', status: :see_other }

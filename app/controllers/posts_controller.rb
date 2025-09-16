@@ -9,6 +9,10 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    # If post is not published and user is not logged in, return 404
+    if !@post.published? && !authenticated?
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   private

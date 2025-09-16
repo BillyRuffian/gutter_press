@@ -15,7 +15,7 @@ class PostsCoverImageControllerTest < ActionDispatch::IntegrationTest
 
   test 'can create post with cover image' do
     image_file = fixture_file_upload('test.jpg', 'image/jpeg')
-    
+
     assert_difference('Post.count') do
       post manage_posts_url, params: {
         post: {
@@ -36,7 +36,7 @@ class PostsCoverImageControllerTest < ActionDispatch::IntegrationTest
 
   test 'can update post with cover image' do
     image_file = fixture_file_upload('test.jpg', 'image/jpeg')
-    
+
     patch manage_post_url(@post), params: {
       post: {
         cover_image: image_file,
@@ -71,7 +71,7 @@ class PostsCoverImageControllerTest < ActionDispatch::IntegrationTest
 
   test 'validates cover image format on upload' do
     invalid_file = fixture_file_upload('test.txt', 'text/plain')
-    
+
     patch manage_post_url(@post), params: {
       post: {
         cover_image: invalid_file

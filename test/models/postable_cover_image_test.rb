@@ -91,14 +91,14 @@ class PostableCoverImageTest < ActiveSupport::TestCase
   test 'validates cover image size - accepts normal files' do
     # Test that normal sized files are accepted
     assert @post.valid? # Post without image should be valid
-    
+
     # Attach a regular sized image - should be valid
     @post.cover_image.attach(
       io: StringIO.new('normal size content'),
       filename: 'normal.jpg',
       content_type: 'image/jpeg'
     )
-    
+
     assert @post.valid?
   end
 
@@ -106,7 +106,7 @@ class PostableCoverImageTest < ActiveSupport::TestCase
     attribution = 'Photo by John Doe'
     @post.cover_image_attribution = attribution
     @post.save!
-    
+
     assert_equal attribution, @post.reload.cover_image_attribution
   end
 
@@ -123,15 +123,15 @@ class PostableCoverImageTest < ActiveSupport::TestCase
       publish: true,
       published_at: 1.hour.ago
     )
-    
+
     assert_not page.has_cover_image?
-    
+
     page.cover_image.attach(
       io: StringIO.new('fake image'),
       filename: 'test.jpg',
       content_type: 'image/jpeg'
     )
-    
+
     assert page.has_cover_image?
     assert_not_nil page.cover_image_thumbnail
     assert_not_nil page.cover_image_hero

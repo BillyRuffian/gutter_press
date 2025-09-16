@@ -34,7 +34,7 @@ class Manage::PostsController < ApplicationController
     if params.dig(:post, :remove_cover_image) == '1'
       @post.cover_image.purge
     end
-    
+
     respond_to do |format|
       if @post.update(post_params_without_remove_flag)
         format.html { redirect_to manage_post_url(@post), notice: 'Post was successfully updated.', status: :see_other }
