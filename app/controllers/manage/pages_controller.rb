@@ -30,8 +30,13 @@ class Manage::PagesController < ApplicationController
   end
 
   def update
+    # Handle cover image removal
+    if params.dig(:page, :remove_cover_image) == '1'
+      @page.cover_image.purge
+    end
+    
     respond_to do |format|
-      if @page.update(page_params)
+      if @page.update(page_params_without_remove_flag)
         format.html { redirect_to manage_page_url(@page), notice: 'Page was successfully updated.', status: :see_other }
         format.json { render :show, status: :ok, location: manage_page_url(@page) }
       else
@@ -58,6 +63,10 @@ class Manage::PagesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def page_params
-      params.expect(page: [ :title, :slug, :excerpt, :publish, :published_at, :content ])
+      params.expect(page: [ :title, :slug, :excerpt, :publish, :published_at, :content, :cover_image, :cover_image_attribution, :remove_cover_image ])
+    end
+
+    def page_params_without_remove_flag
+      params.expect(page: [ :title, :slug, :excerpt, :publish, :published_at, :content, :cover_image, :cover_image_attribution ])
     end
 end

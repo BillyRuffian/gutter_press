@@ -30,8 +30,13 @@ class Manage::PostsController < ApplicationController
   end
 
   def update
+    # Handle cover image removal
+    if params.dig(:post, :remove_cover_image) == '1'
+      @post.cover_image.purge
+    end
+    
     respond_to do |format|
-      if @post.update(post_params)
+      if @post.update(post_params_without_remove_flag)
         format.html { redirect_to manage_post_url(@post), notice: 'Post was successfully updated.', status: :see_other }
         format.json { render :show, status: :ok, location: manage_post_url(@post) }
       else
@@ -58,6 +63,10 @@ class Manage::PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.expect(post: [ :title, :slug, :excerpt, :publish, :published_at, :content ])
+      params.expect(post: [ :title, :slug, :excerpt, :publish, :published_at, :content, :cover_image, :cover_image_attribution, :remove_cover_image ])
+    end
+
+    def post_params_without_remove_flag
+      params.expect(post: [ :title, :slug, :excerpt, :publish, :published_at, :content, :cover_image, :cover_image_attribution ])
     end
 end

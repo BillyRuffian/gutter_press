@@ -37,7 +37,11 @@
               %li.nav-item
                 = link_to "Sign In", new_session_path, class: "nav-link"
 
-    %main.container.my-4
+    = yield(:hero_section)
+    
+    %main{class: content_for?(:hero_section) ? "mt-0" : "container my-4"}
+      - if content_for?(:hero_section)
+        .container.mt-4
       - if notice
         .alert.alert-success.alert-dismissible.fade.show{"role" => "alert"}
           = notice
@@ -48,6 +52,9 @@
           %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "alert", :type => "button"}
       
       = yield
+      
+      - if content_for?(:hero_section)
+        .container
 
     %footer.bg-light.border-top.mt-5
       .container.py-4

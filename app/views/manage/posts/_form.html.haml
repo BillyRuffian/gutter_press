@@ -60,6 +60,34 @@
             .form-text.text-muted.small
               If left blank, the first paragraph of your content will be used automatically.
 
+        / Cover Image card
+        .card.border-0.shadow-sm.mb-4
+          .card-header.bg-white.border-0.pb-0
+            %h6.card-title.text-dark.mb-0
+              %i.bi.bi-image.me-2
+              Cover Image
+          .card-body.pt-3
+            - if post.has_cover_image? && post.cover_image_thumbnail
+              .mb-3
+                = image_tag post.cover_image_thumbnail, class: "img-fluid rounded", alt: "Cover image preview"
+                .mt-2
+                  = form.label :cover_image, "Replace cover image", class: "form-label small text-muted mb-2"
+            - else
+              = form.label :cover_image, "Upload cover image", class: "form-label small text-muted mb-2"
+            
+            = form.file_field :cover_image, accept: "image/jpeg,image/png,image/webp", class: "form-control mb-3"
+            
+            = form.label :cover_image_attribution, "Attribution (optional)", class: "form-label small text-muted mb-2"
+            = form.text_area :cover_image_attribution, rows: 2, class: "form-control", placeholder: "Photo credit or attribution text..."
+            
+            .form-text.text-muted.small
+              Supported formats: JPEG, PNG, WebP. Maximum size: 10MB.
+              
+            - if post.has_cover_image?
+              .mt-3
+                = form.check_box :remove_cover_image, {}, "1", ""
+                = form.label :remove_cover_image, "Remove current cover image", class: "form-check-label small"
+
         / URL Settings card
         .card.border-0.shadow-sm.mb-4
           .card-header.bg-white.border-0.pb-0

@@ -6,6 +6,9 @@ class Postable < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
 
   has_rich_text :content
+  has_one_attached :cover_image
+
+  validate :cover_image_format, if: -> { cover_image.attached? }
 
   scope :published, -> { where(publish: true).where('published_at IS NOT NULL AND published_at <= ?', Time.current) }
 
@@ -58,6 +61,23 @@ class Postable < ApplicationRecord
     end
   end
 
+  # Cover image helper methods
+  def has_cover_image?
+    cover_image.attached?
+  end
+
+  def cover_image_thumbnail
+    return nil unless has_cover_image?
+    return nil unless cover_image.content_type.in?(['image/jpeg', 'image/png', 'image/webp'])
+    cover_image.variant(resize_to_fill: [300, 200])
+  end
+
+  def cover_image_hero
+    return nil unless has_cover_image?
+    return nil unless cover_image.content_type.in?(['image/jpeg', 'image/png', 'image/webp'])
+    cover_image.variant(resize_to_limit: [1920, 1080])
+  end
+
   private
 
   def generate_slug
@@ -75,5 +95,17 @@ class Postable < ApplicationRecord
 
   def regenerate_slug_if_title_changed
     generate_slug
+  end
+
+  def cover_image_format
+    return unless cover_image.attached?
+    
+    unless cover_image.content_type.in?(['image/jpeg', 'image/png', 'image/webp'])
+      errors.add(:cover_image, 'must be a JPEG, PNG, or WebP image')
+    end
+
+    if cover_image.byte_size > 10.megabytes
+      errors.add(:cover_image, 'must be smaller than 10MB')
+    end
   end
 end

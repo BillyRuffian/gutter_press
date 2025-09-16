@@ -1,13 +1,41 @@
 - # Using dom_id helper which is safe for HTML attributes
 %article{id: dom_id(page), class: 'page'}
-  %header.mb-4
-    %h1.display-6.fw-bold.mb-3= page.title
-    .page-meta.text-muted.border-bottom.pb-3.mb-4
-      %i.bi.bi-calendar.me-2
-      = page.published_at.strftime('%B %d, %Y at %l:%M %p')
-      %span.mx-2 •
-      %i.bi.bi-person.me-2
-      = page.user.email_address
-
-  .page-content.lh-lg.lexxy-content{"data-controller" => "syntax-highlight"}
-    = page.content
+  - content_for(:hero_section) do
+    - if page.has_cover_image?
+      .hero-section.position-relative{"data-controller": "parallax"}
+        .hero-image.position-relative
+          = image_tag page.cover_image_hero, class: "w-100 hero-bg", alt: page.title, "data-parallax-target": "image"
+          .hero-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-end
+            .container-fluid.px-4.pb-4
+              .row
+                .col-lg-8.mx-auto
+                  %h1.display-4.fw-bold.text-white.hero-title.mb-3= page.title
+                  .page-meta.text-white-50.mb-0
+                    %i.bi.bi-calendar.me-2
+                    = page.published_at.strftime('%B %d, %Y at %l:%M %p')
+                    %span.mx-2 •
+                    %i.bi.bi-person.me-2
+                    = page.user.email_address
+          - if page.cover_image_attribution.present?
+            .attribution.position-absolute.bottom-0.end-0.m-3.px-2.py-1.bg-dark.bg-opacity-75.text-white.small.rounded
+              = page.cover_image_attribution
+  
+  .container-fluid.px-0
+    .row
+      .col-lg-8.mx-auto.px-4
+        - unless page.has_cover_image?
+          %header.mb-4
+            %h1.display-6.fw-bold.mb-3.text-dark= page.title
+            - if page.excerpt.present?
+              .alert.alert-info.mb-3
+                %strong Excerpt: 
+                = page.excerpt
+            .page-meta.text-muted.border-bottom.pb-3.mb-4
+              %i.bi.bi-calendar.me-2
+              = page.published_at.strftime('%B %d, %Y at %l:%M %p')
+              %span.mx-2 •
+              %i.bi.bi-person.me-2
+              = page.user.email_address
+        
+        .page-content.lh-lg.lexxy-content.mt-4{"data-controller" => "syntax-highlight"}
+          = page.content
