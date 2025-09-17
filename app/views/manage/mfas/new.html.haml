@@ -50,19 +50,16 @@
           %strong Step 2 of 2:
           Enter the 6-digit code from your authenticator app to verify setup.
         
-        = form_with url: manage_mfa_path, method: :post, local: true, class: "needs-validation", novalidate: true do |form|
+        %form{action: manage_mfa_path, method: "post", "data-turbo": "false"}
+          = hidden_field_tag :authenticity_token, form_authenticity_token
           .row.align-items-end
             .col-md-6.mb-3
-              = form.label :mfa_code, "Verification Code", class: "form-label"
-              = form.text_field :mfa_code, class: "form-control form-control-lg text-center", 
-                                placeholder: "000000", maxlength: 6, required: true,
-                                style: "letter-spacing: 0.5em; font-family: monospace;"
-              .invalid-feedback
-                Please enter the 6-digit code from your authenticator app.
+              %label.form-label{for: "mfa_code"} Verification Code
+              %input.form-control.form-control-lg.text-center{type: "text", name: "mfa_code", id: "mfa_code", placeholder: "000000", maxlength: "6", style: "letter-spacing: 0.5em; font-family: monospace;"}
             
             .col-md-6.mb-3
               .d-grid
-                = form.submit "Enable Two-Factor Authentication", class: "btn btn-success btn-lg"
+                %input.btn.btn-success.btn-lg{type: "submit", value: "Enable Two-Factor Authentication"}
         
         .text-center.mt-3
           = link_to "Cancel", manage_mfa_path, class: "btn btn-outline-secondary"
@@ -97,43 +94,4 @@
           %li Two-factor authentication will be enabled
           %li You'll need your authenticator app every time you sign in
 
-:javascript
-  // Auto-focus and format the MFA code input
-  document.addEventListener('DOMContentLoaded', function() {
-    const mfaInput = document.getElementById('mfa_code');
-    const form = document.querySelector('form');
-    const submitBtn = form ? form.querySelector('input[type="submit"]') : null;
-    
-    if (mfaInput) {
-      mfaInput.focus();
-      
-      mfaInput.addEventListener('input', function(e) {
-        // Remove any non-numeric characters
-        e.target.value = e.target.value.replace(/\D/g, '');
-        
-        // Auto-submit when 6 digits are entered
-        if (e.target.value.length === 6) {
-          if (submitBtn) {
-            submitBtn.textContent = 'Verifying...';
-            submitBtn.disabled = true;
-          }
-          form.submit();
-        }
-      });
-    }
-    
-    // Handle form submission
-    if (form) {
-      form.addEventListener('submit', function(e) {
-        if (submitBtn && mfaInput) {
-          if (mfaInput.value.length !== 6) {
-            e.preventDefault();
-            mfaInput.focus();
-            return false;
-          }
-          submitBtn.textContent = 'Verifying...';
-          submitBtn.disabled = true;
-        }
-      });
-    }
-  });
+
