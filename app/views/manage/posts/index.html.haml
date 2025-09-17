@@ -21,7 +21,7 @@
           - @posts.each do |post|
             %tr
               %td
-                = link_to post.title, manage_post_path(post)
+                = link_to post.title, edit_manage_post_path(post)
                 - unless post.published?
                   %span.badge.bg-secondary.ms-2 Draft
               %td

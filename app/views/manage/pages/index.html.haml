@@ -21,7 +21,7 @@
           - @pages.each do |page|
             %tr
               %td
-                = link_to page.title, manage_page_path(page)
+                = link_to page.title, edit_manage_page_path(page)
                 - unless page.published?
                   %span.badge.bg-secondary.ms-2 Draft
               %td
