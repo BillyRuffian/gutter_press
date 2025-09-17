@@ -10,6 +10,9 @@ class Postable < ApplicationRecord
 
   validate :cover_image_format, if: -> { cover_image.attached? }
 
+  # Trigger variant processing when cover image changes
+  after_commit :process_cover_image_variants_async, if: :cover_image_just_attached?
+
   scope :published, -> { where(publish: true).where('published_at IS NOT NULL AND published_at <= ?', Time.current) }
 
   before_validation :generate_slug, if: -> { title.present? && slug.blank? }
@@ -66,19 +69,84 @@ class Postable < ApplicationRecord
     cover_image.attached?
   end
 
+  def cover_image_variants_ready?
+    return false unless has_cover_image?
+
+    thumbnail_ready = variant_processed?(cover_image.variant(resize_to_fill: [ 300, 200 ]))
+    hero_ready = variant_processed?(cover_image.variant(resize_to_limit: [ 1920, 1080 ]))
+
+    thumbnail_ready && hero_ready
+  end
+
   def cover_image_thumbnail
-    return nil unless has_cover_image?
-    return nil unless cover_image.content_type.in?([ 'image/jpeg', 'image/png', 'image/webp' ])
-    cover_image.variant(resize_to_fill: [ 300, 200 ])
+    return unless has_cover_image?
+
+    # Try to get existing processed variant first
+    thumbnail_variant = cover_image.variant(resize_to_fill: [ 300, 200 ])
+
+    # Check if variant is already processed
+    return thumbnail_variant if variant_processed?(thumbnail_variant)
+
+    # Enqueue background job to process variants if not already processing
+    ensure_variants_processing
+
+    # Return the variant (will be processed on first access if not done in background)
+    thumbnail_variant
   end
 
   def cover_image_hero
-    return nil unless has_cover_image?
-    return nil unless cover_image.content_type.in?([ 'image/jpeg', 'image/png', 'image/webp' ])
-    cover_image.variant(resize_to_limit: [ 1920, 1080 ])
+    return unless has_cover_image?
+
+    # Try to get existing processed variant first
+    hero_variant = cover_image.variant(resize_to_limit: [ 1920, 1080 ])
+
+    # Check if variant is already processed
+    return hero_variant if variant_processed?(hero_variant)
+
+    # Enqueue background job to process variants if not already processing
+    ensure_variants_processing
+
+    # Return the variant (will be processed on first access if not done in background)
+    hero_variant
   end
 
   private
+
+  def variant_processed?(variant)
+    # Check if the variant record exists in the database
+    variant_record = ActiveStorage::VariantRecord.find_by(
+      blob: cover_image.blob,
+      variation_digest: variant.variation.digest
+    )
+
+    variant_record&.image&.attached?
+  end
+
+  def ensure_variants_processing
+    # Use a cache key to prevent multiple job enqueues for the same attachment
+    cache_key = "processing_variants_#{cover_image.blob.key}"
+
+    # Only enqueue if not already processing (cache expires after 5 minutes)
+    unless Rails.cache.exist?(cache_key)
+      Rails.cache.write(cache_key, true, expires_in: 5.minutes)
+      ProcessCoverImageVariantsJob.perform_later(self)
+      Rails.logger.info "Enqueued ProcessCoverImageVariantsJob for #{self.class.name}##{id}"
+    end
+  end
+
+  def cover_image_just_attached?
+    return false unless cover_image.attached?
+
+    # Check if this is a new attachment (created in the last few seconds)
+    cover_image.attachment.created_at > 10.seconds.ago
+  end
+
+  def process_cover_image_variants_async
+    return unless cover_image.attached?
+
+    ProcessCoverImageVariantsJob.perform_later(self)
+    Rails.logger.info "Scheduled ProcessCoverImageVariantsJob for #{self.class.name}##{id}"
+  end
 
   def generate_slug
     base_slug = title.parameterize
