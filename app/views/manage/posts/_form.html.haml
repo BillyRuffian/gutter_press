@@ -29,6 +29,16 @@
     / Sidebar
     .col-lg-4.h-100
       .sticky-lg-top{style: "top: 2rem;"}
+        / Action buttons card
+        .card.border-0.shadow-sm.mb-4
+          .card-body.p-3
+            .d-grid.gap-2
+              = form.submit post.persisted? ? "Update Post" : "Create Post", class: "btn btn-primary btn-lg"
+              - if post.persisted?
+                = link_to "Cancel", manage_post_path(post), class: "btn btn-outline-secondary"
+              - else
+                = link_to "Cancel", manage_posts_path, class: "btn btn-outline-secondary"
+
         / Publish settings card
         .card.border-0.shadow-sm.mb-4{"data-controller" => "publish"}
           .card-header.bg-white.border-0.pb-0
@@ -102,12 +112,4 @@
               This will be auto-generated from the title if left blank. Used for the URL: 
               %code= "/posts/#{post.slug || 'your-slug'}"
 
-        / Action buttons card
-        .card.border-0.shadow-sm
-          .card-body.p-3
-            .d-grid.gap-2
-              = form.submit post.persisted? ? "Update Post" : "Create Post", class: "btn btn-primary btn-lg"
-              - if post.persisted?
-                = link_to "Cancel", manage_post_path(post), class: "btn btn-outline-secondary"
-              - else
-                = link_to "Cancel", manage_posts_path, class: "btn btn-outline-secondary"
+

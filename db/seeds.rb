@@ -33,7 +33,6 @@ sample_post = Post.find_or_create_by!(slug: "welcome-to-gutterpress") do |post|
   CONTENT
   post.description = "An introduction to GutterPress and its features"
   post.user = admin_user
-  post.publish = true
   post.published_at = Time.current
 end
 
@@ -55,7 +54,6 @@ sample_page = Page.find_or_create_by!(slug: "about") do |page|
   CONTENT
   page.description = "Learn more about this GutterPress site"
   page.user = admin_user
-  page.publish = true
   page.published_at = Time.current
 end
 
