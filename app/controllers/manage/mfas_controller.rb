@@ -17,9 +17,17 @@ class Manage::MfasController < ApplicationController
     # Setup MFA - Step 2: Verify code and enable MFA
     code = params[:mfa_code]
 
+    if code.blank?
+      @qr_code_uri = @user.qr_code_uri
+      flash.now[:alert] = 'Please enter a verification code.'
+      render :new, status: :unprocessable_entity
+      return
+    end
+
     if @user.verify_setup_code(code)
       @user.enable_mfa!
       @backup_codes = @user.generate_backup_codes!
+      flash.now[:success] = 'Two-factor authentication has been successfully enabled!'
       render :backup_codes
     else
       @qr_code_uri = @user.qr_code_uri

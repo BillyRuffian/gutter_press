@@ -8,6 +8,16 @@
       .card-body
         %p Setup two-factor authentication to add an extra layer of security to your account.
         
+        - if flash[:alert]
+          .alert.alert-danger
+            %i.bi.bi-exclamation-triangle.me-2
+            = flash[:alert]
+        
+        - if flash[:notice]
+          .alert.alert-success
+            %i.bi.bi-check-circle.me-2
+            = flash[:notice]
+        
         .alert.alert-info
           %i.bi.bi-info-circle.me-2
           %strong Step 1 of 2:
@@ -91,12 +101,39 @@
   // Auto-focus and format the MFA code input
   document.addEventListener('DOMContentLoaded', function() {
     const mfaInput = document.getElementById('mfa_code');
+    const form = document.querySelector('form');
+    const submitBtn = form ? form.querySelector('input[type="submit"]') : null;
+    
     if (mfaInput) {
       mfaInput.focus();
       
       mfaInput.addEventListener('input', function(e) {
         // Remove any non-numeric characters
         e.target.value = e.target.value.replace(/\D/g, '');
+        
+        // Auto-submit when 6 digits are entered
+        if (e.target.value.length === 6) {
+          if (submitBtn) {
+            submitBtn.textContent = 'Verifying...';
+            submitBtn.disabled = true;
+          }
+          form.submit();
+        }
+      });
+    }
+    
+    // Handle form submission
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        if (submitBtn && mfaInput) {
+          if (mfaInput.value.length !== 6) {
+            e.preventDefault();
+            mfaInput.focus();
+            return false;
+          }
+          submitBtn.textContent = 'Verifying...';
+          submitBtn.disabled = true;
+        }
       });
     }
   });
