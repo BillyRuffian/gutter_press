@@ -2,7 +2,7 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title= content_for(:title) ? "#{content_for(:title)} - Gutter Press Admin" : "Gutter Press Admin"
+    %title= content_for(:title) ? "#{content_for(:title)} - #{site_name} Admin" : "#{site_name} Admin"
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     = csrf_meta_tags
     = csp_meta_tag
@@ -16,7 +16,7 @@
   %body.bg-light
     %nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.shadow-sm
       .container-fluid
-        = link_to "Gutter Press Admin", manage_root_path, class: "navbar-brand fw-bold"
+        = link_to "#{site_name} Admin", manage_root_path, class: "navbar-brand fw-bold"
         .navbar-nav.ms-auto
           = link_to "View Site", root_path, class: "nav-link text-light", target: "_blank"
           
@@ -68,6 +68,10 @@
                 = link_to manage_mfa_path, class: "nav-link d-flex align-items-center #{'active' if controller_name == 'mfa'}" do
                   %i.bi.bi-shield-check.me-2
                   Two-Factor Auth
+              %li.nav-item
+                = link_to manage_site_settings_path, class: "nav-link d-flex align-items-center #{'active' if controller_name == 'site_settings'}" do
+                  %i.bi.bi-gear.me-2
+                  Site Settings
         
         %main.col-md-9.ms-sm-auto.col-lg-10.px-md-4
           - if notice

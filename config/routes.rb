@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :pages
     resources :links, only: :index
     resource :profile, only: [ :show, :edit, :update ]
+    resource :site_settings, only: [ :show, :edit, :update ], path: 'settings'
 
     # Multi-factor authentication management (authenticated user settings)
     # Used by signed-in users to enable/disable/configure MFA

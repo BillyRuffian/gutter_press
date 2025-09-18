@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>GutterPress Blog</title>
+  <title><%= site_name %> Blog</title>
+  <subtitle><%= site_description %></subtitle>
   <link href="<%= request.base_url %>/feed.xml" rel="self"/>
   <link href="<%= request.base_url %>"/>
   <updated><%= @posts.first&.updated_at&.iso8601 || Time.current.iso8601 %></updated>
   <id><%= request.base_url %>/</id>
   <author>
-    <name>GutterPress</name>
+    <name><%= site_name %></name>
   </author>
 
   <% @posts.each do |post| %>

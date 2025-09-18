@@ -1,0 +1,108 @@
+- content_for :title, 'Site Settings'
+
+.d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+  %h1.h2 Site Settings
+  = link_to edit_manage_site_settings_path, class: 'btn btn-primary' do
+    %i.bi.bi-pencil.me-2
+    Edit Settings
+
+.row
+  .col-lg-8
+    .card.border-0.shadow-sm.mb-4
+      .card-header.bg-white.border-0.pb-0
+        %h6.card-title.text-dark.mb-0
+          %i.bi.bi-info-circle.me-2
+          General Settings
+      .card-body.pt-3
+        .row
+          .col-md-6
+            %h6.text-muted.mb-2 Site Name
+            %p.mb-3= @settings['site_name']
+          .col-md-6
+            %h6.text-muted.mb-2 Description
+            %p.mb-3= @settings['site_description']
+        .row
+          .col-md-12
+            %h6.text-muted.mb-2 Tagline
+            %p.mb-3= @settings['site_tagline']
+
+    .card.border-0.shadow-sm.mb-4
+      .card-header.bg-white.border-0.pb-0
+        %h6.card-title.text-dark.mb-0
+          %i.bi.bi-gear.me-2
+          Content Settings
+      .card-body.pt-3
+        .row
+          .col-md-6
+            %h6.text-muted.mb-2 Posts Per Page
+            %p.mb-3= @settings['posts_per_page']
+          .col-md-6
+            %h6.text-muted.mb-2 Allow Comments
+            %p.mb-3
+              - if @settings['allow_comments'] == 'true'
+                %span.badge.bg-success Yes
+              - else
+                %span.badge.bg-secondary No
+
+    .card.border-0.shadow-sm.mb-4
+      .card-header.bg-white.border-0.pb-0
+        %h6.card-title.text-dark.mb-0
+          %i.bi.bi-envelope.me-2
+          Contact & Social
+      .card-body.pt-3
+        .row
+          .col-md-12
+            %h6.text-muted.mb-2 Contact Email
+            %p.mb-3
+              - if @settings['contact_email'].present?
+                = @settings['contact_email']
+              - else
+                %span.text-muted Not set
+        .row
+          .col-md-4
+            %h6.text-muted.mb-2 Twitter
+            %p.mb-3
+              - if @settings['social_twitter'].present?
+                @#{@settings['social_twitter']}
+              - else
+                %span.text-muted Not set
+          .col-md-4
+            %h6.text-muted.mb-2 GitHub
+            %p.mb-3
+              - if @settings['social_github'].present?
+                = @settings['social_github']
+              - else
+                %span.text-muted Not set
+          .col-md-4
+            %h6.text-muted.mb-2 LinkedIn
+            %p.mb-3
+              - if @settings['social_linkedin'].present?
+                = @settings['social_linkedin']
+              - else
+                %span.text-muted Not set
+
+  .col-lg-4
+    .card.border-0.shadow-sm.mb-4
+      .card-header.bg-white.border-0.pb-0
+        %h6.card-title.text-dark.mb-0
+          %i.bi.bi-info-circle.me-2
+          About Settings
+      .card-body.pt-3
+        %p.small.text-muted
+          These settings control how your site appears to visitors. Changes take effect immediately.
+        
+        %hr
+        
+        %h6.text-muted.mb-2 Current Site Name
+        %p.lead= @settings['site_name']
+        
+        %p.small.text-muted
+          This appears in the browser title, navigation, and other places throughout your site.
+
+    .card.border-0.shadow-sm
+      .card-header.bg-white.border-0.pb-0
+        %h6.card-title.text-dark.mb-0
+          %i.bi.bi-file-text.me-2
+          Footer Text
+      .card-body.pt-3
+        %p.small= @settings['footer_text']

@@ -2,10 +2,10 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title= content_for(:title) || "Gutter Press"
+    %title= content_for(:title) || site_name
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
-    %meta{:content => "Gutter Press", :name => "application-name"}/
+    %meta{:content => site_name, :name => "application-name"}/
     %meta{:content => "yes", :name => "mobile-web-app-capable"}/
     = csrf_meta_tags
     = csp_meta_tag
@@ -13,7 +13,7 @@
     %link{:href => "/icon.png", :rel => "icon", :type => "image/png"}/
     %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
     %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
-    %link{:href => feed_path, :rel => "alternate", :type => "application/atom+xml", :title => "GutterPress Blog Feed"}/
+    %link{:href => feed_path, :rel => "alternate", :type => "application/atom+xml", :title => "#{site_name} Blog Feed"}/
     %link{:href => "https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap", :rel => "stylesheet"}/
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
     = stylesheet_link_tag "lexxy"
@@ -21,7 +21,7 @@
   %body
     %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.shadow-sm
       .container
-        = link_to "Gutter Press", root_path, class: "navbar-brand fw-bold"
+        = link_to site_name, root_path, class: "navbar-brand fw-bold"
         %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-bs-target" => "#navbarNav", "data-bs-toggle" => "collapse", :type => "button"}
           %span.navbar-toggler-icon
         #navbarNav.collapse.navbar-collapse
@@ -61,8 +61,7 @@
       .container.py-4
         .row
           .col-md-6
-            %h5 Gutter Press
-            %p.text-muted A clean, professional blog platform
+            %h5= site_name
+            %p.text-muted= site_description
           .col-md-6.text-md-end
-            %p.text-muted
-              &copy; #{Date.current.year} Gutter Press. All rights reserved.
+            %p.text-muted= footer_text

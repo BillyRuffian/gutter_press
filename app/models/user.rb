@@ -14,7 +14,7 @@ class User < ApplicationRecord
   end
 
   def totp
-    @totp ||= ROTP::TOTP.new(mfa_secret, issuer: 'GutterPress') if mfa_secret.present?
+    @totp ||= ROTP::TOTP.new(mfa_secret, issuer: SiteSetting.site_name) if mfa_secret.present?
   end
 
   def verify_mfa_code(code)
