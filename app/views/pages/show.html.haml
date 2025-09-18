@@ -1,8 +1,32 @@
-- content_for :title, @page.title
+- content_for :title, cached_page_title(@page)
+- content_for :meta_description, cached_meta_description(@page)
+- content_for :meta_image, cached_meta_image(@page)
+
+- if @page.has_cover_image?
+  - content_for(:hero_section) do
+    - cache cache_key_for_hero_section(@page) do
+      .hero-section.position-relative{"data-controller": "parallax"}
+        .hero-image
+          = image_tag @page.cover_image_hero, class: "w-100 hero-bg", alt: @page.title, "data-parallax-target": "image"
+        .hero-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-end
+          .container-fluid.px-4.pb-4
+            .row
+              .col-lg-8.mx-auto
+                %h1.display-4.fw-bold.text-white.hero-title.mb-3= @page.title
+                .page-meta.text-white-50.mb-0
+                  %i.bi.bi-calendar.me-2
+                  = @page.published_at.strftime('%B %d, %Y at %l:%M %p')
+                  %span.mx-2 •
+                  %i.bi.bi-person.me-2
+                  = @page.user.email_address
+        - if @page.cover_image_attribution.present?
+          .attribution.position-absolute.bottom-0.end-0.m-3.px-2.py-1.bg-dark.bg-opacity-75.text-white.small.rounded
+            = @page.cover_image_attribution
 
 .row
   .col-lg-8.mx-auto
-    = render @page
+    - cache cache_key_for_page(@page) do
+      = render @page
     
     - if Current.user && Current.user == @page.user
       %hr.my-4

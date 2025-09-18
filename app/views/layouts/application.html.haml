@@ -3,6 +3,11 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title= content_for(:title) || site_name
+    %meta{:content => content_for(:meta_description) || site_description, :name => "description"}/
+    - if content_for(:meta_image)
+      %meta{:content => content_for(:meta_image), :name => "image"}/
+      %meta{:content => content_for(:meta_image), :property => "og:image"}/
+      %meta{:content => content_for(:meta_image), :name => "twitter:image"}/
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
     %meta{:content => site_name, :name => "application-name"}/

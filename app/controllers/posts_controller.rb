@@ -1,10 +1,12 @@
 class PostsController < ApplicationController
+  include CacheHelper
+
   allow_unauthenticated_access only: %i[ index show ]
   before_action :set_post, only: :show
 
   # GET /posts or /posts.json
   def index
-    @pagy, @posts = pagy(Post.published.order(published_at: :desc))
+    @pagy, @posts = pagy(Post.published.order(published_at: :desc), limit: SiteSetting.posts_per_page)
   end
 
   # GET /posts/1 or /posts/1.json

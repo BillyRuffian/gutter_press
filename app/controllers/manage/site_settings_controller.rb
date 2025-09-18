@@ -12,6 +12,7 @@ class Manage::SiteSettingsController < ApplicationController
 
   def update
     if SiteSetting.update_multiple(settings_params)
+      Rails.cache.clear
       redirect_to manage_site_settings_path, notice: 'Site settings were successfully updated.'
     else
       @settings = SiteSetting.all_as_hash

@@ -1,4 +1,5 @@
-- content_for :title, 'Posts'
+- content_for :title, cached_page_title
+- content_for :meta_description, cached_meta_description
 
 .row
   .col-lg-8.mx-auto
@@ -10,39 +11,40 @@
           New Post
 
     - if @posts.any?
-      .posts
-        - @posts.each_with_index do |post, index|
-          %article.py-4{class: (index > 0 ? 'border-top' : '')}
-            .row
-              - if post.has_cover_image?
-                .col-md-4.mb-3.mb-md-0
-                  = link_to post do
-                    = image_tag post.cover_image_thumbnail, class: "img-fluid rounded", alt: post.title
-                .col-md-8
-                  %h2.h4.mb-3
-                    = link_to post.title, post, class: 'text-decoration-none text-dark'
-                  .text-muted.small.mb-3
-                    %i.bi.bi-calendar.me-2
-                    = post.published_at.strftime('%B %d, %Y')
-                    %span.mx-2 •
-                    %i.bi.bi-person.me-2
-                    = post.user.email_address
-                  %p.mb-3.lexxy-content{"data-controller" => "syntax-highlight"}
-                    = post.display_excerpt
-                  = link_to 'Read more', post, class: 'btn btn-outline-primary btn-sm'
-              - else
-                .col-12
-                  %h2.h4.mb-3
-                    = link_to post.title, post, class: 'text-decoration-none text-dark'
-                  .text-muted.small.mb-3
-                    %i.bi.bi-calendar.me-2
-                    = post.published_at.strftime('%B %d, %Y')
-                    %span.mx-2 •
-                    %i.bi.bi-person.me-2
-                    = post.user.email_address
-                  %p.mb-3.lexxy-content{"data-controller" => "syntax-highlight"}
-                    = post.display_excerpt
-                  = link_to 'Read more', post, class: 'btn btn-outline-primary btn-sm'
+      - cache cache_key_for_posts_index(Post.published, @pagy) do
+        .posts
+          - @posts.each_with_index do |post, index|
+            %article.py-4{class: (index > 0 ? 'border-top' : '')}
+              .row
+                - if post.has_cover_image?
+                  .col-md-4.mb-3.mb-md-0
+                    = link_to post do
+                      = image_tag post.cover_image_thumbnail, class: "img-fluid rounded", alt: post.title
+                  .col-md-8
+                    %h2.h4.mb-3
+                      = link_to post.title, post, class: 'text-decoration-none text-dark'
+                    .text-muted.small.mb-3
+                      %i.bi.bi-calendar.me-2
+                      = post.published_at.strftime('%B %d, %Y')
+                      %span.mx-2 •
+                      %i.bi.bi-person.me-2
+                      = post.user.email_address
+                    %p.mb-3.lexxy-content{"data-controller" => "syntax-highlight"}
+                      = post.display_excerpt
+                    = link_to 'Read more', post, class: 'btn btn-outline-primary btn-sm'
+                - else
+                  .col-12
+                    %h2.h4.mb-3
+                      = link_to post.title, post, class: 'text-decoration-none text-dark'
+                    .text-muted.small.mb-3
+                      %i.bi.bi-calendar.me-2
+                      = post.published_at.strftime('%B %d, %Y')
+                      %span.mx-2 •
+                      %i.bi.bi-person.me-2
+                      = post.user.email_address
+                    %p.mb-3.lexxy-content{"data-controller" => "syntax-highlight"}
+                      = post.display_excerpt
+                    = link_to 'Read more', post, class: 'btn btn-outline-primary btn-sm'
       
       - if @pagy.pages > 1
         .mt-5

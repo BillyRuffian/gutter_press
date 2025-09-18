@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  include CacheHelper
+
   allow_unauthenticated_access only: :show
   before_action :set_page, only: :show
 

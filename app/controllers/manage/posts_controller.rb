@@ -4,7 +4,7 @@ class Manage::PostsController < ApplicationController
   layout 'manage'
 
   def index
-    @pagy, @posts = pagy(Post.order(created_at: :desc))
+    @pagy, @posts = pagy(Post.order(created_at: :desc), limit: SiteSetting.posts_per_page)
   end
 
   def new
