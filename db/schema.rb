@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_09_18_210511) do
+ActiveRecord::Schema[8.1].define(version: 2025_09_18_213822) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -231,7 +231,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_09_18_210511) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "menu_items", "pages"
+  add_foreign_key "menu_items", "postables", column: "page_id"
   add_foreign_key "postables", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

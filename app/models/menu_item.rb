@@ -1,5 +1,5 @@
 class MenuItem < ApplicationRecord
-  belongs_to :page
+  belongs_to :page, class_name: 'Page'
   
   validates :position, presence: true, uniqueness: true
   validates :page_id, presence: true, uniqueness: true

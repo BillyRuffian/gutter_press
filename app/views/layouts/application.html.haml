@@ -29,7 +29,7 @@
             - if has_menu_items?
               - main_menu_items.each do |menu_item|
                 %li.nav-item
-                  = link_to menu_item.page.title, page_path(menu_item.page), class: "nav-link #{'active' if request.path == page_path(menu_item.page)}"
+                  = link_to menu_item[:name], menu_item[:path], class: "nav-link #{'active' if request.path == menu_item[:path]}"
             - else
               %li.nav-item
                 = link_to "Posts", posts_path, class: "nav-link #{'active' if controller_name == 'posts'}"
@@ -37,11 +37,6 @@
             - if Current.user
               %li.nav-item
                 = link_to "Admin", manage_root_path, class: "nav-link"
-              %li.nav-item
-                = link_to "Sign Out", session_path, data: { turbo_method: :delete }, class: "nav-link"
-            - else
-              %li.nav-item
-                = link_to "Sign In", new_session_path, class: "nav-link"
 
     = yield(:hero_section)
     
@@ -69,4 +64,9 @@
             %h5= site_name
             %p.text-muted= site_description
           .col-md-6.text-md-end
-            %p.text-muted= footer_text
+            %p.text-muted.mb-2= footer_text
+            .text-end
+              - if Current.user
+                = link_to "Sign Out", session_path, data: { turbo_method: :delete }, class: "btn btn-outline-secondary btn-sm"
+              - else
+                = link_to "Sign In", new_session_path, class: "btn btn-outline-primary btn-sm"
