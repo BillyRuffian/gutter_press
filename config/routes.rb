@@ -16,6 +16,11 @@ Rails.application.routes.draw do
     resources :posts
     resources :pages
     resources :links, only: :index
+    resources :menu_items do
+      collection do
+        patch :reorder
+      end
+    end
     resource :profile, only: [ :show, :edit, :update ]
     resource :site_settings, only: [ :show, :edit, :update ], path: 'settings'
 

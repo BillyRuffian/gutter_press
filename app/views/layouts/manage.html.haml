@@ -57,6 +57,10 @@
                 = link_to manage_pages_path, class: "nav-link d-flex align-items-center #{'active' if controller_name == 'pages'}" do
                   %i.bi.bi-file-earmark-text.me-2
                   Pages
+              %li.nav-item
+                = link_to manage_menu_items_path, class: "nav-link d-flex align-items-center #{'active' if controller_name == 'menu_items'}" do
+                  %i.bi.bi-list.me-2
+                  Menu
               
               %hr.my-3
               

@@ -26,8 +26,13 @@
           %span.navbar-toggler-icon
         #navbarNav.collapse.navbar-collapse
           %ul.navbar-nav.me-auto
-            %li.nav-item
-              = link_to "Posts", posts_path, class: "nav-link"
+            - if has_menu_items?
+              - main_menu_items.each do |menu_item|
+                %li.nav-item
+                  = link_to menu_item.page.title, page_path(menu_item.page), class: "nav-link #{'active' if request.path == page_path(menu_item.page)}"
+            - else
+              %li.nav-item
+                = link_to "Posts", posts_path, class: "nav-link #{'active' if controller_name == 'posts'}"
           %ul.navbar-nav
             - if Current.user
               %li.nav-item

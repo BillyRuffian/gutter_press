@@ -1,0 +1,110 @@
+- content_for :title, 'Menu Management'
+
+.d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+  %h1.h2 Menu Management
+  .btn-toolbar.mb-2.mb-md-0
+    - if @available_pages.any?
+      = link_to new_manage_menu_item_path, class: 'btn btn-primary' do
+        %i.bi.bi-plus-lg.me-2
+        Add Menu Item
+
+- if @menu_items.any?
+  .card.border-0.shadow-sm
+    .card-header.bg-white.border-0.d-flex.justify-content-between.align-items-center
+      %h6.card-title.text-dark.mb-0
+        %i.bi.bi-list.me-2
+        Navigation Menu Items
+      .text-muted.small
+        = pluralize(@menu_items.count, 'item')
+    .card-body.p-0
+      .table-responsive
+        %table.table.table-hover.mb-0#menu-items-table
+          %thead.table-light
+            %tr
+              %th.ps-4{style: "width: 40px;"} Order
+              %th Page
+              %th Status
+              %th.text-end.pe-4 Actions
+          %tbody#sortable-menu-items
+            - @menu_items.each do |menu_item|
+              %tr{data: {id: menu_item.id, position: menu_item.position}}
+                %td.ps-4
+                  %i.bi.bi-grip-vertical.text-muted.drag-handle{style: "cursor: move;"}
+                  = menu_item.position
+                %td
+                  .d-flex.align-items-center
+                    %div
+                      %strong= menu_item.page.title
+                      %br
+                      %small.text-muted= "/pages/#{menu_item.page.slug}"
+                %td
+                  - if menu_item.enabled?
+                    %span.badge.bg-success Enabled
+                  - else
+                    %span.badge.bg-secondary Disabled
+                %td.text-end.pe-4
+                  .btn-group{role: "group"}
+                    = link_to edit_manage_menu_item_path(menu_item), class: 'btn btn-outline-secondary btn-sm' do
+                      %i.bi.bi-pencil
+                      Edit
+                    = link_to manage_menu_item_path(menu_item), method: :delete, 
+                            class: 'btn btn-outline-danger btn-sm',
+                            confirm: 'Are you sure you want to remove this menu item?' do
+                      %i.bi.bi-trash
+                      Remove
+
+- else
+  .card.border-0.shadow-sm
+    .card-body.text-center.py-5
+      %i.bi.bi-list.display-4.text-muted.mb-3
+      %h5.text-muted No menu items yet
+      %p.text-muted Add pages to your navigation menu to help visitors find your content.
+      - if @available_pages.any?
+        = link_to new_manage_menu_item_path, class: 'btn btn-primary mt-3' do
+          %i.bi.bi-plus-lg.me-2
+          Add First Menu Item
+      - else
+        %p.text-muted.mt-3
+          You need to 
+          = link_to "create some pages", new_manage_page_path, class: "text-decoration-none"
+          first.
+
+:javascript
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize sortable functionality
+    const sortable = Sortable.create(document.getElementById('sortable-menu-items'), {
+      animation: 150,
+      handle: '.drag-handle',
+      onEnd: function(evt) {
+        // Get new order
+        const items = Array.from(document.querySelectorAll('#sortable-menu-items tr[data-id]'));
+        const positions = {};
+        
+        items.forEach((item, index) => {
+          const itemId = item.dataset.id;
+          positions[itemId] = index + 1;
+        });
+        
+        // Send AJAX request to update order
+        fetch('#{reorder_manage_menu_items_path}', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+          },
+          body: JSON.stringify({item_positions: positions})
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status !== 'success') {
+            console.error('Failed to reorder menu items');
+            location.reload(); // Reload to reset order on error
+          }
+        })
+        .catch(error => {
+          console.error('Error reordering menu items:', error);
+          location.reload(); // Reload to reset order on error
+        });
+      }
+    });
+  });

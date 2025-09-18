@@ -1,0 +1,73 @@
+- content_for :title, 'Add Menu Item'
+
+.d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+  %h1.h2 Add Menu Item
+  .btn-toolbar.mb-2.mb-md-0
+    = link_to manage_menu_items_path, class: 'btn btn-outline-secondary' do
+      %i.bi.bi-arrow-left.me-2
+      Back to Menu
+
+= form_with model: [:manage, @menu_item], local: true, class: 'needs-validation', novalidate: true do |form|
+  - if @menu_item.errors.any?
+    .alert.alert-danger.mb-4
+      %h5.alert-heading
+        %i.bi.bi-exclamation-triangle.me-2
+        = pluralize(@menu_item.errors.count, "error")
+        prohibited this menu item from being saved:
+      %ul.mb-0
+        - @menu_item.errors.each do |error|
+          %li= error.full_message
+
+  .row
+    .col-lg-8
+      .card.border-0.shadow-sm
+        .card-header.bg-white.border-0.pb-0
+          %h6.card-title.text-dark.mb-0
+            %i.bi.bi-plus-circle.me-2
+            Menu Item Details
+        .card-body.pt-3
+          .mb-4
+            = form.label :page_id, "Select Page", class: "form-label"
+            = form.select :page_id, 
+                options_from_collection_for_select(@available_pages, :id, :title, @menu_item.page_id),
+                { prompt: "Choose a page..." },
+                { class: "form-select", required: true }
+            .form-text.text-muted
+              The page title will be used as the menu item name.
+
+          .row
+            .col-md-6
+              .mb-3
+                = form.label :position, "Position", class: "form-label"
+                = form.number_field :position, class: "form-control", min: 1, required: true
+                .form-text.text-muted
+                  Lower numbers appear first in the menu.
+            .col-md-6
+              .mb-3
+                .form-check.form-switch.mt-4
+                  = form.check_box :enabled, class: "form-check-input", role: "switch", checked: true
+                  = form.label :enabled, "Enable menu item", class: "form-check-label"
+
+    .col-lg-4
+      .card.border-0.shadow-sm
+        .card-body
+          %h6.mb-3 Add Menu Item
+          %p.small.text-muted
+            This will add the selected page to your site's navigation menu.
+          
+          = form.submit "Add Menu Item", class: "btn btn-primary w-100 mb-2"
+          = link_to "Cancel", manage_menu_items_path, class: "btn btn-outline-secondary w-100"
+
+      .card.border-0.shadow-sm.mt-4
+        .card-header.bg-white.border-0.pb-0
+          %h6.card-title.text-dark.mb-0
+            %i.bi.bi-info-circle.me-2
+            Help
+        .card-body.pt-3
+          %p.small.text-muted
+            %strong Menu Order:
+            Items are displayed in numerical order. You can drag and drop to reorder after creation.
+          
+          %p.small.text-muted
+            %strong Page Selection:
+            Only published pages that aren't already in the menu are available.
