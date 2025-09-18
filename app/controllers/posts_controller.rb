@@ -1,6 +1,4 @@
 class PostsController < ApplicationController
-  include CacheHelper
-
   allow_unauthenticated_access only: %i[ index show ]
   before_action :set_post, only: :show
 
