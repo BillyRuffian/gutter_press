@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_09_18_213822) do
+ActiveRecord::Schema[8.1].define(version: 2025_09_19_214721) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -90,6 +90,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_09_18_213822) do
 
   create_table "site_settings", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.text "hero_image_attribution"
     t.string "key"
     t.datetime "updated_at", null: false
     t.text "value"

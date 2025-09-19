@@ -99,6 +99,44 @@
         %p.small.text-muted
           This appears in the browser title, navigation, and other places throughout your site.
 
+    .card.border-0.shadow-sm.mb-4
+      .card-header.bg-white.border-0.pb-0
+        %h6.card-title.text-dark.mb-0
+          %i.bi.bi-image.me-2
+          Hero Section
+      .card-body.pt-3
+        %h6.text-muted.mb-2 Status
+        %p.mb-3
+          - if @settings['hero_enabled'] == 'true'
+            %span.badge.bg-success Enabled
+          - else
+            %span.badge.bg-secondary Disabled
+        
+        - if @settings['hero_enabled'] == 'true'
+          %h6.text-muted.mb-2 Title
+          %p.mb-3.small
+            - if @settings['hero_title'].present?
+              = @settings['hero_title']
+            - else
+              %span.text-muted Not set
+          
+          %h6.text-muted.mb-2 Subtitle
+          %p.mb-3.small
+            - if @settings['hero_subtitle'].present?
+              = @settings['hero_subtitle']
+            - else
+              %span.text-muted Not set
+          
+          - if SiteSetting.has_hero_image?
+            %h6.text-muted.mb-2 Hero Image
+            .mb-3.text-center
+              = image_tag SiteSetting.hero_image.variant(resize_to_fill: [200, 120]), class: "img-thumbnail", style: "max-width: 100%;"
+            - if SiteSetting.hero_image_attribution.present?
+              %p.mb-0.small.text-muted.text-center= SiteSetting.hero_image_attribution
+          - else
+            %h6.text-muted.mb-2 Hero Image
+            %p.mb-3.small.text-muted No image uploaded
+
     .card.border-0.shadow-sm
       .card-header.bg-white.border-0.pb-0
         %h6.card-title.text-dark.mb-0

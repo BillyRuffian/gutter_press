@@ -11,7 +11,25 @@ class Manage::SiteSettingsController < ApplicationController
   end
 
   def update
-    if SiteSetting.update_multiple(settings_params)
+    success = true
+
+    # Handle regular settings
+    if settings_params.present?
+      success = SiteSetting.update_multiple(settings_params)
+    end
+
+    # Handle hero image upload
+    if params[:hero_image].present?
+      hero_record = SiteSetting.hero_image_record
+      hero_record.hero_image.attach(params[:hero_image])
+    end
+
+    # Handle hero image attribution
+    if params[:hero_image_attribution]
+      SiteSetting.set_hero_image_attribution(params[:hero_image_attribution])
+    end
+
+    if success
       redirect_to manage_site_settings_path, notice: 'Site settings were successfully updated.'
     else
       @settings = SiteSetting.all_as_hash
@@ -34,7 +52,10 @@ class Manage::SiteSettingsController < ApplicationController
       :social_twitter,
       :social_github,
       :social_linkedin,
-      :analytics_code
+      :analytics_code,
+      :hero_enabled,
+      :hero_title,
+      :hero_subtitle
     )
   end
 end

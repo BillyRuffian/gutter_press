@@ -53,6 +53,55 @@
               .form-text.text-muted.small
                 Enable commenting system (if implemented)
 
+      / Hero Section Card
+      .card.border-0.shadow-sm.mb-4
+        .card-header.bg-white.border-0.pb-0
+          %h6.card-title.text-dark.mb-0
+            %i.bi.bi-image.me-2
+            Hero Section
+        .card-body.pt-3
+          .mb-3
+            = form.label "site_settings[hero_enabled]", "Enable Hero Section", class: "form-label small text-muted mb-2"
+            = form.select "site_settings[hero_enabled]", options_for_select([['Yes', 'true'], ['No', 'false']], @settings['hero_enabled']), {}, { class: "form-select" }
+            .form-text.text-muted.small
+              Show a hero section on the main page
+          
+          .row
+            .col-md-6
+              = form.label "site_settings[hero_title]", "Hero Title", class: "form-label small text-muted mb-2"
+              = form.text_field "site_settings[hero_title]", value: @settings['hero_title'], class: "form-control", placeholder: "Welcome to Our Blog"
+              .form-text.text-muted.small
+                Main headline for the hero section
+            .col-md-6
+              = form.label "site_settings[hero_subtitle]", "Hero Subtitle", class: "form-label small text-muted mb-2"
+              = form.text_field "site_settings[hero_subtitle]", value: @settings['hero_subtitle'], class: "form-control", placeholder: "Discover amazing stories"
+              .form-text.text-muted.small
+                Secondary text under the title
+          
+          .mt-3
+            = form.label "hero_image", "Hero Image", class: "form-label small text-muted mb-2"
+            - if SiteSetting.has_hero_image?
+              .mb-3
+                .d-flex.align-items-start.gap-3
+                  = image_tag SiteSetting.hero_image.variant(resize_to_fill: [200, 120]), class: "img-thumbnail", style: "max-width: 200px;"
+                  - if SiteSetting.hero_image_attribution.present?
+                    .flex-grow-1
+                      %p.mb-0.small.text-muted
+                        %strong Attribution:
+                        = SiteSetting.hero_image_attribution
+            = form.file_field "hero_image", class: "form-control", accept: "image/*"
+            .form-text.text-muted.small
+              Upload a background image for the hero section (JPEG, PNG, or WebP)
+              - if SiteSetting.has_hero_image?
+                %br
+                Leave blank to keep the current image.
+          
+          .mt-3
+            = form.label "hero_image_attribution", "Hero Image Attribution", class: "form-label small text-muted mb-2"
+            = form.text_field "hero_image_attribution", value: SiteSetting.hero_image_attribution, class: "form-control", placeholder: "Photo by John Doe on Unsplash"
+            .form-text.text-muted.small
+              Optional attribution text for the hero image
+
       / Contact & Social Card
       .card.border-0.shadow-sm.mb-4
         .card-header.bg-white.border-0.pb-0

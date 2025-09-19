@@ -2,6 +2,9 @@ class SiteSetting < ApplicationRecord
   validates :key, presence: true, uniqueness: true
   # Value can be empty string for optional settings
 
+  # Add hero image attachment (we'll use a singleton pattern since we only need one)
+  has_one_attached :hero_image
+
   # Cache key for storing all settings in Rails.cache
   CACHE_KEY = 'site_settings_all'.freeze
 
@@ -17,7 +20,10 @@ class SiteSetting < ApplicationRecord
     'social_twitter' => '',
     'social_github' => '',
     'social_linkedin' => '',
-    'analytics_code' => ''
+    'analytics_code' => '',
+    'hero_enabled' => 'false',
+    'hero_title' => 'Welcome to Our Blog',
+    'hero_subtitle' => 'Discover amazing stories and insights'
   }.freeze
 
   # Class method to get a setting value with caching
@@ -98,13 +104,61 @@ class SiteSetting < ApplicationRecord
     get('footer_text')
   end
 
+  # Hero section settings
+  def self.hero_enabled?
+    get('hero_enabled') == 'true'
+  end
+
+  def self.hero_title
+    get('hero_title')
+  end
+
+  def self.hero_subtitle
+    get('hero_subtitle')
+  end
+
+  # Hero image attachment methods (using singleton pattern)
+  def self.hero_image_record
+    @hero_image_record ||= find_or_create_by(key: '_hero_image_record') do |record|
+      record.value = 'singleton'
+    end
+  end
+
+  def self.hero_image
+    hero_image_record.hero_image
+  end
+
+  def self.has_hero_image?
+    hero_image.attached?
+  end
+
+  def self.hero_image_attribution
+    hero_image_record.hero_image_attribution
+  end
+
+  def self.set_hero_image_attribution(attribution)
+    hero_image_record.update(hero_image_attribution: attribution)
+    clear_cache
+  end
+
+  # Hero image helper methods (similar to postables)
+  def self.hero_image_hero
+    return unless has_hero_image?
+    hero_image.variant(resize_to_limit: [1920, 1080])
+  end
+
   # Clear cache after any database changes
   after_save :clear_cache
   after_destroy :clear_cache
 
+  # Class method to clear cache
+  def self.clear_cache
+    Rails.cache.delete(CACHE_KEY)
+  end
+
   private
 
   def clear_cache
-    Rails.cache.delete(CACHE_KEY)
+    self.class.clear_cache
   end
 end
