@@ -9,3 +9,4 @@ pin 'bootstrap', to: 'bootstrap.bundle.min.js'
 
 pin 'lexxy', to: 'lexxy.js'
 pin '@rails/activestorage', to: 'activestorage.esm.js' # to support attachments
+pin "sortablejs" # @1.15.6

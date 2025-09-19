@@ -25,12 +25,12 @@
               %th Page
               %th Status
               %th.text-end.pe-4 Actions
-          %tbody#sortable-menu-items
+          %tbody{data: { controller: "sortable", sortable_url_value: reorder_manage_menu_items_path, sortable_handle_value: ".drag-handle", sortable_target: "list" }}
             - @menu_items.each do |menu_item|
               %tr{data: {id: menu_item.id, position: menu_item.position}}
                 %td.ps-4
                   %i.bi.bi-grip-vertical.text-muted.drag-handle{style: "cursor: move;"}
-                  = menu_item.position
+                  %span.position-number= menu_item.position
                 %td
                   .d-flex.align-items-center
                     %div
@@ -69,42 +69,3 @@
           = link_to "create some pages", new_manage_page_path, class: "text-decoration-none"
           first.
 
-:javascript
-  document.addEventListener('DOMContentLoaded', function() {
-    // Initialize sortable functionality
-    const sortable = Sortable.create(document.getElementById('sortable-menu-items'), {
-      animation: 150,
-      handle: '.drag-handle',
-      onEnd: function(evt) {
-        // Get new order
-        const items = Array.from(document.querySelectorAll('#sortable-menu-items tr[data-id]'));
-        const positions = {};
-        
-        items.forEach((item, index) => {
-          const itemId = item.dataset.id;
-          positions[itemId] = index + 1;
-        });
-        
-        // Send AJAX request to update order
-        fetch('#{reorder_manage_menu_items_path}', {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
-          },
-          body: JSON.stringify({item_positions: positions})
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.status !== 'success') {
-            console.error('Failed to reorder menu items');
-            location.reload(); // Reload to reset order on error
-          }
-        })
-        .catch(error => {
-          console.error('Error reordering menu items:', error);
-          location.reload(); // Reload to reset order on error
-        });
-      }
-    });
-  });

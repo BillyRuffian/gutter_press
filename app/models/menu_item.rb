@@ -45,9 +45,19 @@ class MenuItem < ApplicationRecord
   # Bulk reorder menu items
   def self.reorder!(item_positions)
     transaction do
+      # First, set all positions to negative values to avoid unique constraint conflicts
+      max_position = maximum(:position) || 0
+      offset = max_position + 1000
+
+      item_positions.each do |item_id, new_position|
+        where(id: item_id).update_all(position: -(new_position + offset))
+      end
+
+      # Then update to the actual positive positions
       item_positions.each do |item_id, new_position|
         where(id: item_id).update_all(position: new_position)
       end
+
       invalidate_menu_cache
     end
   end
