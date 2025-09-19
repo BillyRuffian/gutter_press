@@ -34,9 +34,10 @@
               %li.nav-item
                 = link_to "Posts", posts_path, class: "nav-link #{'active' if controller_name == 'posts'}"
           %ul.navbar-nav
-            - if Current.user
-              %li.nav-item
-                = link_to "Admin", manage_root_path, class: "nav-link"
+            %li.nav-item
+              = link_to search_path, class: "nav-link", "aria-label" => "Search" do
+                %i.bi.bi-search
+
 
     = yield(:hero_section)
     

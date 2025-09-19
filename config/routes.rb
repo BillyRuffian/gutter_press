@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'search', to: 'search#index', as: :search
   get 'pages/show'
   resources :posts, only: %i[index show]
   resources :pages, only: :show

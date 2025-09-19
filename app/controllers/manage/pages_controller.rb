@@ -4,7 +4,12 @@ class Manage::PagesController < ApplicationController
   layout 'manage'
 
   def index
-    @pagy, @pages = pagy(Page.order(created_at: :desc), limit: SiteSetting.posts_per_page)
+    # Order unpublished pages first by updated_at, then published pages by published_at desc
+    pages_ordered = Page.order(
+      Arel.sql("CASE WHEN (publish = 0 OR published_at IS NULL OR published_at > datetime('now')) THEN 0 ELSE 1 END"),
+      Arel.sql("CASE WHEN (publish = 0 OR published_at IS NULL OR published_at > datetime('now')) THEN updated_at ELSE published_at END DESC")
+    )
+    @pagy, @pages = pagy(pages_ordered, limit: SiteSetting.posts_per_page)
   end
 
   def new

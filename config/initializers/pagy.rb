@@ -20,6 +20,9 @@ Pagy::DEFAULT[:size]  = 9         # nav bar links
 require 'pagy/extras/bootstrap'
 Pagy::DEFAULT[:bootstrap_nav_class] = 'pagination justify-content-center'
 
+# Array extra: Enable pagy_array for paginating arrays
+require 'pagy/extras/array'
+
 # Trim extra: Remove the page=1 param from links
 require 'pagy/extras/trim'
 
