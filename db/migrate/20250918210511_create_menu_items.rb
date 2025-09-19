@@ -7,9 +7,9 @@ class CreateMenuItems < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
-    
+
     # Add indexes for performance
     add_index :menu_items, :position, unique: true
-    add_index :menu_items, [:enabled, :position], name: 'index_menu_items_on_enabled_and_position'
+    add_index :menu_items, [ :enabled, :position ], name: 'index_menu_items_on_enabled_and_position'
   end
 end

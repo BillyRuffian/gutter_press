@@ -1,6 +1,6 @@
 class Manage::MenuItemsController < ApplicationController
   before_action :require_authentication
-  before_action :set_menu_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_menu_item, only: [ :show, :edit, :update, :destroy ]
   layout 'manage'
 
   def index
@@ -15,10 +15,10 @@ class Manage::MenuItemsController < ApplicationController
     @menu_item = MenuItem.new
     @menu_item.position = MenuItem.next_position
     @available_pages = Page.published.where.not(id: MenuItem.pluck(:page_id)).order(:title)
-    
+
     if @available_pages.empty?
       redirect_to manage_menu_items_path, alert: 'No available pages to add to menu. All published pages are already in the menu.'
-      return
+      nil
     end
   end
 
