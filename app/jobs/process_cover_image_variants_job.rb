@@ -8,16 +8,12 @@ class ProcessCoverImageVariantsJob < ApplicationJob
     Rails.logger.info "Processing cover image variants for #{postable.class.name}##{postable.id}"
 
     # Generate the thumbnail variant (300x200)
-    step :thumbnail do
-      thumbnail_variant = postable.cover_image.variant(resize_to_fill: [ 300, 200 ])
-      thumbnail_variant.processed
-    end
+    thumbnail_variant = postable.cover_image.variant(resize_to_fill: [ 300, 200 ])
+    thumbnail_variant.processed
 
     # Generate the hero variant (1920x1080 max)
-    step :hero do
-      hero_variant = postable.cover_image.variant(resize_to_limit: [ 1920, 1080 ])
-      hero_variant.processed
-    end
+    hero_variant = postable.cover_image.variant(resize_to_limit: [ 1920, 1080 ])
+    hero_variant.processed
 
     Rails.logger.info "Completed processing cover image variants for #{postable.class.name}##{postable.id}"
 
