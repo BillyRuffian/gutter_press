@@ -1,6 +1,12 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 
+/* Prevent horizontal scrolling on mobile */
+html,
+body {
+  overflow-x: hidden;
+}
+
 /* Global font styling with Crimson Text */
 body {
   font-family: 'Crimson Text', Georgia, 'Times New Roman', Times, serif;
@@ -118,7 +124,7 @@ ul.lexxy-prompt-menu {
   font-size: 0.75rem;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments and mobile fixes */
 @media (max-width: 768px) {
   .hero-section {
     height: 50vh;
@@ -127,6 +133,31 @@ ul.lexxy-prompt-menu {
 
   .hero-title {
     font-size: 2rem !important;
+  }
+
+  /* Ensure containers don't overflow */
+  .container-fluid {
+    overflow-x: hidden;
+  }
+
+  /* Fix potential width issues */
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* Ensure images stay within bounds */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Fix pre and code blocks */
+  pre,
+  code {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }
 

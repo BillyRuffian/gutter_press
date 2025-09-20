@@ -144,7 +144,7 @@ class SiteSetting < ApplicationRecord
   # Hero image helper methods (similar to postables)
   def self.hero_image_hero
     return unless has_hero_image?
-    hero_image.variant(resize_to_limit: [1920, 1080])
+    hero_image.variant(resize_to_limit: [ 1920, 1080 ])
   end
 
   # Clear cache after any database changes
