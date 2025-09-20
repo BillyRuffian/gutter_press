@@ -1,0 +1,9 @@
+one:
+  page: three
+  position: 1
+  enabled: true
+
+two:
+  page: four
+  position: 2
+  enabled: false

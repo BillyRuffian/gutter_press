@@ -30,4 +30,57 @@ four:
   publish: false
   published_at: <%= 1.day.from_now %>
   user: two
-  type: Page 
+  type: Page
+
+first_post:
+  title: "First Blog Post"
+  excerpt: "This is the first blog post"
+  slug: "first-blog-post"
+  publish: true
+  published_at: <%= 1.week.ago %>
+  user: one
+  type: "Post"
+
+second_post:
+  title: "Second Blog Post" 
+  excerpt: "This is the second blog post"
+  slug: "second-blog-post"
+  publish: true
+  published_at: <%= 3.days.ago %>
+  user: one
+  type: "Post"
+
+draft_post:
+  title: "Draft Blog Post"
+  excerpt: "This is a draft post"
+  slug: "draft-blog-post"
+  publish: false
+  user: one
+  type: "Post"
+
+about_page:
+  title: "About Us"
+  excerpt: "Learn more about us"
+  slug: "about-us"
+  publish: true
+  published_at: <%= 2.weeks.ago %>
+  user: one
+  type: "Page"
+
+contact_page:
+  title: "Contact"
+  excerpt: "Get in touch"
+  slug: "contact"
+  publish: true
+  published_at: <%= 1.week.ago %>
+  user: one
+  type: "Page"
+
+privacy_page:
+  title: "Privacy Policy"
+  excerpt: "Our privacy policy"
+  slug: "privacy-policy"
+  publish: true
+  published_at: <%= 1.month.ago %>
+  user: one
+  type: "Page" 

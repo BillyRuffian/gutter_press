@@ -86,9 +86,15 @@ class SearchService
     query_position = text.downcase.index(query.downcase)
     return nil unless query_position
 
-    # Calculate snippet boundaries
-    start_pos = [ query_position - 100, 0 ].max
+    # Calculate snippet boundaries - center the query in the snippet
+    half_length = snippet_length / 2
+    start_pos = [ query_position - half_length, 0 ].max
     end_pos = [ start_pos + snippet_length, text.length ].min
+
+    # If we're near the end, adjust start_pos to get full snippet
+    if end_pos == text.length && (end_pos - start_pos) < snippet_length
+      start_pos = [ text.length - snippet_length, 0 ].max
+    end
 
     # Extract snippet
     snippet = text[start_pos...end_pos]

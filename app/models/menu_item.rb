@@ -1,8 +1,10 @@
 class MenuItem < ApplicationRecord
   belongs_to :page, class_name: 'Page'
 
-  validates :position, presence: true, uniqueness: true
   validates :page_id, presence: true, uniqueness: true
+  validates :position, presence: true, uniqueness: true
+
+  before_validation :assign_position_if_blank
 
   scope :enabled, -> { where(enabled: true) }
   scope :ordered, -> { order(:position) }
@@ -50,12 +52,12 @@ class MenuItem < ApplicationRecord
       offset = max_position + 1000
 
       item_positions.each do |item_id, new_position|
-        where(id: item_id).update_all(position: -(new_position + offset))
+        where(id: item_id).update_all(position: -(new_position.to_i + offset))
       end
 
       # Then update to the actual positive positions
       item_positions.each do |item_id, new_position|
-        where(id: item_id).update_all(position: new_position)
+        where(id: item_id).update_all(position: new_position.to_i)
       end
 
       invalidate_menu_cache
@@ -72,9 +74,24 @@ class MenuItem < ApplicationRecord
     (maximum(:position) || 0) + 1
   end
 
+  # Get the label from page title
+  def label
+    page&.title
+  end
+
+  # Get the URL from page slug
+  def url
+    return nil unless page&.slug
+    "/pages/#{page.slug}"
+  end
+
   private
 
   def invalidate_cache
     self.class.invalidate_menu_cache
+  end
+
+  def assign_position_if_blank
+    self.position = self.class.next_position if position.blank?
   end
 end

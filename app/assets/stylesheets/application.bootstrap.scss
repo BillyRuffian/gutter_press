@@ -122,12 +122,12 @@ ul.lexxy-prompt-menu {
 .attribution {
   backdrop-filter: blur(4px);
   font-size: 0.75rem;
-  
+
   a {
     color: inherit !important;
     text-decoration: underline;
   }
-  
+
   a:hover {
     color: inherit !important;
     text-decoration: underline;
@@ -184,7 +184,7 @@ ul.lexxy-prompt-menu {
 .attachment {
   margin: 1.5rem auto;
   text-align: center;
-  
+
   &--video {
     video {
       max-width: 100%;
@@ -193,7 +193,7 @@ ul.lexxy-prompt-menu {
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
   }
-  
+
   &__caption {
     margin-top: 0.5rem;
     font-style: italic;

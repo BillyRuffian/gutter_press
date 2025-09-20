@@ -12,10 +12,13 @@ class Manage::LinksController < ApplicationController
     # Search both title and slug with case-insensitive matching
     # Include both published and unpublished items since this is the management interface
     # Order by type (pages first) then title
-    Postable
+    p = Postable
       .where('LOWER(title) LIKE ? OR LOWER(slug) LIKE ?',
              "%#{query.downcase}%", "%#{query.downcase}%")
       .order(:type, :title)
       .limit(10) # Limit results for performance
+
+    Rails.logger.info "Search query: #{query}, Results found: #{p.count}"
+    p
   end
 end
