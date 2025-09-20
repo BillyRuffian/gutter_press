@@ -1,7 +1,7 @@
 # Configure Action Text to handle video attachments
 Rails.application.configure do
   # Add video content types to Action Text allowed content types
-  config.active_storage.variant_processor = :mini_magick
+  config.active_storage.variant_processor = :vips
   
   # Ensure video content types are properly handled
   config.active_storage.video_preview_arguments = {
