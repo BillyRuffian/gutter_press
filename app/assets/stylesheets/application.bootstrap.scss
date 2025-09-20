@@ -122,6 +122,17 @@ ul.lexxy-prompt-menu {
 .attribution {
   backdrop-filter: blur(4px);
   font-size: 0.75rem;
+  
+  a {
+    color: inherit !important;
+    text-decoration: underline;
+  }
+  
+  a:hover {
+    color: inherit !important;
+    text-decoration: underline;
+    opacity: 0.8;
+  }
 }
 
 /* Responsive adjustments and mobile fixes */

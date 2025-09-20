@@ -2,7 +2,10 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title= content_for(:title) ? "#{content_for(:title)} - #{site_name} Admin" : "#{site_name} Admin"
+    - if content_for(:title)
+      %title= "#{strip_tags(content_for(:title))} - #{site_name} Admin"
+    - else
+      %title= "#{site_name} Admin"
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     = csrf_meta_tags
     = csp_meta_tag
