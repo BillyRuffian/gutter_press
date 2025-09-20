@@ -1,0 +1,6 @@
+%figure.attachment.attachment--preview.attachment--video
+  %video{controls: true, preload: "metadata", style: "max-width: 100%; height: auto;"}
+    %source{src: url_for(attachable), type: attachable.content_type}
+    Your browser does not support the video tag.
+  - if caption.present?
+    %figcaption.attachment__caption= caption

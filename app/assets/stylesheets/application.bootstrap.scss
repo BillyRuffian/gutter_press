@@ -179,3 +179,25 @@ ul.lexxy-prompt-menu {
     text-align: center;
   }
 }
+
+/* Action Text attachment styling */
+.attachment {
+  margin: 1.5rem auto;
+  text-align: center;
+  
+  &--video {
+    video {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  &__caption {
+    margin-top: 0.5rem;
+    font-style: italic;
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,22 @@
+- if attachable.is_a?(ActiveStorage::Blob)
+  - if attachable.video?
+    %figure.attachment.attachment--preview.attachment--video
+      %video{controls: true, preload: "metadata", style: "max-width: 100%; height: auto; border-radius: 8px;"}
+        %source{src: url_for(attachable), type: attachable.content_type}
+        Your browser does not support the video tag.
+      - if caption.present?
+        %figcaption.attachment__caption= caption
+  - elsif attachable.representable?
+    %figure.attachment.attachment--preview.attachment--image
+      = image_tag attachable.representation(resize_to_limit: [800, 600]), style: "max-width: 100%; height: auto;"
+      - if caption.present?
+        %figcaption.attachment__caption= caption
+  - else
+    %figure.attachment.attachment--file
+      = link_to url_for(attachable), target: "_blank", class: "btn btn-outline-primary" do
+        %i.bi.bi-download.me-2
+        = attachable.filename
+- else
+  %figure.attachment
+    = link_to url_for(attachable), target: "_blank" do
+      = attachable.to_s
