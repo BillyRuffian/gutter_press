@@ -19,7 +19,7 @@
                   = post.user.email_address
         - if post.cover_image_attribution.present?
           .attribution.position-absolute.bottom-0.end-0.m-3.px-2.py-1.bg-dark.bg-opacity-75.text-white.small.rounded
-            = post.cover_image_attribution
+            = raw post.cover_image_attribution
   
   .container-fluid.px-0
     .row

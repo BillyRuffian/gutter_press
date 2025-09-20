@@ -14,7 +14,7 @@
                 %p.lead.text-white.hero-subtitle.mb-0= SiteSetting.hero_subtitle
       - if SiteSetting.hero_image_attribution.present?
         .attribution.position-absolute.bottom-0.end-0.m-3.px-2.py-1.bg-dark.bg-opacity-75.text-white.small.rounded
-          = SiteSetting.hero_image_attribution
+          = raw SiteSetting.hero_image_attribution
 
 .container-fluid.px-0
   .row
