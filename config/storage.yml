@@ -5,6 +5,15 @@ test:
 local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
+  public: true  # Allow public access for CDN caching
+
+# Production storage with CDN-friendly configuration
+production:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>
+  public: true
+  # When you set up a CDN, you can add:
+  # public_host: "https://cdn.yourdomain.com"
 
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
