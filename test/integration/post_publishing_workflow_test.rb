@@ -54,7 +54,7 @@ class PostPublishingWorkflowTest < ActionDispatch::IntegrationTest
   test 'draft post workflow' do
     # Create draft post with published_at set but publish false
     post_title = 'Draft Integration Test'
-    
+
     post manage_posts_path, params: {
       post: {
         title: post_title,
@@ -68,7 +68,7 @@ class PostPublishingWorkflowTest < ActionDispatch::IntegrationTest
     assert_not_nil created_post
     assert_not created_post.published?
 
-    # Should not appear in public index  
+    # Should not appear in public index
     get posts_path
     assert_select 'h2 a', { text: post_title, count: 0 }
 
@@ -107,7 +107,7 @@ class PostPublishingWorkflowTest < ActionDispatch::IntegrationTest
     # After updating title, slug changes, so redirect URL changes too
     post.reload
     assert_redirected_to manage_post_path(post)
-    
+
     # Verify changes
     assert_equal updated_title, post.title
     assert_equal 'Updated content', post.content.to_plain_text
@@ -128,7 +128,7 @@ class PostPublishingWorkflowTest < ActionDispatch::IntegrationTest
 
     # Attach cover image
     image_file = fixture_file_upload('test_image.jpg', 'image/jpeg')
-    
+
     patch manage_post_path(post), params: {
       post: {
         title: post.title,
@@ -137,7 +137,7 @@ class PostPublishingWorkflowTest < ActionDispatch::IntegrationTest
     }
 
     assert_redirected_to manage_post_path(post)
-    
+
     post.reload
     assert post.has_cover_image?
     assert_equal 'image/jpeg', post.cover_image.content_type
@@ -197,11 +197,11 @@ class PostPublishingWorkflowTest < ActionDispatch::IntegrationTest
 
     created_post = Post.find_by(title: post_title)
     assert_not_nil created_post
-    
+
     # Should not be considered published yet
     assert_not created_post.published?
 
-    # Should not appear in public index  
+    # Should not appear in public index
     get posts_path
     assert_select 'h2 a', { text: post_title, count: 0 }
 
@@ -216,10 +216,10 @@ class PostPublishingWorkflowTest < ActionDispatch::IntegrationTest
 
   def fixture_file_upload(filename, content_type)
     # Create a simple test image file
-    test_file = Tempfile.new(['test', '.jpg'])
+    test_file = Tempfile.new([ 'test', '.jpg' ])
     test_file.write('fake image data')
     test_file.rewind
-    
+
     Rack::Test::UploadedFile.new(test_file, content_type)
   end
 end

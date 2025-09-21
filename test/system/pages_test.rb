@@ -97,7 +97,7 @@ class PagesTest < ApplicationSystemTestCase
 
     # Check publish first to make date field visible
     check 'Ready to publish'
-    
+
     # Set published_at to avoid any validation issues
     fill_in 'page[published_at]', with: 1.hour.ago.strftime('%Y-%m-%dT%H:%M')
 
@@ -115,13 +115,13 @@ class PagesTest < ApplicationSystemTestCase
     if page.has_selector?('h1', text: 'Auto Generated Slug Page!')
       # Success case - check the slug
       created_page = Page.find_by(title: 'Auto Generated Slug Page!')
-      assert_not_nil created_page, "Page was not created in database"
+      assert_not_nil created_page, 'Page was not created in database'
       assert_equal 'auto-generated-slug-page', created_page.slug
     else
       # Debug case - check what happened
       puts "Current page content: #{page.text}"
       puts "Current URL: #{current_url}"
-      
+
       # Try to find the page anyway to see if it was created
       created_page = Page.find_by(title: 'Auto Generated Slug Page!')
       assert_not_nil created_page, "Page was not found in database. Current page: #{page.text}"

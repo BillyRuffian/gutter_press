@@ -12,15 +12,15 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
       content: 'Test content',
       user: @user
     )
-    
+
     # Should save successfully or fail gracefully with validation
     saved = post.save
     if saved
       # Slug should be generated (may be long but should not crash)
       assert_not_nil post.slug
       # Just verify it's a reasonable string and not empty
-      assert post.slug.length > 0, "Slug should not be empty"
-      assert post.slug.is_a?(String), "Slug should be a string"
+      assert post.slug.length > 0, 'Slug should not be empty'
+      assert post.slug.is_a?(String), 'Slug should be a string'
     else
       # If there's a length validation, that's also acceptable behavior
       # Just verify it fails gracefully without exceptions
@@ -29,7 +29,7 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
       assert post.is_a?(Post)
     end
     # The main test is that this completes without exceptions
-    assert true, "Post with extremely long title handled gracefully"
+    assert true, 'Post with extremely long title handled gracefully'
   end
 
   test 'should handle special unicode characters in titles' do
@@ -39,7 +39,7 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
       content: 'Test content',
       user: @user
     )
-    
+
     assert post.save
     assert_not_nil post.slug
     # Slug should be URL-safe
@@ -54,7 +54,7 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
       publish: true,
       published_at: 1.hour.ago
     )
-    
+
     assert post.save
     assert_equal '', post.display_excerpt
   end
@@ -67,7 +67,7 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
       publish: true,
       published_at: 1.hour.ago
     )
-    
+
     assert post.save
     # Display excerpt should handle whitespace-only content
     assert_equal '', post.display_excerpt
@@ -82,7 +82,7 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
       publish: true,
       published_at: 1.hour.ago
     )
-    
+
     assert post.save
     # Should not crash with very short content
     excerpt = post.display_excerpt
@@ -98,7 +98,7 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
       publish: true,
       published_at: 1.hour.ago
     )
-    
+
     assert post.save
     # Should handle mixed newline formats gracefully
     excerpt = post.display_excerpt
@@ -108,7 +108,7 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
 
   test 'should handle concurrent slug generation' do
     base_title = 'Duplicate Title'
-    
+
     # Create multiple posts with same title concurrently (simulated)
     posts = []
     3.times do |i|
@@ -121,14 +121,14 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
       )
       posts << post
     end
-    
+
     # Save all posts
     posts.each(&:save!)
-    
+
     # All should have unique slugs
     slugs = posts.map(&:slug)
-    assert_equal slugs.uniq.length, slugs.length, "All slugs should be unique"
-    
+    assert_equal slugs.uniq.length, slugs.length, 'All slugs should be unique'
+
     # First should have base slug, others should have numbered suffixes
     assert_includes slugs, 'duplicate-title'
     assert_includes slugs, 'duplicate-title-1'
@@ -141,14 +141,14 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
       content: 'Test content',
       user: @user
     )
-    
+
     # Try to attach a non-image file as cover
     post.cover_image.attach(
-      io: StringIO.new("not an image"),
-      filename: "test.txt",
-      content_type: "text/plain"
+      io: StringIO.new('not an image'),
+      filename: 'test.txt',
+      content_type: 'text/plain'
     )
-    
+
     # Save should succeed (the post itself is valid)
     saved = post.save
     if saved
@@ -168,7 +168,7 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
       content: 'Test content',
       user: @user
     )
-    
+
     assert post.save
     assert_not post.has_cover_image?
     assert_nil post.cover_image_thumbnail
@@ -184,9 +184,9 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
       publish: true,
       published_at: 1.hour.from_now  # Future date
     )
-    
+
     assert post.save
-    
+
     # Should not be considered published if published_at is in the future
     assert_not post.published?
   end
@@ -199,7 +199,7 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
       publish: true,
       published_at: nil
     )
-    
+
     assert post.save
     # Should not be considered published without published_at
     assert_not post.published?
@@ -215,7 +215,7 @@ class PostableEdgeCasesTest < ActiveSupport::TestCase
         publish: true,
         published_at: Time.current
       )
-      
+
       assert post.save
       assert post.published?
     end
