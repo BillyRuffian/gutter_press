@@ -74,7 +74,7 @@ class Postable < ApplicationRecord
   # CDN-friendly URL methods
   def cover_image_url(**options)
     return unless has_cover_image?
-    
+
     if Rails.env.production?
       Rails.application.routes.url_helpers.rails_blob_url(cover_image, **options)
     else
@@ -85,7 +85,7 @@ class Postable < ApplicationRecord
   def cover_image_thumbnail_url(**options)
     variant = cover_image_thumbnail
     return unless variant
-    
+
     if Rails.env.production?
       Rails.application.routes.url_helpers.rails_blob_url(variant, **options)
     else
@@ -96,7 +96,7 @@ class Postable < ApplicationRecord
   def cover_image_hero_url(**options)
     variant = cover_image_hero
     return unless variant
-    
+
     if Rails.env.production?
       Rails.application.routes.url_helpers.rails_blob_url(variant, **options)
     else

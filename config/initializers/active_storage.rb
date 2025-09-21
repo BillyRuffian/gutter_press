@@ -8,7 +8,7 @@ Rails.application.config.active_storage.urls_expire_in = 1.year
 if Rails.env.production?
   # Override Active Storage URL generation for public blobs
   Rails.application.config.active_storage.draw_routes = true
-  
+
   # Set variant processor for image processing
   Rails.application.config.active_storage.variant_processor = :vips
 end

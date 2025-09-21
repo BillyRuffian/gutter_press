@@ -35,11 +35,11 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :production
-  
+
   # Configure Active Storage for CDN usage
   config.active_storage.variant_processor = :vips
   config.active_storage.urls_expire_in = 1.year
-  
+
   # Serve Active Storage files with CDN-friendly headers
   config.active_storage.draw_routes = true
 

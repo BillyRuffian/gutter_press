@@ -6,13 +6,13 @@ class ActiveStorage::VariantsController < ActiveStorage::BaseController
 
   def show
     expires_in ActiveStorage.urls_expire_in, public: true
-    
+
     # Set CDN-friendly cache headers for variants
     response.headers['Cache-Control'] = 'public, max-age=31536000, immutable'
     response.headers['Vary'] = 'Accept'
-    
+
     variant = @blob.variant(params[:variation_key])
-    
+
     if variant.processed?
       # If variant is already processed, redirect to it
       redirect_to variant.url, allow_other_host: true
@@ -26,7 +26,7 @@ class ActiveStorage::VariantsController < ActiveStorage::BaseController
 
   def send_variant_stream(variant)
     variant.process unless variant.processed?
-    
+
     send_data variant.download,
               type: variant.blob.content_type,
               disposition: :inline,

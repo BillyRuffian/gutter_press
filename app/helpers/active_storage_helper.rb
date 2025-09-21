@@ -5,12 +5,12 @@ module ActiveStorageHelper
   # Generate a CDN-friendly URL for an Active Storage attachment
   def cdn_image_tag(attachment, **options)
     return unless attachment&.attached?
-    
+
     # Extract image-specific options
     alt = options.delete(:alt) || ''
     css_class = options.delete(:class) || options.delete('class')
     transformations = options.delete(:resize) || options.delete(:variant)
-    
+
     # Generate the appropriate URL
     if transformations.present? && attachment.image?
       variant = attachment.variant(transformations)
@@ -18,9 +18,9 @@ module ActiveStorageHelper
     else
       url = cdn_url_for(attachment)
     end
-    
+
     return unless url
-    
+
     # Generate the image tag with CDN URL
     image_tag url, alt: alt, class: css_class, **options
   end
@@ -28,25 +28,25 @@ module ActiveStorageHelper
   # Generate a CDN-friendly link to an Active Storage attachment
   def cdn_link_to(text, attachment, **options)
     return unless attachment&.attached?
-    
+
     url = cdn_url_for(attachment)
     return unless url
-    
+
     link_to text, url, **options
   end
 
   # Helper for common thumbnail sizes used in the app
   def cdn_thumbnail_tag(attachment, size: :medium, **options)
     return unless attachment&.attached?
-    
+
     transformations = case size
-    when :small then { resize_to_fill: [150, 100] }
-    when :medium then { resize_to_fill: [300, 200] }
-    when :large then { resize_to_fill: [600, 400] }
-    when :hero then { resize_to_limit: [1920, 1080] }
-    else size.is_a?(Hash) ? size : { resize_to_fill: [300, 200] }
+    when :small then { resize_to_fill: [ 150, 100 ] }
+    when :medium then { resize_to_fill: [ 300, 200 ] }
+    when :large then { resize_to_fill: [ 600, 400 ] }
+    when :hero then { resize_to_limit: [ 1920, 1080 ] }
+    else size.is_a?(Hash) ? size : { resize_to_fill: [ 300, 200 ] }
     end
-    
+
     cdn_image_tag(attachment, variant: transformations, **options)
   end
 
