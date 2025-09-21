@@ -12,15 +12,21 @@ export default class extends Controller {
   }
 
   setupiPhoneVideoCompatibility(video) {
-    // Critical iPhone video attributes - must be set programmatically
-    video.setAttribute('playsinline', 'true')
-    video.setAttribute('webkit-playsinline', 'true')
+    // Essential iPhone video attributes - set programmatically for reliability
+    video.setAttribute('playsinline', '')
+    video.setAttribute('webkit-playsinline', '')
     video.setAttribute('controls', 'controls')
     video.setAttribute('preload', 'metadata')
+    video.setAttribute('x-webkit-airplay', 'allow')
+
+    // iPhone requires muted attribute for some video loading scenarios
+    if (this.isIPhone()) {
+      video.setAttribute('muted', 'muted')
+    }
 
     // iPhone-specific styling
     video.style.width = '100%'
-    video.style.height = 'auto'
+    video.style.height = 'auto' 
     video.style.display = 'block'
     video.style.outline = 'none'
 
@@ -30,15 +36,14 @@ export default class extends Controller {
   }
 
   applyiPhoneSpecificFixes(video) {
-    // iPhone Safari requires specific handling
+    // iPhone Safari requires specific handling for proper display
     video.addEventListener('loadstart', () => {
-      // Force iPhone to show video properly
       video.style.backgroundColor = '#000'
       video.style.minHeight = '200px'
     })
 
     video.addEventListener('loadedmetadata', () => {
-      // Ensure proper iPhone video rendering
+      // Set proper aspect ratio once metadata loads
       if (video.videoWidth > 0 && video.videoHeight > 0) {
         video.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`
         video.style.minHeight = 'auto'
@@ -46,29 +51,42 @@ export default class extends Controller {
     })
 
     video.addEventListener('canplay', () => {
-      // Final iPhone compatibility check
+      // Ensure video is visible and ready for iPhone
       video.style.visibility = 'visible'
       video.style.opacity = '1'
-    })
-
-    // iPhone video error recovery
-    video.addEventListener('error', (e) => {
-      console.warn('iPhone video error:', e)
-      if (video.error) {
-        console.warn('Error code:', video.error.code, 'Message:', video.error.message)
-        // Try to recover by reloading
-        setTimeout(() => {
-          video.load()
-        }, 1000)
-      }
-    })
-
-    // Ensure iPhone shows controls properly
-    video.addEventListener('click', () => {
+      
+      // iPhone sometimes needs a nudge to show controls
       if (!video.controls) {
         video.setAttribute('controls', 'controls')
       }
     })
+
+    // iPhone video error recovery - reload on failure
+    video.addEventListener('error', () => {
+      setTimeout(() => {
+        video.load()
+      }, 1000)
+    })
+
+    // Handle iPhone video interaction requirements  
+    video.addEventListener('click', (e) => {
+      // Ensure controls are visible on click
+      if (!video.controls) {
+        video.setAttribute('controls', 'controls')
+      }
+      
+      // Try to play if video is paused (iPhone sometimes needs this)
+      if (video.paused && video.readyState >= 3) {
+        video.play().catch(() => {
+          // Silently handle play promise rejection
+        })
+      }
+    })
+
+    // Force load the video for iPhone
+    setTimeout(() => {
+      video.load()
+    }, 100)
   }
 
   isIPhone() {

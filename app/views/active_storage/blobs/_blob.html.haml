@@ -2,14 +2,16 @@
   = image_tag blob.representation(resize_to_limit: [800, 600]), style: "max-width: 100%; height: auto;"
 - elsif blob.video?
   %figure{style: "position: relative; margin: 0;", data: {controller: "ios-video"}}
-    %video{controls: "controls", playsinline: "playsinline", "webkit-playsinline": "webkit-playsinline", preload: "metadata", style: "max-width: 100%; height: auto; border-radius: 8px; display: block; background-color: #000;"}
-      %source{src: rails_blob_url(blob), type: blob.content_type}
-      - if blob.content_type.include?('mp4')
+    %video{controls: "controls", playsinline: "playsinline", "webkit-playsinline": "webkit-playsinline", preload: "metadata", "x-webkit-airplay": "allow", style: "max-width: 100%; height: auto; border-radius: 8px; display: block; background-color: #000;"}
+      - # iPhone prefers MP4 first, so prioritize it
+      - if blob.content_type.include?('mp4') || blob.content_type == 'video/mp4'
         %source{src: rails_blob_url(blob), type: "video/mp4"}
-      - if blob.content_type.include?('webm')
+      - elsif blob.content_type.include?('webm') || blob.content_type == 'video/webm'  
         %source{src: rails_blob_url(blob), type: "video/webm"}
-      - if blob.content_type.include?('ogg')
+      - elsif blob.content_type.include?('ogg') || blob.content_type == 'video/ogg'
         %source{src: rails_blob_url(blob), type: "video/ogg"}
+      - else
+        %source{src: rails_blob_url(blob), type: blob.content_type}
       Your browser does not support the video tag.
 - else
   = link_to rails_blob_url(blob), target: "_blank", class: "btn btn-outline-primary" do

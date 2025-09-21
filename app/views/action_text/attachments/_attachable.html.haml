@@ -1,13 +1,15 @@
 -  - if attachable.video?
     %figure.attachment.attachment--preview.attachment--video{style: "position: relative;", data: {controller: "ios-video"}}
-      %video{controls: "controls", playsinline: "playsinline", "webkit-playsinline": "webkit-playsinline", preload: "metadata", style: "max-width: 100%; height: auto; border-radius: 8px; display: block; background-color: #000;"}
-        %source{src: url_for(attachable), type: attachable.content_type}
-        - if attachable.content_type.include?('mp4')
+      %video{controls: "controls", playsinline: "playsinline", "webkit-playsinline": "webkit-playsinline", preload: "metadata", "x-webkit-airplay": "allow", muted: "muted", style: "max-width: 100%; height: auto; border-radius: 8px; display: block; background-color: #000;"}
+        - # iPhone-optimized source ordering - MP4 first
+        - if attachable.content_type.include?('mp4') || attachable.content_type == 'video/mp4'
           %source{src: url_for(attachable), type: "video/mp4"}
-        - if attachable.content_type.include?('webm')
+        - elsif attachable.content_type.include?('webm') || attachable.content_type == 'video/webm'
           %source{src: url_for(attachable), type: "video/webm"}
-        - if attachable.content_type.include?('ogg')
+        - elsif attachable.content_type.include?('ogg') || attachable.content_type == 'video/ogg'
           %source{src: url_for(attachable), type: "video/ogg"}
+        - else
+          %source{src: url_for(attachable), type: attachable.content_type}
         Your browser does not support the video tag.ble.is_a?(ActiveStorage::Blob)
   - if attachable.video?
     %figure.attachment.attachment--preview.attachment--video{style: "position: relative;", data: {controller: "ios-video"}}
