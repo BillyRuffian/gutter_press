@@ -1,4 +1,6 @@
-- - elsif blob.video?
+- if blob.image? && blob.representable?
+  = image_tag blob.representation(resize_to_limit: [800, 600]), style: "max-width: 100%; height: auto;"
+- elsif blob.video?
   %figure{style: "position: relative; margin: 0;", data: {controller: "ios-video"}}
     %video{controls: "controls", playsinline: "playsinline", "webkit-playsinline": "webkit-playsinline", preload: "metadata", style: "max-width: 100%; height: auto; border-radius: 8px; display: block; background-color: #000;"}
       %source{src: rails_blob_url(blob), type: blob.content_type}
@@ -8,19 +10,7 @@
         %source{src: rails_blob_url(blob), type: "video/webm"}
       - if blob.content_type.include?('ogg')
         %source{src: rails_blob_url(blob), type: "video/ogg"}
-      Your browser does not support the video tag.ge? && blob.representable?
-  = image_tag blob.representation(resize_to_limit: [800, 600]), style: "max-width: 100%; height: auto;"
-- elsif blob.video?
-  %figure{style: "position: relative; margin: 0;", data: {controller: "ios-video"}}
-    %video{style: "max-width: 100%; height: auto; border-radius: 8px; display: block;"}
-    %source{src: rails_blob_url(blob), type: blob.content_type}
-    - if blob.content_type.include?('mp4')
-      %source{src: rails_blob_url(blob), type: "video/mp4"}
-    - if blob.content_type.include?('webm')
-      %source{src: rails_blob_url(blob), type: "video/webm"}
-    - if blob.content_type.include?('ogg')
-      %source{src: rails_blob_url(blob), type: "video/ogg"}
-    Your browser does not support the video tag.
+      Your browser does not support the video tag.
 - else
   = link_to rails_blob_url(blob), target: "_blank", class: "btn btn-outline-primary" do
     %i.bi.bi-download.me-2
