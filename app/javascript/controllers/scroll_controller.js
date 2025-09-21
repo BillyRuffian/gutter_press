@@ -48,32 +48,14 @@ export default class extends Controller {
   }
 
   preventLayoutShifts() {
-    // Find hero sections that might cause layout shifts
-    const heroSections = document.querySelectorAll('.hero-section')
-
-    heroSections.forEach(hero => {
-      const img = hero.querySelector('img')
-      if (img && !img.complete) {
-        // Set minimum height to prevent layout shift
-        hero.style.minHeight = '60vh'
-
-        // Remove min-height once image loads
-        img.addEventListener('load', () => {
-          hero.style.minHeight = ''
-        }, { once: true })
-
-        // Handle load error
-        img.addEventListener('error', () => {
-          hero.style.minHeight = ''
-        }, { once: true })
-      }
-    })
-
-    // Handle other potentially shifting elements
-    const images = document.querySelectorAll('img:not([width]):not([height])')
+    // For hero sections, let's not interfere with their layout at all
+    // The scroll jumping was the main issue, which we've fixed with scrollToTop()
+    
+    // Only handle non-hero images that might cause layout shifts
+    const images = document.querySelectorAll('img:not([width]):not([height]):not(.hero-bg)')
     images.forEach(img => {
       if (!img.complete) {
-        // Add loading class to prevent shifts
+        // Add loading class to prevent shifts for regular images
         img.classList.add('loading-image')
 
         img.addEventListener('load', () => {
