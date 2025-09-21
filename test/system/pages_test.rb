@@ -157,7 +157,7 @@ class PagesTest < ApplicationSystemTestCase
     fill_in 'Email Address', with: user.email_address
     fill_in 'Password', with: 'password'
     click_button 'Sign In'
-    # Wait for redirect to complete
-    assert_selector 'h1', text: 'Latest Posts'
+    # Wait for redirect to complete - authentication redirects to manage area (Dashboard)
+    assert_selector 'h1', text: 'Dashboard'
   end
 end

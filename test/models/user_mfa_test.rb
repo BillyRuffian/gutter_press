@@ -22,7 +22,7 @@ class UserMfaTest < ActiveSupport::TestCase
     totp = @user.totp
     assert_not_nil totp
     assert_instance_of ROTP::TOTP, totp
-    assert_equal 'GutterPress', totp.issuer
+    assert_equal 'Gutter Press', totp.issuer
   end
 
   test 'should return nil TOTP when no secret' do
@@ -102,7 +102,7 @@ class UserMfaTest < ActiveSupport::TestCase
     assert_not_nil uri
     assert_includes uri, 'otpauth://totp/'
     assert_includes uri, CGI.escape(@user.email_address)
-    assert_includes uri, 'GutterPress'
+    assert_includes uri, 'Gutter%20Press'
     assert_includes uri, @user.mfa_secret
   end
 

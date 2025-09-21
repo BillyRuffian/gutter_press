@@ -132,7 +132,7 @@
             .mb-3.text-center
               = image_tag SiteSetting.hero_image.variant(resize_to_fill: [200, 120]), class: "img-thumbnail", style: "max-width: 100%;"
             - if SiteSetting.hero_image_attribution.present?
-              %p.mb-0.small.text-muted.text-center= raw SiteSetting.hero_image_attribution
+              %p.mb-0.small.text-muted.text-center= sanitize SiteSetting.hero_image_attribution, tags: %w[a], attributes: %w[href target]
           - else
             %h6.text-muted.mb-2 Hero Image
             %p.mb-3.small.text-muted No image uploaded

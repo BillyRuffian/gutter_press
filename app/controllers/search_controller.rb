@@ -1,4 +1,5 @@
 class SearchController < ApplicationController
+  allow_unauthenticated_access only: :index
   def index
     @query = params[:q]
     @search_service = SearchService.new(@query).perform

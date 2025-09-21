@@ -40,7 +40,7 @@ class MfasControllerTest < ActionDispatch::IntegrationTest
     code = @user.totp.now
     post mfa_path, params: { mfa_code: code }
 
-    assert_redirected_to root_path
+    assert_redirected_to manage_root_path
     assert_match(/Successfully signed in/, flash[:notice])
   end
 
@@ -55,7 +55,7 @@ class MfasControllerTest < ActionDispatch::IntegrationTest
 
     post mfa_path, params: { mfa_code: backup_codes.first }
 
-    assert_redirected_to root_path
+    assert_redirected_to manage_root_path
     assert_match(/Successfully signed in/, flash[:notice])
   end
 

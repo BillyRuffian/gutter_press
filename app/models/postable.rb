@@ -1,4 +1,6 @@
 class Postable < ApplicationRecord
+  VALID_COVER_IMAGE_TYPES = [ 'image/jpeg', 'image/png', 'image/webp' ].freeze
+
   belongs_to :user
 
   validates :title, presence: true
@@ -80,6 +82,7 @@ class Postable < ApplicationRecord
 
   def cover_image_thumbnail
     return unless has_cover_image?
+    return unless cover_image.content_type.in?(VALID_COVER_IMAGE_TYPES)
 
     # Try to get existing processed variant first
     thumbnail_variant = cover_image.variant(resize_to_fill: [ 300, 200 ])
@@ -96,6 +99,7 @@ class Postable < ApplicationRecord
 
   def cover_image_hero
     return unless has_cover_image?
+    return unless cover_image.content_type.in?(VALID_COVER_IMAGE_TYPES)
 
     # Try to get existing processed variant first
     hero_variant = cover_image.variant(resize_to_limit: [ 1920, 1080 ])
@@ -168,7 +172,7 @@ class Postable < ApplicationRecord
   def cover_image_format
     return unless cover_image.attached?
 
-    unless cover_image.content_type.in?([ 'image/jpeg', 'image/png', 'image/webp' ])
+    unless cover_image.content_type.in?(VALID_COVER_IMAGE_TYPES)
       errors.add(:cover_image, 'must be a JPEG, PNG, or WebP image')
     end
 

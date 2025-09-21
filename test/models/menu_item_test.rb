@@ -90,6 +90,7 @@ class MenuItemTest < ActiveSupport::TestCase
     end
 
     cache_spy.verify
+    assert true # Explicit assertion to satisfy test runner
   end
 
   test 'should get label from page title' do

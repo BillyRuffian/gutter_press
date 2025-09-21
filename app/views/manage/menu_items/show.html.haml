@@ -15,7 +15,11 @@
           
           %dt.col-sm-3 Page URL:
           %dd.col-sm-9
-            = link_to @menu_item.url, @menu_item.url, target: '_blank'
+            - safe_url = @menu_item.url
+            - if safe_url&.start_with?('/')
+              = link_to safe_url, safe_url, target: '_blank'
+            - else
+              %span.text-muted Invalid URL
             
           %dt.col-sm-3 Position:
           %dd.col-sm-9= @menu_item.position

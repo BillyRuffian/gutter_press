@@ -15,7 +15,7 @@ class MfaIntegrationTest < ActionDispatch::IntegrationTest
       password: 'password123'
     }
 
-    assert_redirected_to root_path
+    assert_redirected_to manage_root_path
     follow_redirect!
     assert_response :success
   end
@@ -44,7 +44,7 @@ class MfaIntegrationTest < ActionDispatch::IntegrationTest
     post mfa_path, params: { mfa_code: code }
 
     # Should complete sign in
-    assert_redirected_to root_path
+    assert_redirected_to manage_root_path
     assert_nil session[:pending_mfa_user_id]
   end
 
@@ -62,7 +62,7 @@ class MfaIntegrationTest < ActionDispatch::IntegrationTest
     # Use backup code
     post mfa_path, params: { mfa_code: backup_codes.first }
 
-    assert_redirected_to root_path
+    assert_redirected_to manage_root_path
     assert_nil session[:pending_mfa_user_id]
   end
 

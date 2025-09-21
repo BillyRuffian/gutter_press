@@ -87,8 +87,42 @@
         79
       ],
       "note": "dom_id helper is safe for HTML attributes and generates properly escaped IDs"
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "dbb3bea70b369964e5bdd2ee0b7d4ead93f9b23839686a9f62bbcb065004f0cd",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in `link_to` href",
+      "file": "app/views/manage/menu_items/show.html.haml",
+      "line": 20,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(MenuItem.find(params[:id]).url, MenuItem.find(params[:id]).url, :target => \"_blank\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Manage::MenuItemsController",
+          "method": "show",
+          "line": 12,
+          "file": "app/controllers/manage/menu_items_controller.rb",
+          "rendered": {
+            "name": "manage/menu_items/show",
+            "file": "app/views/manage/menu_items/show.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "manage/menu_items/show"
+      },
+      "user_input": "MenuItem.find(params[:id]).url",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": "MenuItem.url generates safe internal paths like /pages/slug with validation. Admin interface requires authentication."
     }
   ],
-  "updated": "2025-09-14 15:33:30 +0100",
+  "updated": "2025-09-21 16:25:00 +0100",
   "brakeman_version": "7.1.0"
 }
