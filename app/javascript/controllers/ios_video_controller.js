@@ -4,137 +4,74 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["video"]
-
   connect() {
-    this.videoTargets.forEach(video => {
-      this.setupiOSCompatibility(video)
-    })
+    const video = this.element.querySelector('video')
+    if (video) {
+      this.setupiPhoneVideoCompatibility(video)
+    }
   }
 
-  setupiOSCompatibility(video) {
-    // Ensure playsinline is set for iOS
+  setupiPhoneVideoCompatibility(video) {
+    // Critical iPhone video attributes - must be set programmatically
     video.setAttribute('playsinline', 'true')
     video.setAttribute('webkit-playsinline', 'true')
+    video.setAttribute('controls', 'controls')
+    video.setAttribute('preload', 'metadata')
 
-    // Handle iOS autoplay restrictions
-    if (this.isIOS()) {
-      this.setupiOSPlayback(video)
+    // iPhone-specific styling
+    video.style.width = '100%'
+    video.style.height = 'auto'
+    video.style.display = 'block'
+    video.style.outline = 'none'
+
+    if (this.isIPhone()) {
+      this.applyiPhoneSpecificFixes(video)
     }
-
-    // Add error handling for iOS video loading issues
-    video.addEventListener('error', this.handleVideoError.bind(this))
-
-    // Handle load events to ensure proper iOS rendering
-    video.addEventListener('loadedmetadata', this.handleVideoLoaded.bind(this))
-
-    // iOS sometimes needs a manual trigger to show controls properly
-    video.addEventListener('canplay', () => {
-      if (this.isIOS() && !video.controls) {
-        video.controls = true
-      }
-    })
   }
 
-  setupiOSPlayback(video) {
-    // iOS requires user interaction for video to play
-    // Add a play button overlay for better UX
-    const playButton = this.createPlayButton()
-
-    // Insert play button before video
-    video.parentNode.insertBefore(playButton, video)
-
-    // Hide native poster and show our custom overlay
+  applyiPhoneSpecificFixes(video) {
+    // iPhone Safari requires specific handling
     video.addEventListener('loadstart', () => {
-      if (video.poster) {
-        playButton.style.backgroundImage = `url(${video.poster})`
+      // Force iPhone to show video properly
+      video.style.backgroundColor = '#000'
+      video.style.minHeight = '200px'
+    })
+
+    video.addEventListener('loadedmetadata', () => {
+      // Ensure proper iPhone video rendering
+      if (video.videoWidth > 0 && video.videoHeight > 0) {
+        video.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`
+        video.style.minHeight = 'auto'
       }
     })
 
-    // Handle play button click
-    playButton.addEventListener('click', (e) => {
-      e.preventDefault()
-      video.play().then(() => {
-        playButton.style.display = 'none'
-        video.controls = true
-      }).catch(error => {
-        console.warn('iOS video playback failed:', error)
-      })
+    video.addEventListener('canplay', () => {
+      // Final iPhone compatibility check
+      video.style.visibility = 'visible'
+      video.style.opacity = '1'
     })
 
-    // Hide play button when video plays
-    video.addEventListener('play', () => {
-      playButton.style.display = 'none'
+    // iPhone video error recovery
+    video.addEventListener('error', (e) => {
+      console.warn('iPhone video error:', e)
+      if (video.error) {
+        console.warn('Error code:', video.error.code, 'Message:', video.error.message)
+        // Try to recover by reloading
+        setTimeout(() => {
+          video.load()
+        }, 1000)
+      }
     })
 
-    // Show play button when video ends or is paused
-    video.addEventListener('ended', () => {
-      playButton.style.display = 'flex'
+    // Ensure iPhone shows controls properly
+    video.addEventListener('click', () => {
+      if (!video.controls) {
+        video.setAttribute('controls', 'controls')
+      }
     })
   }
 
-  createPlayButton() {
-    const button = document.createElement('div')
-    button.className = 'ios-video-play-button'
-    button.innerHTML = `
-      <svg width="50" height="50" viewBox="0 0 50 50" fill="white">
-        <circle cx="25" cy="25" r="25" fill="rgba(0,0,0,0.7)"/>
-        <polygon points="20,15 20,35 35,25" fill="white"/>
-      </svg>
-    `
-
-    // Style the play button
-    Object.assign(button.style, {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      cursor: 'pointer',
-      zIndex: '10',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: '8px',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      width: '100%',
-      height: '100%',
-      minHeight: '200px'
-    })
-
-    return button
-  }
-
-  handleVideoError(event) {
-    const video = event.target
-    console.error('Video error on iOS:', {
-      error: video.error,
-      src: video.currentSrc,
-      networkState: video.networkState,
-      readyState: video.readyState
-    })
-
-    // Try to reload the video on iOS
-    if (this.isIOS() && video.error && video.error.code === 4) {
-      setTimeout(() => {
-        video.load()
-      }, 1000)
-    }
-  }
-
-  handleVideoLoaded(event) {
-    const video = event.target
-
-    // Ensure iOS shows the video properly
-    if (this.isIOS()) {
-      // Force a repaint on iOS
-      video.style.display = 'none'
-      video.offsetHeight // Trigger reflow
-      video.style.display = 'block'
-    }
-  }
-
-  isIOS() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+  isIPhone() {
+    return /iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
   }
 }

@@ -1,7 +1,17 @@
-- if attachable.is_a?(ActiveStorage::Blob)
+-  - if attachable.video?
+    %figure.attachment.attachment--preview.attachment--video{style: "position: relative;", data: {controller: "ios-video"}}
+      %video{controls: "controls", playsinline: "playsinline", "webkit-playsinline": "webkit-playsinline", preload: "metadata", style: "max-width: 100%; height: auto; border-radius: 8px; display: block; background-color: #000;"}
+        %source{src: url_for(attachable), type: attachable.content_type}
+        - if attachable.content_type.include?('mp4')
+          %source{src: url_for(attachable), type: "video/mp4"}
+        - if attachable.content_type.include?('webm')
+          %source{src: url_for(attachable), type: "video/webm"}
+        - if attachable.content_type.include?('ogg')
+          %source{src: url_for(attachable), type: "video/ogg"}
+        Your browser does not support the video tag.ble.is_a?(ActiveStorage::Blob)
   - if attachable.video?
-    %figure.attachment.attachment--preview.attachment--video{style: "position: relative;", "data-controller" => "ios-video"}
-      %video{controls: true, preload: "metadata", playsinline: true, "webkit-playsinline": true, muted: false, style: "max-width: 100%; height: auto; border-radius: 8px;", "data-ios-video-target" => "video"}
+    %figure.attachment.attachment--preview.attachment--video{style: "position: relative;", data: {controller: "ios-video"}}
+      %video{style: "max-width: 100%; height: auto; border-radius: 8px; display: block;"}
         %source{src: url_for(attachable), type: attachable.content_type}
         - if attachable.content_type.include?('mp4')
           %source{src: url_for(attachable), type: "video/mp4"}
