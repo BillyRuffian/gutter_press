@@ -1,4 +1,13 @@
-- if blob.representable?
+- - elif blob.video?
+  %video{controls: true, preload: "metadata", playsinline: true, "webkit-playsinline": true, muted: false, style: "max-width: 100%; height: auto; border-radius: 8px;"}
+    %source{src: rails_blob_url(blob), type: blob.content_type}
+    - if blob.content_type.include?('mp4')
+      %source{src: rails_blob_url(blob), type: "video/mp4"}
+    - if blob.content_type.include?('webm')
+      %source{src: rails_blob_url(blob), type: "video/webm"}
+    - if blob.content_type.include?('ogg')
+      %source{src: rails_blob_url(blob), type: "video/ogg"}
+    Your browser does not support the video tag.lob.representable?
   = image_tag blob.representation(resize_to_limit: [800, 600]), style: "max-width: 100%; height: auto;"
 - elsif blob.video?
   %video{controls: true, preload: "metadata", style: "max-width: 100%; height: auto; border-radius: 8px;"}

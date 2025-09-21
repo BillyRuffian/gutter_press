@@ -191,6 +191,42 @@ ul.lexxy-prompt-menu {
       height: auto;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+      // iPhone/iOS specific optimizations
+      -webkit-playsinline: true;
+      -webkit-appearance: none;
+      appearance: none;
+
+      // Prevent iOS from showing full screen controls overlay
+      &::-webkit-media-controls {
+        display: flex !important;
+      }
+
+      &::-webkit-media-controls-panel {
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 4px;
+      }
+
+      // Mobile responsive enhancements
+      @media (max-width: 768px) {
+        border-radius: 6px;
+        margin: 1rem 0;
+      }
+    }
+
+    // iOS play button overlay
+    .ios-video-play-button {
+      &:hover {
+        opacity: 0.9;
+      }
+
+      svg circle {
+        transition: all 0.2s ease;
+      }
+
+      &:hover svg circle {
+        fill: rgba(0, 0, 0, 0.8);
+      }
     }
   }
 
