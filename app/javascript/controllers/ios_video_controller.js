@@ -26,7 +26,7 @@ export default class extends Controller {
 
     // iPhone-specific styling
     video.style.width = '100%'
-    video.style.height = 'auto' 
+    video.style.height = 'auto'
     video.style.display = 'block'
     video.style.outline = 'none'
 
@@ -54,7 +54,7 @@ export default class extends Controller {
       // Ensure video is visible and ready for iPhone
       video.style.visibility = 'visible'
       video.style.opacity = '1'
-      
+
       // iPhone sometimes needs a nudge to show controls
       if (!video.controls) {
         video.setAttribute('controls', 'controls')
@@ -74,7 +74,7 @@ export default class extends Controller {
       if (!video.controls) {
         video.setAttribute('controls', 'controls')
       }
-      
+
       // Try to play if video is paused (iPhone sometimes needs this)
       if (video.paused && video.readyState >= 3) {
         video.play().catch(() => {

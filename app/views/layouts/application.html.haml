@@ -18,7 +18,7 @@
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
     = stylesheet_link_tag "lexxy"
     = javascript_importmap_tags
-  %body
+  %body{"data-controller" => "scroll"}
     %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.shadow-sm
       .container
         = link_to site_name, root_path, class: "navbar-brand fw-bold"
