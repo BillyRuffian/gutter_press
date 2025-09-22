@@ -15,13 +15,24 @@ export default class extends Controller {
   }
 
   handleBeforeVisit(event) {
-    // Store current scroll position
-    sessionStorage.setItem('scrollPosition', window.pageYOffset.toString())
+    // Store current scroll position with the current URL
+    const currentUrl = window.location.href
+    sessionStorage.setItem(`scrollPosition_${currentUrl}`, window.pageYOffset.toString())
   }
 
   handlePageLoad(event) {
-    // Always scroll to top on new page loads (not back/forward navigation)
-    if (!event.detail?.isPreview) {
+    // Check if this is a back/forward navigation by looking for stored scroll position
+    const currentUrl = window.location.href
+    const storedPosition = sessionStorage.getItem(`scrollPosition_${currentUrl}`)
+    
+    if (storedPosition && !event.detail?.isPreview) {
+      // This is likely a back navigation, restore scroll position
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(() => {
+        window.scrollTo(0, parseInt(storedPosition))
+      })
+    } else if (!event.detail?.isPreview) {
+      // This is a new page visit, scroll to top
       this.scrollToTop()
     }
 
@@ -30,8 +41,26 @@ export default class extends Controller {
   }
 
   handleBeforeCache(event) {
-    // Clean up any scroll-related state before caching
-    sessionStorage.removeItem('scrollPosition')
+    // Keep scroll position in storage for potential back navigation
+    // Clean up old scroll positions to prevent memory leaks (keep last 10)
+    this.cleanupOldScrollPositions()
+  }
+
+  cleanupOldScrollPositions() {
+    const scrollKeys = []
+    for (let i = 0; i < sessionStorage.length; i++) {
+      const key = sessionStorage.key(i)
+      if (key && key.startsWith('scrollPosition_')) {
+        scrollKeys.push(key)
+      }
+    }
+    
+    // Remove oldest entries if we have more than 10
+    if (scrollKeys.length > 10) {
+      scrollKeys.slice(0, scrollKeys.length - 10).forEach(key => {
+        sessionStorage.removeItem(key)
+      })
+    }
   }
 
   scrollToTop() {
