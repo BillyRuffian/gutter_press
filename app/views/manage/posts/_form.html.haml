@@ -77,15 +77,32 @@
               %i.bi.bi-image.me-2
               Cover Image
           .card-body.pt-3
-            - if post.has_cover_image?
-              - thumbnail = post.cover_image_thumbnail
-              - if thumbnail
-                .mb-3
-                  = image_tag thumbnail, class: "img-fluid rounded", alt: "Cover image preview"
-                  .mt-2
-                    = form.label :cover_image, "Replace cover image", class: "form-label small text-muted mb-2"
-              - else
-                = form.label :cover_image, "Replace cover image", class: "form-label small text-muted mb-2"
+            - if post.has_cover_image? && post.persisted?
+              - begin
+                - thumbnail = post.cover_image_thumbnail
+                - if thumbnail
+                  .mb-3
+                    = image_tag thumbnail, class: "img-fluid rounded", alt: "Cover image preview"
+                    .mt-2
+                      = form.label :cover_image, "Replace cover image", class: "form-label small text-muted mb-2"
+                - else
+                  / Thumbnail is still processing
+                  .mb-3.p-3.bg-light.rounded.text-center
+                    %i.bi.bi-hourglass-split.text-muted
+                    %br
+                    %small.text-muted Cover image is processing...
+                  = form.label :cover_image, "Replace cover image", class: "form-label small text-muted mb-2"
+              - rescue ArgumentError => e
+                - if e.message.include?("Cannot get a signed_id")
+                  .mb-3.p-3.bg-warning.bg-opacity-10.rounded.text-center
+                    %i.bi.bi-exclamation-triangle.text-warning
+                    %br
+                    %small.text-muted Cover image is still processing, please wait...
+                  = form.label :cover_image, "Replace cover image", class: "form-label small text-muted mb-2"
+                - else
+                  - raise e
+              - rescue => e
+                = form.label :cover_image, "Replace cover image (unavailable)", class: "form-label small text-muted mb-2"
             - else
               = form.label :cover_image, "Upload cover image", class: "form-label small text-muted mb-2"
             

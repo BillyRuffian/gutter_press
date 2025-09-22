@@ -121,40 +121,68 @@ class Postable < ApplicationRecord
     return unless has_cover_image?
     return unless cover_image.content_type.in?(VALID_COVER_IMAGE_TYPES)
 
-    # Safety check: ensure the record is persisted
+    # Safety check: ensure the record is persisted and attachment is properly saved
     return unless persisted?
+    return unless cover_image.attachment&.persisted?
+    
+    begin
+      # Try to get existing processed variant first
+      thumbnail_variant = cover_image.variant(resize_to_fill: [ 300, 200 ])
 
-    # Try to get existing processed variant first
-    thumbnail_variant = cover_image.variant(resize_to_fill: [ 300, 200 ])
+      # Check if variant is already processed
+      if variant_processed?(thumbnail_variant)
+        return thumbnail_variant
+      end
 
-    # Check if variant is already processed
-    return thumbnail_variant if variant_processed?(thumbnail_variant)
+      # Enqueue background job to process variants if not already processing
+      ensure_variants_processing
 
-    # Enqueue background job to process variants if not already processing
-    ensure_variants_processing
-
-    # Return the variant (will be processed on first access if not done in background)
-    thumbnail_variant
+      # Only return the variant if it's been processed, otherwise return nil
+      # This prevents signed_id errors when the job is still processing
+      return nil
+    rescue ArgumentError => e
+      # Handle signed_id errors gracefully
+      if e.message.include?("Cannot get a signed_id")
+        Rails.logger.warn "Cannot generate signed_id for cover_image_thumbnail on #{self.class.name}##{id}: #{e.message}"
+        return nil
+      else
+        raise e
+      end
+    end
   end
 
   def cover_image_hero
     return unless has_cover_image?
     return unless cover_image.content_type.in?(VALID_COVER_IMAGE_TYPES)
 
-    # Safety check: ensure the record is persisted
+    # Safety check: ensure the record is persisted and attachment is properly saved
     return unless persisted?
+    return unless cover_image.attachment&.persisted?
+    
+    begin
+      # Try to get existing processed variant first
+      hero_variant = cover_image.variant(resize_to_limit: [ 1920, 1080 ])
 
-    # Try to get existing processed variant first
-    hero_variant = cover_image.variant(resize_to_limit: [ 1920, 1080 ])
+      # Check if variant is already processed
+      if variant_processed?(hero_variant)
+        return hero_variant
+      end
 
-    # Check if variant is already processed
-    return hero_variant if variant_processed?(hero_variant)
+      # Enqueue background job to process variants if not already processing
+      ensure_variants_processing
 
-    # Enqueue background job to process variants if not already processing
-    ensure_variants_processing
-
-    # Return the variant (will be processed on first access if not done in background)
-    hero_variant
+      # Only return the variant if it's been processed, otherwise return nil
+      # This prevents signed_id errors when the job is still processing
+      return nil
+    rescue ArgumentError => e
+      # Handle signed_id errors gracefully
+      if e.message.include?("Cannot get a signed_id")
+        Rails.logger.warn "Cannot generate signed_id for cover_image_hero on #{self.class.name}##{id}: #{e.message}"
+        return nil
+      else
+        raise e
+      end
+    end
   end
 
   private
