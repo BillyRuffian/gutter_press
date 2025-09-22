@@ -39,10 +39,10 @@ class PostableCoverImageTest < ActiveSupport::TestCase
       filename: 'test.jpg',
       content_type: 'image/jpeg'
     )
-    
+
     # Mock the variant_processed? method to return true
     @post.define_singleton_method(:variant_processed?) { |_| true }
-    
+
     assert_not_nil @post.cover_image_thumbnail
   end
 
@@ -52,10 +52,10 @@ class PostableCoverImageTest < ActiveSupport::TestCase
       filename: 'test.jpg',
       content_type: 'image/jpeg'
     )
-    
+
     # Mock the variant_processed? method to return true
     @post.define_singleton_method(:variant_processed?) { |_| true }
-    
+
     assert_not_nil @post.cover_image_hero
   end
 
@@ -141,10 +141,10 @@ class PostableCoverImageTest < ActiveSupport::TestCase
     )
 
     assert page.has_cover_image?
-    
+
     # Mock the variant_processed? method to return true
     page.define_singleton_method(:variant_processed?) { |_| true }
-    
+
     assert_not_nil page.cover_image_thumbnail
     assert_not_nil page.cover_image_hero
   end

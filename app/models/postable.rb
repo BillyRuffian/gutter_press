@@ -124,7 +124,7 @@ class Postable < ApplicationRecord
     # Safety check: ensure the record is persisted and attachment is properly saved
     return unless persisted?
     return unless cover_image.attachment&.persisted?
-    
+
     begin
       # Try to get existing processed variant first
       thumbnail_variant = cover_image.variant(resize_to_fill: [ 300, 200 ])
@@ -139,12 +139,12 @@ class Postable < ApplicationRecord
 
       # Only return the variant if it's been processed, otherwise return nil
       # This prevents signed_id errors when the job is still processing
-      return nil
+      nil
     rescue ArgumentError => e
       # Handle signed_id errors gracefully
-      if e.message.include?("Cannot get a signed_id")
+      if e.message.include?('Cannot get a signed_id')
         Rails.logger.warn "Cannot generate signed_id for cover_image_thumbnail on #{self.class.name}##{id}: #{e.message}"
-        return nil
+        nil
       else
         raise e
       end
@@ -158,7 +158,7 @@ class Postable < ApplicationRecord
     # Safety check: ensure the record is persisted and attachment is properly saved
     return unless persisted?
     return unless cover_image.attachment&.persisted?
-    
+
     begin
       # Try to get existing processed variant first
       hero_variant = cover_image.variant(resize_to_limit: [ 1920, 1080 ])
@@ -173,12 +173,12 @@ class Postable < ApplicationRecord
 
       # Only return the variant if it's been processed, otherwise return nil
       # This prevents signed_id errors when the job is still processing
-      return nil
+      nil
     rescue ArgumentError => e
       # Handle signed_id errors gracefully
-      if e.message.include?("Cannot get a signed_id")
+      if e.message.include?('Cannot get a signed_id')
         Rails.logger.warn "Cannot generate signed_id for cover_image_hero on #{self.class.name}##{id}: #{e.message}"
-        return nil
+        nil
       else
         raise e
       end
