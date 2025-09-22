@@ -8,4 +8,14 @@ class ApplicationController < ActionController::Base
 
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
+
+  private
+
+  # Extract page parameter from referrer URL if coming from specified path
+  def extract_page_from_referrer(path)
+    return nil unless request.referrer&.include?(path)
+
+    referrer_params = Rack::Utils.parse_nested_query(URI.parse(request.referrer).query || '')
+    referrer_params['page'] if referrer_params['page'].present?
+  end
 end

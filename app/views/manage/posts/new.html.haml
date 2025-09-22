@@ -3,4 +3,4 @@
 = render "form", post: @post
 %br/
 %div
-  = link_to "Back to posts", manage_posts_path
+  = link_to "Back to posts", manage_posts_path(@back_to_posts_page ? { page: @back_to_posts_page } : {})

@@ -7,6 +7,6 @@
     .col-lg-8.mx-auto.px-4
       %hr.my-4
       .text-center
-        = link_to posts_path, class: 'btn btn-primary' do
+        = link_to posts_path(@back_to_posts_page ? { page: @back_to_posts_page } : {}), class: 'btn btn-primary' do
           %i.bi.bi-arrow-left.me-2
           Back to Posts

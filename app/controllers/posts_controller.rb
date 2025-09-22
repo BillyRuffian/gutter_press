@@ -13,6 +13,9 @@ class PostsController < ApplicationController
     if !@post.published? && !authenticated?
       raise ActiveRecord::RecordNotFound
     end
+
+    # Extract page parameter from referrer if coming from posts index
+    @back_to_posts_page = extract_page_from_referrer(posts_path)
   end
 
   private

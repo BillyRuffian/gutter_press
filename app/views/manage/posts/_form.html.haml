@@ -77,11 +77,15 @@
               %i.bi.bi-image.me-2
               Cover Image
           .card-body.pt-3
-            - if post.has_cover_image? && post.cover_image_thumbnail
-              .mb-3
-                = image_tag post.cover_image_thumbnail, class: "img-fluid rounded", alt: "Cover image preview"
-                .mt-2
-                  = form.label :cover_image, "Replace cover image", class: "form-label small text-muted mb-2"
+            - if post.has_cover_image?
+              - thumbnail = post.cover_image_thumbnail
+              - if thumbnail
+                .mb-3
+                  = image_tag thumbnail, class: "img-fluid rounded", alt: "Cover image preview"
+                  .mt-2
+                    = form.label :cover_image, "Replace cover image", class: "form-label small text-muted mb-2"
+              - else
+                = form.label :cover_image, "Replace cover image", class: "form-label small text-muted mb-2"
             - else
               = form.label :cover_image, "Upload cover image", class: "form-label small text-muted mb-2"
             

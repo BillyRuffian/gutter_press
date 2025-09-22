@@ -83,6 +83,8 @@ class Postable < ApplicationRecord
   end
 
   def cover_image_thumbnail_url(**options)
+    return unless persisted?
+
     variant = cover_image_thumbnail
     return unless variant
 
@@ -94,6 +96,8 @@ class Postable < ApplicationRecord
   end
 
   def cover_image_hero_url(**options)
+    return unless persisted?
+
     variant = cover_image_hero
     return unless variant
 
@@ -117,6 +121,9 @@ class Postable < ApplicationRecord
     return unless has_cover_image?
     return unless cover_image.content_type.in?(VALID_COVER_IMAGE_TYPES)
 
+    # Safety check: ensure the record is persisted
+    return unless persisted?
+
     # Try to get existing processed variant first
     thumbnail_variant = cover_image.variant(resize_to_fill: [ 300, 200 ])
 
@@ -133,6 +140,9 @@ class Postable < ApplicationRecord
   def cover_image_hero
     return unless has_cover_image?
     return unless cover_image.content_type.in?(VALID_COVER_IMAGE_TYPES)
+
+    # Safety check: ensure the record is persisted
+    return unless persisted?
 
     # Try to get existing processed variant first
     hero_variant = cover_image.variant(resize_to_limit: [ 1920, 1080 ])
@@ -160,6 +170,9 @@ class Postable < ApplicationRecord
   end
 
   def ensure_variants_processing
+    # Safety check: ensure the record is persisted
+    return unless persisted?
+
     # Use a cache key to prevent multiple job enqueues for the same attachment
     cache_key = "processing_variants_#{cover_image.blob.key}"
 

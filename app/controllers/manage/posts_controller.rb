@@ -15,9 +15,15 @@ class Manage::PostsController < ApplicationController
   def new
     @post = Post.new
     @post.published_at = Time.current
+    @back_to_posts_page = extract_page_from_referrer(manage_posts_path)
   end
 
   def show
+    @back_to_posts_page = extract_page_from_referrer(manage_posts_path)
+  end
+
+  def edit
+    @back_to_posts_page = extract_page_from_referrer(manage_posts_path)
   end
 
   def create
