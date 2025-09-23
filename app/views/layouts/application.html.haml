@@ -20,7 +20,7 @@
     = stylesheet_link_tag "lexxy"
     = javascript_importmap_tags
   %body{"data-controller" => "scroll"}
-    %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.shadow-sm
+    %nav.navbar.navbar-expand-lg.navbar-dark{class: content_for?(:hero_section) ? "bg-transparent position-absolute w-100" : "bg-dark", style: content_for?(:hero_section) ? "z-index: 1030;" : ""}
       .container
         = link_to site_name, root_path, class: "navbar-brand fw-bold"
         %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-bs-target" => "#navbarNav", "data-bs-toggle" => "collapse", :type => "button"}
@@ -42,7 +42,7 @@
 
     = yield(:hero_section)
     
-    %main{class: content_for?(:hero_section) ? "mt-0" : "container my-4"}
+    %main{class: content_for?(:hero_section) ? "mt-0" : "container", style: content_for?(:hero_section) ? "" : "margin-top: 6rem;"}
       - if content_for?(:hero_section)
         .container.mt-4
       - if notice

@@ -1,10 +1,89 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 
+/* Transparent navbar over hero images */
+.navbar.bg-transparent {
+  background: transparent !important;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  top: 0 !important;
+  margin: 0 !important;
+}
+
+/* Navbar without hero - match body background */
+.navbar.bg-dark:not(.bg-transparent) {
+  background: white !important;
+}
+
+.navbar.bg-dark:not(.bg-transparent) .navbar-brand {
+  color: #333 !important;
+}
+
+.navbar.bg-dark:not(.bg-transparent) .nav-link {
+  color: #666 !important;
+  font-weight: 500 !important;
+}
+
+.navbar.bg-dark:not(.bg-transparent) .nav-link:hover {
+  color: #333 !important;
+}
+
 /* Prevent horizontal scrolling on mobile */
 html,
 body {
   overflow-x: hidden;
+}
+
+/* Transparent navbar over hero images */
+.navbar.bg-transparent {
+  background: transparent !important;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  top: 0 !important;
+  margin: 0 !important;
+}
+
+.navbar.bg-transparent .container {
+  display: flex !important;
+  align-items: baseline !important;
+}
+
+.navbar.bg-transparent .navbar-brand {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.navbar.bg-transparent .navbar-collapse {
+  background: transparent;
+  border-radius: 8px;
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+
+.navbar.bg-transparent .navbar-nav {
+  margin-top: 4px !important;
+  align-items: baseline !important;
+}
+
+.navbar.bg-transparent .nav-link {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 1) !important;
+  font-weight: 500 !important;
+}
+
+.navbar.bg-transparent .nav-link:hover {
+  color: rgba(255, 255, 255, 1) !important;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.navbar.bg-transparent .navbar-toggler {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.navbar.bg-transparent .navbar-collapse {
+  background: transparent;
+  border-radius: 8px;
+  margin-top: 10px;
+  padding: 15px;
 }
 
 /* Global font styling with Mulish */
@@ -151,6 +230,12 @@ ul.lexxy-prompt-menu {
     /* Maintain consistent behavior on mobile */
     height: 110%;
     transform: translateY(-5%);
+  }
+
+  /* Make mobile navbar collapse more visible over hero */
+  .navbar.bg-transparent .navbar-collapse {
+    background: transparent;
+    backdrop-filter: blur(15px);
   }
 
   .hero-title {
