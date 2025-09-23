@@ -4,14 +4,10 @@
     %h1.display-6.fw-bold.mb-3= post.title
     - if post.excerpt.present?
       .alert.alert-info.mb-3
-        %strong Excerpt: 
+        %strong Excerpt:
         = post.excerpt
     .post-meta.text-muted.border-bottom.pb-3.mb-4
-      %i.bi.bi-calendar.me-2
-      = post.published_at.strftime('%B %d, %Y at %l:%M %p')
-      %span.mx-2 •
-      %i.bi.bi-person.me-2
-      = post.user.email_address
-  
+      = post.published_at.to_fs(:concise)
+
   .post-content.lh-lg.lexxy-content{"data-controller" => "syntax-highlight"}
     = post.content
