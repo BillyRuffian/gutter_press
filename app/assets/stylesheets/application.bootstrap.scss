@@ -99,7 +99,8 @@ ul.lexxy-prompt-menu {
   object-fit: cover;
   object-position: center center;
   will-change: transform;
-  display: block; /* Ensure no inline spacing */
+  display: block;
+  /* Ensure no inline spacing */
 }
 
 .hero-overlay {
@@ -142,7 +143,8 @@ ul.lexxy-prompt-menu {
   .hero-section {
     height: 50vh;
     min-height: 300px;
-    margin-bottom: 0; /* Ensure no extra spacing */
+    margin-bottom: 0;
+    /* Ensure no extra spacing */
   }
 
   .hero-image {
@@ -186,6 +188,14 @@ ul.lexxy-prompt-menu {
   figure {
     margin: 1.5rem auto;
     text-align: center;
+  }
+
+  code {
+    font-family: 'Sometype Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    font-size: 0.9em;
+    background-color: rgba(0, 0, 0, 0.04);
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
   }
 }
 
@@ -297,7 +307,8 @@ html {
 /* Hero image improvements - better centering and scaling */
 .hero-bg {
   object-fit: cover;
-  object-position: center center; /* Vertically and horizontally centered */
+  object-position: center center;
+  /* Vertically and horizontally centered */
   width: 100%;
   height: 100%;
 }
