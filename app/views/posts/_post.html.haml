@@ -12,15 +12,11 @@
               .col-lg-8.mx-auto
                 %h1.display-4.fw-bold.text-white.hero-title.mb-3= post.title
                 .post-meta.text-white-50.mb-0
-                  %i.bi.bi-calendar.me-2
-                  = post.published_at.strftime('%B %d, %Y at %l:%M %p')
-                  %span.mx-2 •
-                  %i.bi.bi-person.me-2
-                  = post.user.email_address
+                  = post.published_at.to_fs(:concise)
         - if post.cover_image_attribution.present?
           .attribution.position-absolute.bottom-0.end-0.m-3.px-2.py-1.bg-dark.bg-opacity-75.text-white.small.rounded
             = raw post.cover_image_attribution
-  
+
   .container-fluid.px-0
     .row
       .col-lg-8.mx-auto.px-4
@@ -29,14 +25,10 @@
             %h1.display-6.fw-bold.mb-3.text-dark= post.title
             - if post.excerpt.present?
               .alert.alert-info.mb-3
-                %strong Excerpt: 
+                %strong Excerpt:
                 = post.excerpt
             .post-meta.text-muted.border-bottom.pb-3.mb-4
-              %i.bi.bi-calendar.me-2
-              = post.published_at.strftime('%B %d, %Y at %l:%M %p')
-              %span.mx-2 •
-              %i.bi.bi-person.me-2
-              = post.user.email_address
-        
+              = post.published_at.to_fs(:concise)
+
         .post-content.lh-lg.lexxy-content.mt-4{"data-controller" => "syntax-highlight"}
           = post.content
