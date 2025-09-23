@@ -37,8 +37,8 @@ A modern, slug-based blogging platform built with Rails 8.1 featuring rich text 
 - CSRF protection and secure headers
 
 ### 🧪 **Comprehensive Testing**
-- 76 tests with 228 assertions
-- Unit, integration, and system tests
+- 237 tests with 673 assertions
+- Unit and integration tests
 - 100% passing test suite
 - Automated CI/CD ready
 
@@ -121,9 +121,6 @@ The `#` prompt feature allows you to easily link between content:
 ```bash
 # All tests
 bin/rails test
-
-# System tests only
-bin/rails test:system
 
 # Specific test file
 bin/rails test test/models/postable_test.rb
@@ -341,7 +338,7 @@ test/
 │   └── ...
 ├── models/              # Model unit tests
 ├── integration/         # Integration tests
-├── system/             # End-to-end browser tests
+
 ├── fixtures/           # Test data
 └── test_helper.rb      # Test configuration
 ```
@@ -350,7 +347,7 @@ test/
 
 - **`test/models/postable_test.rb`**: Slug generation and validation
 - **`test/controllers/manage/links_controller_test.rb`**: Internal linking API
-- **`test/system/pages_test.rb`**: End-to-end page management workflows
+
 
 ### Running Specific Tests
 
@@ -361,8 +358,7 @@ bin/rails test test/models/
 # Controller tests  
 bin/rails test test/controllers/
 
-# System tests
-bin/rails test test/system/
+
 
 # Single test
 bin/rails test test/models/postable_test.rb:25

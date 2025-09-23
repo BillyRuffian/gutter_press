@@ -21,53 +21,35 @@
     .col-lg-8.mx-auto.px-4
       - unless SiteSetting.hero_enabled? && SiteSetting.has_hero_image?
         .d-flex.justify-content-between.align-items-center.mb-4.mt-4
-          %h1.display-5.fw-bold Latest Posts
-          - if Current.user
-            = link_to new_manage_post_path, class: 'btn btn-primary' do
-              %i.bi.bi-plus-circle.me-2
-              New Post
+          %h1.display-5.fw-bold Latest
       - else
         .d-flex.justify-content-between.align-items-center.mb-4.mt-5
-          %h2.h3.fw-bold Latest Posts
-          - if Current.user
-            = link_to new_manage_post_path, class: 'btn btn-primary' do
-              %i.bi.bi-plus-circle.me-2
-              New Post
+          %h2.h3.fw-bold Latest
 
       - if @posts.any?
         .posts
           - @posts.each_with_index do |post, index|
             %article.py-4{class: (index > 0 ? 'border-top' : '')}
-              .row
+              .row.position-relative
                 - if post.has_cover_image?
                   .col-md-4.mb-3.mb-md-0
-                    = link_to post do
+                    = link_to post, class: 'stretched-link' do
                       = image_tag post.cover_image_thumbnail, class: "img-fluid rounded", alt: post.title
                   .col-md-8
                     %h2.h4.mb-3
-                      = link_to post.title, post, class: 'text-decoration-none text-dark'
-                    .text-muted.small.mb-3
-                      %i.bi.bi-calendar.me-2
-                      = post.published_at.strftime('%B %d, %Y')
-                      %span.mx-2 •
-                      %i.bi.bi-person.me-2
-                      = post.user.email_address
+                      = link_to post.title, post, class: 'text-decoration-none text-dark stretched-link'
                     %p.mb-3.lexxy-content{"data-controller" => "syntax-highlight"}
                       = post.display_excerpt
-                    = link_to 'Read more', post, class: 'btn btn-outline-primary btn-sm'
+                    .text-muted.small.mb-3
+                      = post.published_at.to_fs(:concise)
                 - else
                   .col-12
                     %h2.h4.mb-3
-                      = link_to post.title, post, class: 'text-decoration-none text-dark'
-                    .text-muted.small.mb-3
-                      %i.bi.bi-calendar.me-2
-                      = post.published_at.strftime('%B %d, %Y')
-                      %span.mx-2 •
-                      %i.bi.bi-person.me-2
-                      = post.user.email_address
+                      = link_to post.title, post, class: 'text-decoration-none text-dark stretched-link'
                     %p.mb-3.lexxy-content{"data-controller" => "syntax-highlight"}
                       = post.display_excerpt
-                    = link_to 'Read more', post, class: 'btn btn-outline-primary btn-sm'
+                    .text-muted.small.mb-3
+                      = post.published_at.to_fs(:concise)
         
         - if @pagy.pages > 1
           .d-flex.justify-content-center.mt-5

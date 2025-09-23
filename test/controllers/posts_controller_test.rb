@@ -9,7 +9,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   test 'should get index' do
     get posts_url
     assert_response :success
-    assert_select 'h1', 'Latest Posts'
+    assert_select 'h1', 'Latest'
   end
 
   test 'should show only published posts on index' do
@@ -61,7 +61,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     get posts_url
     assert_response :success
     # Check that the page loads successfully (pagination may not show if only one page)
-    assert_select 'h1', 'Latest Posts'
+    assert_select 'h1', 'Latest'
   end
 
   test 'should show pagination when there are many posts' do
@@ -69,7 +69,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     # Verify pagination functionality is working by checking the page loads successfully
     # The exact count may vary based on other tests, but pagination should be working
-    assert_select 'h1', 'Latest Posts'
+    assert_select 'h1', 'Latest'
     assert_select 'article', minimum: 1
   end
 

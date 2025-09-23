@@ -23,5 +23,10 @@ module GutterPress
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Disable system test generators to prevent accidental creation
+    config.generators do |g|
+      g.system_tests false
+    end
   end
 end
