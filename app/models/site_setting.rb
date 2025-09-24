@@ -144,7 +144,18 @@ class SiteSetting < ApplicationRecord
   # Hero image helper methods (similar to postables)
   def self.hero_image_hero
     return unless has_hero_image?
-    hero_image.variant(resize_to_limit: [ 1920, 1080 ])
+
+    begin
+      hero_image.variant(resize_to_limit: [ 1920, 1080 ])
+    rescue ArgumentError => e
+      # Handle signed_id errors gracefully
+      if e.message.include?('Cannot get a signed_id')
+        Rails.logger.warn "Cannot generate signed_id for SiteSetting hero_image_hero: #{e.message}"
+        nil
+      else
+        raise e
+      end
+    end
   end
 
   # Clear cache after any database changes

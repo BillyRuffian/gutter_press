@@ -1,7 +1,7 @@
 - content_for :title, 'Posts'
 
 - content_for(:hero_section) do
-  - if SiteSetting.hero_enabled? && SiteSetting.has_hero_image?
+  - if SiteSetting.hero_enabled? && SiteSetting.has_hero_image? && SiteSetting.hero_image_hero
     .hero-section.position-relative{"data-controller": "parallax"}
       .hero-image
         = image_tag SiteSetting.hero_image_hero, class: "w-100 hero-bg", alt: SiteSetting.hero_title, "data-parallax-target": "image"

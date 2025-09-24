@@ -2,7 +2,7 @@
 %article{id: dom_id(post), class: 'post'}
   = render 'shared/draft_banner', item: post
   - content_for(:hero_section) do
-    - if post.has_cover_image?
+    - if post.has_cover_image? && post.cover_image_hero
       .hero-section.position-relative{"data-controller": "parallax"}
         .hero-image
           = image_tag post.cover_image_hero, class: "w-100 hero-bg", alt: post.title, "data-parallax-target": "image"
