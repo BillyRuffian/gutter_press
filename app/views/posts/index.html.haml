@@ -31,7 +31,7 @@
           - @posts.each_with_index do |post, index|
             %article.py-4{class: (index > 0 ? 'border-top' : '')}
               .row.position-relative
-                - if post.has_cover_image?
+                - if post.has_cover_image? && post.cover_image_thumbnail
                   .col-md-4.mb-3.mb-md-0
                     = link_to post, class: 'stretched-link' do
                       = image_tag post.cover_image_thumbnail, class: "img-fluid rounded", alt: post.title
