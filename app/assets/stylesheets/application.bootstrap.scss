@@ -275,6 +275,13 @@ ul.lexxy-prompt-menu {
     text-align: center;
   }
 
+  img {
+    display: block;
+    margin: 1.5rem auto;
+    max-width: 100%;
+    height: auto;
+  }
+
   code {
     font-family: 'Sometype Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
     font-size: 0.9em;
