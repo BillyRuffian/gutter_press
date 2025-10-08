@@ -25,9 +25,7 @@ proxy:
   ssl: true
   hosts: 
     - www.billy-ruffian.com
-    - billy-ruffian.com
     - www.billy-ruffian.co.uk
-    - billy-ruffian.co.uk
 
 # Credentials for your image host.
 registry:
