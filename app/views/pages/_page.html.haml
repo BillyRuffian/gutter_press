@@ -11,8 +11,6 @@
             .row
               .col-lg-8.mx-auto
                 %h1.display-4.fw-bold.text-white.hero-title.mb-3= page.title
-                .page-meta.text-white-50.mb-0
-                  = page.published_at.to_fs(:concise)
         - if page.cover_image_attribution.present?
           .attribution.position-absolute.bottom-0.end-0.m-3.px-2.py-1.bg-dark.bg-opacity-75.text-white.small.rounded
             = raw page.cover_image_attribution
@@ -27,8 +25,6 @@
               .alert.alert-info.mb-3
                 %strong Excerpt:
                 = page.excerpt
-            .page-meta.text-muted.border-bottom.pb-3.mb-4
-              = page.published_at.to_fs(:concise)
 
         .page-content.lh-lg.lexxy-content.mt-4{"data-controller" => "syntax-highlight"}
           = page.content
