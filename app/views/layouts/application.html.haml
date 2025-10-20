@@ -7,6 +7,8 @@
     %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
     %meta{:content => site_name, :name => "application-name"}/
     %meta{:content => "yes", :name => "mobile-web-app-capable"}/
+    %meta{:content => "#ffffff", :name => "theme-color", media: "(prefers-color-scheme: light)"}/
+    %meta{:content => "#1a1a1a", :name => "theme-color", media: "(prefers-color-scheme: dark)"}/
     = csrf_meta_tags
     = csp_meta_tag
     = yield :head
@@ -19,7 +21,7 @@
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
     = stylesheet_link_tag "lexxy"
     = javascript_importmap_tags
-  %body{"data-controller" => "scroll"}
+  %body{"data-controller" => "scroll dark-mode"}
     %nav.navbar.navbar-expand-lg.navbar-dark{class: content_for?(:hero_section) ? "bg-transparent position-absolute w-100" : "bg-dark", style: content_for?(:hero_section) ? "z-index: 1030;" : ""}
       .container
         = link_to site_name, root_path, class: "navbar-brand fw-bold"
