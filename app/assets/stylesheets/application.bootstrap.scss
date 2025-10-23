@@ -77,7 +77,12 @@
   }
 
   /* Ensure headings are visible */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: var(--text-primary);
   }
 
@@ -87,18 +92,23 @@
   }
 
   /* Article and post content */
-  article, .post-content, .lexxy-content {
+  article,
+  .post-content,
+  .lexxy-content {
     color: var(--text-primary);
 
     /* Ensure nested elements inherit proper colors */
-    p, li, span, div {
+    p,
+    li,
+    span,
+    div {
       color: var(--text-primary);
     }
 
     /* Keep links distinct */
     a {
       color: var(--link-color);
-      
+
       &:hover {
         color: var(--link-hover-color);
       }
@@ -107,7 +117,7 @@
     /* But override text-dark links */
     a.text-dark {
       color: var(--link-color) !important;
-      
+
       &:hover {
         color: var(--link-hover-color) !important;
       }
@@ -117,7 +127,7 @@
   /* Post/page titles that are links */
   .text-decoration-none.text-dark {
     color: var(--text-primary) !important;
-    
+
     &:hover {
       color: var(--link-color) !important;
     }
@@ -154,7 +164,7 @@
   /* Links */
   a {
     color: var(--link-color);
-    
+
     &:hover {
       color: var(--link-hover-color);
     }
@@ -190,18 +200,17 @@
   }
 
   /* Small text elements */
-  small, .small {
+  small,
+  .small {
     color: var(--text-secondary);
   }
 
   /* Hero overlay adjustments for dark mode */
   .hero-overlay {
-    background: linear-gradient(
-      to bottom,
-      var(--hero-overlay-start) 0%,
-      var(--hero-overlay-mid) 70%,
-      var(--hero-overlay-end) 100%
-    );
+    background: linear-gradient(to bottom,
+        var(--hero-overlay-start) 0%,
+        var(--hero-overlay-mid) 70%,
+        var(--hero-overlay-end) 100%);
   }
 
   /* Code blocks */
@@ -220,7 +229,7 @@
   .btn-outline-secondary {
     color: var(--text-secondary);
     border-color: var(--border-color);
-    
+
     &:hover {
       background-color: var(--bg-secondary);
       color: var(--text-primary);
@@ -230,7 +239,7 @@
   .btn-outline-primary {
     color: var(--link-color);
     border-color: var(--link-color);
-    
+
     &:hover {
       background-color: var(--link-color);
       color: #ffffff;
@@ -256,7 +265,7 @@
     background-color: var(--bg-secondary);
     color: var(--text-primary);
     border-color: var(--border-color);
-    
+
     &:focus {
       background-color: var(--bg-secondary);
       color: var(--text-primary);
@@ -268,8 +277,9 @@
   .table {
     color: var(--text-primary);
     border-color: var(--border-color);
-    
-    th, td {
+
+    th,
+    td {
       border-color: var(--border-color);
     }
   }
@@ -287,7 +297,7 @@
   /* Attribution overlay */
   .attribution {
     background-color: rgba(0, 0, 0, 0.8);
-    
+
     a {
       color: var(--text-secondary) !important;
     }
@@ -356,8 +366,9 @@
 
   .dropdown-item {
     color: var(--text-primary);
-    
-    &:hover, &:focus {
+
+    &:hover,
+    &:focus {
       background-color: var(--bg-secondary);
       color: var(--text-primary);
     }
@@ -550,7 +561,7 @@
     --bs-table-active-color: var(--text-primary);
     --bs-table-hover-bg: rgba(255, 255, 255, 0.075);
     --bs-table-hover-color: var(--text-primary);
-    
+
     color: var(--text-primary);
     background-color: var(--bg-primary);
     border-color: var(--border-color);
@@ -605,7 +616,8 @@
     &.table-bordered {
       border-color: var(--border-color);
 
-      th, td {
+      th,
+      td {
         border-color: var(--border-color);
       }
     }
@@ -617,7 +629,8 @@
     background-color: var(--bg-secondary) !important;
     color: var(--text-primary) !important;
 
-    th, td {
+    th,
+    td {
       background-color: var(--bg-secondary) !important;
       color: var(--text-primary) !important;
     }
@@ -971,7 +984,13 @@
 
   /* Management-specific utility overrides */
   body.bg-light {
-    h1, h2, h3, h4, h5, h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       color: var(--text-primary);
     }
 
