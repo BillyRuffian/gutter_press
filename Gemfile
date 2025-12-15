@@ -71,7 +71,7 @@ gem 'lexxy', '~> 0.1.4'
 gem 'haml-rails', '~> 2.1'
 gem 'html2haml', '~> 2.3'
 
-gem 'pagy', '~> 9.0'
+gem 'pagy', '~> 43.2'
 
 # Multi-factor authentication
 gem 'rotp', '~> 6.3'      # TOTP generation and verification
