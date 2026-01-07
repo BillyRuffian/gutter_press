@@ -1087,7 +1087,7 @@
   /* ============================================
      LEXXY EDITOR DARK MODE
      ============================================ */
-  
+
   /* Override lexxy CSS variables for dark mode */
   :root {
     /* Invert the ink colors for dark backgrounds */
@@ -1235,6 +1235,7 @@
     }
 
     table {
+
       th,
       td {
         border-color: var(--border-color);
@@ -1465,15 +1466,16 @@ lexxy-toolbar {
 lexxy-editor {
   /* Reset Bootstrap's box-sizing if it affects the editor */
   box-sizing: border-box;
-  
+
   /* Ensure buttons inside editor don't get Bootstrap styling */
   button,
   summary {
     /* Reset Bootstrap button defaults */
     border: none;
-    
+
     &:focus {
-      box-shadow: none; /* Remove Bootstrap focus glow */
+      box-shadow: none;
+      /* Remove Bootstrap focus glow */
     }
   }
 
@@ -1481,7 +1483,7 @@ lexxy-editor {
   input[type="url"],
   input[type="text"] {
     box-shadow: none;
-    
+
     &:focus {
       box-shadow: none;
       border-color: var(--lexxy-color-ink-lighter);
@@ -1500,19 +1502,20 @@ lexxy-editor,
     --bs-table-striped-bg: transparent;
     --bs-table-hover-bg: transparent;
     --bs-table-active-bg: transparent;
-    
+
     /* Ensure lexxy styles take precedence */
     border-collapse: collapse;
     border-spacing: 0;
-    margin-bottom: 0; /* Bootstrap adds margin-bottom: 1rem */
+    margin-bottom: 0;
+    /* Bootstrap adds margin-bottom: 1rem */
     vertical-align: top;
     caption-side: bottom;
-    
+
     /* Let lexxy control width - use inline-size for proper sizing */
     width: unset;
     inline-size: calc(100% - 0.5ch);
     margin: 0.25ch;
-    
+
     /* Use canvas color for table background - adapts to dark mode */
     background-color: var(--lexxy-color-canvas, white);
 
@@ -1538,7 +1541,7 @@ lexxy-editor,
       vertical-align: top;
       box-shadow: none;
     }
-    
+
     /* Header cell class styling (for cells marked as headers via class) */
     .lexxy-content__table-cell--header {
       background-color: var(--lexxy-color-table-header-bg, #f8f9fa) !important;
@@ -1550,7 +1553,7 @@ lexxy-editor,
 /* Table handler buttons (the floating row/column controls) */
 .lexxy-table-handle-buttons {
   z-index: 10;
-  
+
   /* Reset Bootstrap button styles inside handler */
   button {
     all: unset;
@@ -1564,17 +1567,17 @@ lexxy-editor,
     background-color: transparent;
     border-radius: var(--lexxy-radius, 0.5ch);
     color: var(--lexxy-color-ink-inverted, white);
-    
+
     &:hover {
       background-color: var(--lexxy-color-ink-medium, #666);
     }
-    
+
     &:focus {
       box-shadow: none;
       outline: var(--lexxy-focus-ring-size, 2px) solid var(--lexxy-focus-ring-color);
     }
   }
-  
+
   /* More menu details button needs different aspect ratio */
   .lexxy-table-control__more-menu-details button {
     aspect-ratio: unset;
@@ -1586,17 +1589,18 @@ lexxy-table-dropdown {
   button {
     border-radius: 0;
     font-family: inherit;
-    
+
     &:focus {
       box-shadow: none;
     }
   }
-  
+
   /* Checkbox label alignment */
   label {
-    margin-bottom: 0; /* Bootstrap adds margin-bottom to labels */
+    margin-bottom: 0;
+    /* Bootstrap adds margin-bottom to labels */
   }
-  
+
   input[type="checkbox"] {
     margin: 0;
   }
@@ -1608,16 +1612,16 @@ lexxy-link-dropdown {
     /* Ensure buttons display inline properly */
     display: inline-flex;
     justify-content: center;
-    
+
     &:focus {
       box-shadow: none;
     }
   }
-  
+
   input[type="url"] {
     /* Reset Bootstrap form-control styles */
     box-shadow: none;
-    
+
     &:focus {
       box-shadow: none;
       outline: none;
@@ -1630,7 +1634,7 @@ lexxy-highlight-dropdown {
   button {
     /* Reset Bootstrap button defaults */
     border: none;
-    
+
     &:focus {
       box-shadow: none;
     }
@@ -1641,7 +1645,7 @@ lexxy-highlight-dropdown {
 .lexxy-code-language-picker {
   /* Reset Bootstrap select styles */
   box-shadow: none;
-  
+
   &:focus {
     box-shadow: none;
     outline: var(--lexxy-focus-ring-size, 2px) solid var(--lexxy-focus-ring-color);
@@ -1653,21 +1657,21 @@ lexxy-highlight-dropdown {
   /* Reset Bootstrap list styles */
   padding-left: 0 !important;
   margin-bottom: 0;
-  
+
   /* Reset Bootstrap list-group if applied */
   list-style: none;
-  
+
   li,
   .lexxy-prompt-menu__item {
     /* Reset Bootstrap list-group-item styles */
     border: none;
     background-color: transparent;
     padding: var(--lexxy-prompt-padding, 0.5ch);
-    
+
     &:hover {
       background-color: var(--lexxy-color-ink-lightest);
     }
-    
+
     &[aria-selected] {
       background-color: var(--lexxy-color-selected);
     }
@@ -1676,23 +1680,24 @@ lexxy-highlight-dropdown {
 
 /* Attachment styling fixes */
 .lexxy-content {
+
   .attachment,
   action-text-attachment {
     /* Reset Bootstrap figure styles */
     margin-bottom: 0;
-    
+
     /* Ensure images don't get Bootstrap's max-width: 100% applied wrongly */
     img {
       max-width: 100%;
       height: auto;
     }
   }
-  
+
   /* Caption textarea */
   .attachment__caption textarea {
     /* Reset Bootstrap form-control styles */
     box-shadow: none;
-    
+
     &:focus {
       box-shadow: none;
       outline: none;
@@ -1704,18 +1709,21 @@ lexxy-highlight-dropdown {
 .lexxy-content blockquote {
   /* Reset Bootstrap blockquote styles */
   margin-bottom: 0;
-  font-size: inherit; /* Bootstrap increases blockquote font-size */
+  font-size: inherit;
+  /* Bootstrap increases blockquote font-size */
 }
 
 /* Code block fixes */
 .lexxy-content {
+
   code,
   pre {
     /* Reset Bootstrap code/pre styles */
-    font-size: 0.9em; /* Bootstrap uses different size */
+    font-size: 0.9em;
+    /* Bootstrap uses different size */
     color: var(--lexxy-color-ink);
   }
-  
+
   pre {
     /* Bootstrap adds margin-bottom to pre */
     margin-bottom: 0;
@@ -1734,16 +1742,24 @@ lexxy-highlight-dropdown {
 
 /* List fixes - Bootstrap modifies ul/ol styles */
 .lexxy-content {
+
   ul,
   ol {
     /* Let lexxy control list styling */
-    padding-left: 2em; /* Reasonable default, lexxy uses default browser */
+    padding-left: 2em;
+    /* Reasonable default, lexxy uses default browser */
   }
 }
 
 /* Heading fixes - Bootstrap modifies heading margins */
 .lexxy-content {
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     /* Reset Bootstrap heading margins */
     margin-top: 0;
     margin-bottom: var(--lexxy-content-margin, 1rem);
