@@ -3,90 +3,36 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "55d357b0f4709935eadcaa1afd8cd034f1ca2444d329d9de64a1e72858accdb0",
+      "fingerprint": "c42f05d157997d03fef1a420348ebad21ab2afd8bf3d42ad80d824febf1de297",
       "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/manage/posts/_post.html.haml",
-      "line": 2,
+      "message": "Unescaped parameter value",
+      "file": "app/views/search/index.html.haml",
+      "line": 57,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "::Haml::AttributeBuilder.build_id(true, dom_id(Post.new(post_params)))",
+      "code": "@pagy.series_nav(:bootstrap, :querify => (lambda do\n p[\"q\"] = params[:q]\n end))",
       "render_path": [
         {
           "type": "controller",
-          "class": "Manage::PostsController",
-          "method": "create",
-          "line": 24,
-          "file": "app/controllers/manage/posts_controller.rb",
+          "class": "SearchController",
+          "method": "index",
+          "line": 10,
+          "file": "app/controllers/search_controller.rb",
           "rendered": {
-            "name": "manage/posts/show",
-            "file": "app/views/manage/posts/show.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "manage/posts/show",
-          "line": 5,
-          "file": "app/views/manage/posts/show.html.haml",
-          "rendered": {
-            "name": "manage/posts/_post",
-            "file": "app/views/manage/posts/_post.html.haml"
+            "name": "search/index",
+            "file": "app/views/search/index.html.haml"
           }
         }
       ],
       "location": {
         "type": "template",
-        "template": "manage/posts/_post"
+        "template": "search/index"
       },
-      "user_input": "Post.new(post_params)",
+      "user_input": "params[:q]",
       "confidence": "Weak",
       "cwe_id": [
         79
       ],
-      "note": "dom_id helper is safe for HTML attributes and generates properly escaped IDs"
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "a85fb4b6d86093d4e30743c0eb289d8e14a456618729e2198f26784fa7bfa1c3",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/manage/pages/_page.html.haml",
-      "line": 2,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "::Haml::AttributeBuilder.build_id(true, dom_id(Page.new(page_params)))",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Manage::PagesController",
-          "method": "create",
-          "line": 24,
-          "file": "app/controllers/manage/pages_controller.rb",
-          "rendered": {
-            "name": "manage/pages/show",
-            "file": "app/views/manage/pages/show.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "manage/pages/show",
-          "line": 5,
-          "file": "app/views/manage/pages/show.html.haml",
-          "rendered": {
-            "name": "manage/pages/_page",
-            "file": "app/views/manage/pages/_page.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "manage/pages/_page"
-      },
-      "user_input": "Page.new(page_params)",
-      "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": "dom_id helper is safe for HTML attributes and generates properly escaped IDs"
+      "note": "Pagy's querify callback URL-encodes parameter values. The query parameter is used for pagination links only."
     },
     {
       "warning_type": "Cross-Site Scripting",
@@ -123,6 +69,6 @@
       "note": "MenuItem.url generates safe internal paths like /pages/slug with validation. Admin interface requires authentication."
     }
   ],
-  "updated": "2025-09-21 16:25:00 +0100",
-  "brakeman_version": "7.1.0"
+  "updated": "2026-01-07 13:35:00 +0000",
+  "brakeman_version": "7.1.2"
 }
