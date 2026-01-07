@@ -46,6 +46,9 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[ mri windows ], require: 'debug/prelude'
 
+  # Lock minitest to 5.x until Rails is compatible with 6.x
+  gem 'minitest', '~> 5.0'
+
   # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)
   gem 'bundler-audit', require: false
 
