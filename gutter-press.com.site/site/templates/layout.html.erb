@@ -3,15 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> - <%= site_name %></title>
-  <style>
-    body { max-width: 800px; margin: 0 auto; padding: 2rem; font-family: system-ui; line-height: 1.6; }
-    nav { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #ddd; }
-    nav a { margin-right: 1rem; text-decoration: none; }
-  </style>
+  <title><%= title %> — Gutter Press</title>
+  <meta name="description" content="Gutter Press - A beautiful, modern content management system for writers and publishers">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/styles.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>">
 </head>
 <body>
-  <%= render 'nav' %>
-  <%= content %>
+  <!-- Masthead -->
+  <header class="masthead">
+    <p class="masthead-date"><%= Time.now.strftime('%A, %B %d, %Y') %></p>
+    <h1 class="masthead-title"><a href="/">Gutter Press</a></h1>
+    <p class="masthead-tagline">The Authoritative Guide to Modern Publishing</p>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/getting-started" class="nav-link">Getting Started</a>
+      <a href="/features" class="nav-link">Features</a>
+      <a href="/content-editing" class="nav-link">Content Editing</a>
+      <a href="/themes" class="nav-link">Styling</a>
+      <a href="/deployment" class="nav-link">Deployment</a>
+      <a href="https://github.com/BillyRuffian/gutter_press" class="nav-link">GitHub ↗</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <%= content %>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">Gutter Press</div>
+      <p class="footer-tagline">"All the Content That's Fit to Publish"</p>
+      <div class="footer-links">
+        <a href="/">Documentation</a>
+        <a href="https://github.com/BillyRuffian/gutter_press">Source Code</a>
+        <a href="https://github.com/BillyRuffian/gutter_press/issues">Report an Issue</a>
+      </div>
+      <p class="footer-copyright">
+        © <%= Time.now.year %> Gutter Press. Built with Ruby on Rails.<br>
+        Released under the MIT License.
+      </p>
+    </div>
+  </footer>
 </body>
 </html>
