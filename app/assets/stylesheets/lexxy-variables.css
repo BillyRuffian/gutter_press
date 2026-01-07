@@ -79,3 +79,51 @@
   --lexxy-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   --lexxy-z-popup: 1000;
 }
+
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Invert the ink colors for dark backgrounds */
+    --lexxy-color-ink: #e9ecef;
+    --lexxy-color-ink-medium: #adb5bd;
+    --lexxy-color-ink-light: #6c757d;
+    --lexxy-color-ink-lighter: #6c757d;
+    --lexxy-color-ink-lightest: #2d2d2d;
+    --lexxy-color-ink-inverted: #1a1a1a;
+
+    /* Canvas and text colors */
+    --lexxy-color-canvas: #2d2d2d;
+    --lexxy-color-text: #e9ecef;
+    --lexxy-color-text-subtle: #adb5bd;
+
+    /* Link and accent colors - brighter for dark mode */
+    --lexxy-color-link: #6ea8fe;
+    --lexxy-color-accent-dark: #6ea8fe;
+    --lexxy-color-accent-medium: #9ec5fe;
+    --lexxy-color-accent-light: #3d5a80;
+    --lexxy-color-accent-lightest: #2d3d50;
+
+    /* Selection colors */
+    --lexxy-color-selected: rgba(110, 168, 254, 0.2);
+    --lexxy-color-selected-hover: rgba(110, 168, 254, 0.3);
+    --lexxy-color-selected-dark: #6ea8fe;
+
+    /* Code colors for dark mode */
+    --lexxy-color-code-bg: rgba(255, 255, 255, 0.1);
+    --lexxy-color-code-token-att: #ff7b72;
+    --lexxy-color-code-token-comment: #8b949e;
+    --lexxy-color-code-token-function: #d2a8ff;
+    --lexxy-color-code-token-operator: #ff7b72;
+    --lexxy-color-code-token-property: #79c0ff;
+    --lexxy-color-code-token-punctuation: #c9d1d9;
+    --lexxy-color-code-token-selector: #7ee787;
+    --lexxy-color-code-token-variable: #ffa657;
+
+    /* Table colors */
+    --lexxy-color-table-header-bg: #4a4a4a;
+    --lexxy-color-table-cell-border: #6c757d;
+
+    /* Shadow for dark mode */
+    --lexxy-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+}

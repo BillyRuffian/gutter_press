@@ -1169,6 +1169,31 @@
     /* Content area */
     .lexxy-editor__content {
       color: var(--lexxy-color-ink);
+      background-color: var(--lexxy-color-canvas);
+    }
+
+    /* Tables inside the editor - dark mode fix */
+    table {
+      background-color: var(--lexxy-color-canvas);
+
+      th,
+      td {
+        background-color: var(--lexxy-color-canvas);
+        border-color: var(--border-color);
+        color: var(--lexxy-color-ink);
+      }
+
+      /* Header cells */
+      th,
+      .lexxy-content__table-cell--header {
+        background-color: var(--lexxy-color-table-header-bg);
+      }
+
+      /* Selected cells */
+      .table-cell--selected,
+      .lexxy-content__table-cell--selected {
+        background-color: var(--lexxy-color-selected) !important;
+      }
     }
 
     /* Inputs inside dropdowns */
@@ -1487,21 +1512,36 @@ lexxy-editor,
     width: unset;
     inline-size: calc(100% - 0.5ch);
     margin: 0.25ch;
+    
+    /* Use canvas color for table background - adapts to dark mode */
+    background-color: var(--lexxy-color-canvas, white);
 
-    th,
+    /* Header cells - th elements get header background */
+    th {
+      border: 1px solid var(--lexxy-color-ink-lighter, #dee2e6);
+      padding: 1ch;
+      text-align: start;
+      background-color: var(--lexxy-color-table-header-bg, #f8f9fa);
+      color: var(--lexxy-color-ink, inherit);
+      font-weight: bold;
+      vertical-align: top;
+      box-shadow: none;
+    }
+
+    /* Regular cells */
     td {
       border: 1px solid var(--lexxy-color-ink-lighter, #dee2e6);
       padding: 1ch;
       text-align: start;
-      background-color: transparent;
+      background-color: var(--lexxy-color-canvas, white);
+      color: var(--lexxy-color-ink, inherit);
       vertical-align: top;
-      /* Reset Bootstrap's td/th padding */
       box-shadow: none;
     }
     
-    /* Header cell styling */
+    /* Header cell class styling (for cells marked as headers via class) */
     .lexxy-content__table-cell--header {
-      background-color: var(--lexxy-color-ink-lightest, #f8f9fa);
+      background-color: var(--lexxy-color-table-header-bg, #f8f9fa) !important;
       font-weight: bold;
     }
   }

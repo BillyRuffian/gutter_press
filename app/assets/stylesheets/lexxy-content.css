@@ -208,6 +208,11 @@
     inline-size: calc(100% - 0.5ch);
     margin: 0.25ch;
 
+    th {
+      background-color: var(--lexxy-color-table-header-bg);
+      font-weight: bold;
+    }
+
     th,
     td {
       border: 1px solid var(--lexxy-color-ink-lighter);
@@ -220,7 +225,7 @@
       }
 
       &.lexxy-content__table-cell--header {
-        background-color: var(--lexxy-color-ink-lightest);
+        background-color: var(--lexxy-color-table-header-bg);
         font-weight: bold;
       }
 
