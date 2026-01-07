@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting started — Gutter Press</title>
+  <meta name="description" content="Gutter Press - A beautiful, modern content management system for writers and publishers">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/styles.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>">
+</head>
+<body>
+  <!-- Masthead -->
+  <header class="masthead">
+    <p class="masthead-date">Wednesday, January 07, 2026</p>
+    <h1 class="masthead-title"><a href="/">Gutter Press</a></h1>
+    <p class="masthead-tagline">The Authoritative Guide to Modern Publishing</p>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/getting-started" class="nav-link">Getting Started</a>
+      <a href="/features" class="nav-link">Features</a>
+      <a href="/content-editing" class="nav-link">Content Editing</a>
+      <a href="/themes" class="nav-link">Styling</a>
+      <a href="/deployment" class="nav-link">Deployment</a>
+      <a href="https://github.com/BillyRuffian/gutter_press" class="nav-link">GitHub ↗</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <article class="documentation">
+  <aside class="doc-sidebar">
+    <h4>Documentation</h4>
+    <ul class="doc-nav">
+      <li><a href="/getting-started">Getting Started</a></li>
+      <li><a href="/features">Features</a></li>
+      <li><a href="/content-editing">Content Editing</a></li>
+      <li><a href="/themes">Styling</a></li>
+      <li><a href="/deployment">Deployment</a></li>
+    </ul>
+  </aside>
+  <div class="doc-content">
+    <header class="doc-header">
+      <h1 class="doc-title">Getting started</h1>
+    </header>
+    <div class="doc-body">
+      <p>Welcome to Gutter Press! This guide will walk you through cloning and setting up your own Gutter Press instance.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<p>Before you begin, ensure you have:</p>
+
+<ul>
+  <li><strong>Ruby 3.2+</strong> (Ruby 3.4 recommended)</li>
+  <li><strong>Git</strong> for cloning the repository</li>
+  <li><strong>Node.js 20+</strong> (for asset compilation)</li>
+  <li>A database (SQLite works out of the box, or PostgreSQL/MySQL for production)</li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+
+<h3 id="step-1-clone-the-repository">Step 1: Clone the Repository</h3>
+
+<p>Clone Gutter Press from GitHub:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git clone https://github.com/BillyRuffian/gutter_press.git my-blog
+<span class="nv">$ </span><span class="nb">cd </span>my-blog
+</code></pre></div></div>
+
+<p>Replace <code>my-blog</code> with whatever you’d like to call your project.</p>
+
+<h3 id="step-2-install-dependencies">Step 2: Install Dependencies</h3>
+
+<p>Install Ruby gems and JavaScript packages:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>bundle <span class="nb">install</span>
+</code></pre></div></div>
+
+<h3 id="step-3-set-up-the-database">Step 3: Set Up the Database</h3>
+
+<p>Create and migrate the database:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>rails db:create
+<span class="nv">$ </span>rails db:migrate
+</code></pre></div></div>
+
+<h3 id="step-4-start-the-development-server">Step 4: Start the Development Server</h3>
+
+<p>Use the dev script to start all services:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>bin/dev
+</code></pre></div></div>
+
+<p>Visit <code>http://localhost:3000</code> to see Gutter Press in action!</p>
+
+<h3 id="step-5-create-your-first-user">Step 5: Create Your First User</h3>
+
+<p>Sign up for an account at <code>http://localhost:3000</code> and start creating content.</p>
+
+<hr />
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Gutter Press works out of the box with sensible defaults. Key configuration files:</p>
+
+<h3 id="database">Database</h3>
+
+<p>Configure your database in <code>config/database.yml</code>. SQLite is the default for development:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">development</span><span class="pi">:</span>
+  <span class="na">adapter</span><span class="pi">:</span> <span class="s">sqlite3</span>
+  <span class="na">database</span><span class="pi">:</span> <span class="s">storage/development.sqlite3</span>
+</code></pre></div></div>
+
+<h3 id="environment-variables">Environment Variables</h3>
+
+<p>For production, set these environment variables:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">RAILS_MASTER_KEY</span><span class="o">=</span>your-master-key
+<span class="nv">DATABASE_URL</span><span class="o">=</span>postgres://user:pass@host/dbname
+</code></pre></div></div>
+
+<h3 id="customization">Customization</h3>
+
+<p>Since you own the code, you can modify anything:</p>
+
+<ul>
+  <li><strong>Views</strong>: <code>app/views/</code> - Customize all templates</li>
+  <li><strong>Styles</strong>: <code>app/assets/stylesheets/</code> - Modify the look and feel</li>
+  <li><strong>Controllers</strong>: <code>app/controllers/</code> - Change behavior</li>
+  <li><strong>Models</strong>: <code>app/models/</code> - Extend functionality</li>
+</ul>
+
+<hr />
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>Now that Gutter Press is installed, explore these guides:</p>
+
+<div class="columns-two">
+  <div class="feature-card">
+    <h3><a href="/content-editing">Content Editing</a></h3>
+    <p>Learn how to create and format beautiful content with the Lexxy editor.</p>
+  </div>
+  <div class="feature-card">
+    <h3><a href="/themes">Themes</a></h3>
+    <p>Customize the look and feel of your Gutter Press installation.</p>
+  </div>
+</div>
+
+<hr />
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="assets-not-compiling">Assets not compiling?</h3>
+
+<p>Make sure you’re using <code>bin/dev</code> which runs the asset pipeline:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>bin/dev
+</code></pre></div></div>
+
+<p>Or manually build assets:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>rails assets:precompile
+</code></pre></div></div>
+
+<h3 id="database-errors">Database errors?</h3>
+
+<p>Make sure all migrations have run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>rails db:migrate:status
+</code></pre></div></div>
+
+<p>Reset the database if needed:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>rails db:reset
+</code></pre></div></div>
+
+<h3 id="need-help">Need help?</h3>
+
+<ul>
+  <li>Check the <a href="https://github.com/BillyRuffian/gutter_press/issues">GitHub Issues</a></li>
+  <li>Open a new issue if you’ve found a bug</li>
+</ul>
+
+    </div>
+  </div>
+</article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">Gutter Press</div>
+      <p class="footer-tagline">"All the Content That's Fit to Publish"</p>
+      <div class="footer-links">
+        <a href="/">Documentation</a>
+        <a href="https://github.com/BillyRuffian/gutter_press">Source Code</a>
+        <a href="https://github.com/BillyRuffian/gutter_press/issues">Report an Issue</a>
+      </div>
+      <p class="footer-copyright">
+        © 2026 Gutter Press. Built with Ruby on Rails.<br>
+        Released under the MIT License.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

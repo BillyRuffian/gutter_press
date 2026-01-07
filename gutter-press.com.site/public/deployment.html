@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Required — Gutter Press</title>
+  <meta name="description" content="Gutter Press - A beautiful, modern content management system for writers and publishers">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/styles.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>">
+</head>
+<body>
+  <!-- Masthead -->
+  <header class="masthead">
+    <p class="masthead-date">Wednesday, January 07, 2026</p>
+    <h1 class="masthead-title"><a href="/">Gutter Press</a></h1>
+    <p class="masthead-tagline">The Authoritative Guide to Modern Publishing</p>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/getting-started" class="nav-link">Getting Started</a>
+      <a href="/features" class="nav-link">Features</a>
+      <a href="/content-editing" class="nav-link">Content Editing</a>
+      <a href="/themes" class="nav-link">Styling</a>
+      <a href="/deployment" class="nav-link">Deployment</a>
+      <a href="https://github.com/BillyRuffian/gutter_press" class="nav-link">GitHub ↗</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <article class="documentation">
+  <aside class="doc-sidebar">
+    <h4>Documentation</h4>
+    <ul class="doc-nav">
+      <li><a href="/getting-started">Getting Started</a></li>
+      <li><a href="/features">Features</a></li>
+      <li><a href="/content-editing">Content Editing</a></li>
+      <li><a href="/themes">Styling</a></li>
+      <li><a href="/deployment">Deployment</a></li>
+    </ul>
+  </aside>
+  <div class="doc-content">
+    <header class="doc-header">
+      <h1 class="doc-title">Required</h1>
+    </header>
+    <div class="doc-body">
+      <p>This guide covers deploying your Gutter Press application to production. Whether you’re using traditional servers, containers, or platform-as-a-service, we’ve got you covered.</p>
+
+<h2 id="pre-deployment-checklist">Pre-Deployment Checklist</h2>
+
+<p>Before deploying, ensure you have:</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Run all tests: <code>rails test</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Compiled assets: <code>rails assets:precompile</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Set production credentials</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Configured production database</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Set up file storage (S3, GCS, etc.)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Reviewed security settings</li>
+</ul>
+
+<hr />
+
+<h2 id="environment-variables">Environment Variables</h2>
+
+<p>Set these environment variables in production:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Required</span>
+<span class="nv">RAILS_ENV</span><span class="o">=</span>production
+<span class="nv">SECRET_KEY_BASE</span><span class="o">=</span>your-secret-key-base
+<span class="nv">DATABASE_URL</span><span class="o">=</span>postgres://user:pass@host/dbname
+
+<span class="c"># File Storage (if using S3)</span>
+<span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span>your-access-key
+<span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>your-secret-key
+<span class="nv">AWS_REGION</span><span class="o">=</span>us-east-1
+<span class="nv">AWS_BUCKET</span><span class="o">=</span>your-bucket-name
+
+<span class="c"># Optional</span>
+<span class="nv">RAILS_LOG_LEVEL</span><span class="o">=</span>info
+<span class="nv">RAILS_SERVE_STATIC_FILES</span><span class="o">=</span><span class="nb">true</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="deploying-with-kamal">Deploying with Kamal</h2>
+
+<p>Gutter Press works beautifully with <a href="https://kamal-deploy.org/">Kamal</a>, the deployment tool from 37signals.</p>
+
+<h3 id="setup">Setup</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>bundle add kamal
+<span class="nv">$ </span>kamal init
+</code></pre></div></div>
+
+<h3 id="configuration">Configuration</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/deploy.yml</span>
+<span class="na">service</span><span class="pi">:</span> <span class="s">gutter-press</span>
+
+<span class="na">image</span><span class="pi">:</span> <span class="s">your-registry/gutter-press</span>
+
+<span class="na">servers</span><span class="pi">:</span>
+  <span class="na">web</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">192.168.1.1</span>
+  <span class="na">job</span><span class="pi">:</span>
+    <span class="na">hosts</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">192.168.1.1</span>
+    <span class="na">cmd</span><span class="pi">:</span> <span class="s">bin/jobs</span>
+
+<span class="na">registry</span><span class="pi">:</span>
+  <span class="na">username</span><span class="pi">:</span> <span class="s">your-username</span>
+  <span class="na">password</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">KAMAL_REGISTRY_PASSWORD</span>
+
+<span class="na">env</span><span class="pi">:</span>
+  <span class="na">clear</span><span class="pi">:</span>
+    <span class="na">RAILS_ENV</span><span class="pi">:</span> <span class="s">production</span>
+    <span class="na">RAILS_LOG_LEVEL</span><span class="pi">:</span> <span class="s">info</span>
+  <span class="na">secret</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">RAILS_MASTER_KEY</span>
+    <span class="pi">-</span> <span class="s">DATABASE_URL</span>
+
+<span class="na">volumes</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s2">"</span><span class="s">gutter_press_storage:/rails/storage"</span>
+
+<span class="na">asset_path</span><span class="pi">:</span> <span class="s">/rails/public/assets</span>
+
+<span class="na">builder</span><span class="pi">:</span>
+  <span class="na">multiarch</span><span class="pi">:</span> <span class="kc">false</span>
+
+<span class="na">accessories</span><span class="pi">:</span>
+  <span class="na">db</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">postgres:16</span>
+    <span class="na">host</span><span class="pi">:</span> <span class="s">192.168.1.1</span>
+    <span class="na">port</span><span class="pi">:</span> <span class="m">5432</span>
+    <span class="na">env</span><span class="pi">:</span>
+      <span class="na">clear</span><span class="pi">:</span>
+        <span class="na">POSTGRES_DB</span><span class="pi">:</span> <span class="s">gutter_press_production</span>
+      <span class="na">secret</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">POSTGRES_PASSWORD</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">gutter_press_db:/var/lib/postgresql/data</span>
+</code></pre></div></div>
+
+<h3 id="deploy">Deploy</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>kamal setup    <span class="c"># First time only</span>
+<span class="nv">$ </span>kamal deploy   <span class="c"># Subsequent deployments</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="deploying-with-docker">Deploying with Docker</h2>
+
+<h3 id="dockerfile">Dockerfile</h3>
+
+<p>Gutter Press includes a production-ready Dockerfile:</p>
+
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Dockerfile</span>
+<span class="k">FROM</span><span class="s"> ruby:3.4-slim</span>
+
+<span class="k">WORKDIR</span><span class="s"> /rails</span>
+
+<span class="c"># Install dependencies</span>
+<span class="k">RUN </span>apt-get update <span class="nt">-qq</span> <span class="o">&amp;&amp;</span> <span class="se">\
+</span>    apt-get <span class="nb">install</span> <span class="nt">-y</span> build-essential libpq-dev nodejs npm <span class="o">&amp;&amp;</span> <span class="se">\
+</span>    <span class="nb">rm</span> <span class="nt">-rf</span> /var/lib/apt/lists/<span class="k">*</span>
+
+<span class="c"># Install gems</span>
+<span class="k">COPY</span><span class="s"> Gemfile Gemfile.lock ./</span>
+<span class="k">RUN </span>bundle config <span class="nb">set</span> <span class="nt">--local</span> deployment <span class="nb">true</span> <span class="o">&amp;&amp;</span> <span class="se">\
+</span>    bundle config <span class="nb">set</span> <span class="nt">--local</span> without <span class="s1">'development test'</span> <span class="o">&amp;&amp;</span> <span class="se">\
+</span>    bundle <span class="nb">install</span>
+
+<span class="c"># Copy application</span>
+<span class="k">COPY</span><span class="s"> . .</span>
+
+<span class="c"># Precompile assets</span>
+<span class="k">RUN </span><span class="nv">SECRET_KEY_BASE</span><span class="o">=</span>dummy rails assets:precompile
+
+<span class="c"># Start server</span>
+<span class="k">EXPOSE</span><span class="s"> 3000</span>
+<span class="k">CMD</span><span class="s"> ["rails", "server", "-b", "0.0.0.0"]</span>
+</code></pre></div></div>
+
+<h3 id="docker-compose">Docker Compose</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># docker-compose.yml</span>
+<span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.8'</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">web</span><span class="pi">:</span>
+    <span class="na">build</span><span class="pi">:</span> <span class="s">.</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">3000:3000"</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">DATABASE_URL=postgres://postgres:password@db/gutter_press</span>
+      <span class="pi">-</span> <span class="s">RAILS_ENV=production</span>
+      <span class="pi">-</span> <span class="s">RAILS_MASTER_KEY=${RAILS_MASTER_KEY}</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">db</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">storage:/rails/storage</span>
+
+  <span class="na">db</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">postgres:16</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">postgres:/var/lib/postgresql/data</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">POSTGRES_PASSWORD</span><span class="pi">:</span> <span class="s">password</span>
+      <span class="na">POSTGRES_DB</span><span class="pi">:</span> <span class="s">gutter_press</span>
+
+<span class="na">volumes</span><span class="pi">:</span>
+  <span class="na">storage</span><span class="pi">:</span>
+  <span class="na">postgres</span><span class="pi">:</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="platform-deployments">Platform Deployments</h2>
+
+<h3 id="heroku">Heroku</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create app</span>
+<span class="nv">$ </span>heroku create my-gutter-press
+
+<span class="c"># Add PostgreSQL</span>
+<span class="nv">$ </span>heroku addons:create heroku-postgresql:essential-0
+
+<span class="c"># Add Redis (for Action Cable)</span>
+<span class="nv">$ </span>heroku addons:create heroku-redis:mini
+
+<span class="c"># Set master key</span>
+<span class="nv">$ </span>heroku config:set <span class="nv">RAILS_MASTER_KEY</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat </span>config/master.key<span class="si">)</span>
+
+<span class="c"># Deploy</span>
+<span class="nv">$ </span>git push heroku main
+
+<span class="c"># Run migrations</span>
+<span class="nv">$ </span>heroku run rails db:migrate
+</code></pre></div></div>
+
+<h3 id="render">Render</h3>
+
+<p>Create a <code>render.yaml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">gutter-press</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">ruby</span>
+    <span class="na">buildCommand</span><span class="pi">:</span> <span class="s">bundle install &amp;&amp; rails assets:precompile</span>
+    <span class="na">startCommand</span><span class="pi">:</span> <span class="s">rails server</span>
+    <span class="na">envVars</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">RAILS_MASTER_KEY</span>
+        <span class="na">sync</span><span class="pi">:</span> <span class="kc">false</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">DATABASE_URL</span>
+        <span class="na">fromDatabase</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">gutter-press-db</span>
+          <span class="na">property</span><span class="pi">:</span> <span class="s">connectionString</span>
+
+<span class="na">databases</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">gutter-press-db</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">starter</span>
+</code></pre></div></div>
+
+<h3 id="flyio">Fly.io</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Initialize</span>
+<span class="nv">$ </span>fly launch
+
+<span class="c"># Deploy</span>
+<span class="nv">$ </span>fly deploy
+
+<span class="c"># Open</span>
+<span class="nv">$ </span>fly open
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="file-storage-in-production">File Storage in Production</h2>
+
+<h3 id="amazon-s3">Amazon S3</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/storage.yml</span>
+<span class="ss">amazon:
+  service: </span><span class="no">S3</span>
+  <span class="ss">access_key_id: </span><span class="o">&lt;</span><span class="sx">%= ENV['AWS_ACCESS_KEY_ID'] %&gt;
+  secret_access_key: &lt;%=</span> <span class="no">ENV</span><span class="p">[</span><span class="s1">'AWS_SECRET_ACCESS_KEY'</span><span class="p">]</span> <span class="o">%&gt;</span>
+  <span class="ss">region: </span><span class="o">&lt;</span><span class="sx">%= ENV['AWS_REGION'] %&gt;
+  bucket: &lt;%=</span> <span class="no">ENV</span><span class="p">[</span><span class="s1">'AWS_BUCKET'</span><span class="p">]</span> <span class="o">%&gt;</span>
+</code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/environments/production.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">active_storage</span><span class="p">.</span><span class="nf">service</span> <span class="o">=</span> <span class="ss">:amazon</span>
+</code></pre></div></div>
+
+<h3 id="google-cloud-storage">Google Cloud Storage</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/storage.yml</span>
+<span class="ss">google:
+  service: </span><span class="no">GCS</span>
+  <span class="ss">credentials: </span><span class="o">&lt;</span><span class="sx">%= ENV['GOOGLE_CLOUD_KEYFILE'] %&gt;
+  project: &lt;%=</span> <span class="no">ENV</span><span class="p">[</span><span class="s1">'GOOGLE_CLOUD_PROJECT'</span><span class="p">]</span> <span class="o">%&gt;</span>
+  <span class="ss">bucket: </span><span class="o">&lt;</span><span class="sx">%= ENV['GOOGLE_CLOUD_BUCKET'] %&gt;
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="ssl-configuration">SSL Configuration</h2>
+
+<h3 id="with-kamal">With Kamal</h3>
+
+<p>Kamal can configure Traefik for automatic Let’s Encrypt SSL:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/deploy.yml</span>
+<span class="na">traefik</span><span class="pi">:</span>
+  <span class="na">options</span><span class="pi">:</span>
+    <span class="na">publish</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">443:443"</span>
+    <span class="na">volume</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">/letsencrypt:/letsencrypt"</span>
+  <span class="na">args</span><span class="pi">:</span>
+    <span class="na">entrypoints.websecure.address</span><span class="pi">:</span> <span class="s2">"</span><span class="s">:443"</span>
+    <span class="na">certificatesresolvers.letsencrypt.acme.email</span><span class="pi">:</span> <span class="s2">"</span><span class="s">admin@example.com"</span>
+    <span class="na">certificatesresolvers.letsencrypt.acme.storage</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/letsencrypt/acme.json"</span>
+    <span class="na">certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint</span><span class="pi">:</span> <span class="s2">"</span><span class="s">web"</span>
+</code></pre></div></div>
+
+<h3 id="with-nginx">With Nginx</h3>
+
+<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span> <span class="mi">443</span> <span class="s">ssl</span> <span class="s">http2</span><span class="p">;</span>
+    <span class="kn">server_name</span> <span class="s">example.com</span><span class="p">;</span>
+    
+    <span class="kn">ssl_certificate</span> <span class="n">/etc/letsencrypt/live/example.com/fullchain.pem</span><span class="p">;</span>
+    <span class="kn">ssl_certificate_key</span> <span class="n">/etc/letsencrypt/live/example.com/privkey.pem</span><span class="p">;</span>
+    
+    <span class="kn">location</span> <span class="n">/</span> <span class="p">{</span>
+        <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:3000</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Host</span> <span class="nv">$host</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-Proto</span> <span class="nv">$scheme</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="performance-optimization">Performance Optimization</h2>
+
+<h3 id="asset-delivery">Asset Delivery</h3>
+
+<p>Use a CDN for static assets:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/environments/production.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">asset_host</span> <span class="o">=</span> <span class="s1">'https://cdn.example.com'</span>
+</code></pre></div></div>
+
+<h3 id="caching">Caching</h3>
+
+<p>Enable caching for better performance:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/environments/production.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">cache_classes</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">action_controller</span><span class="p">.</span><span class="nf">perform_caching</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:solid_cache_store</span>
+</code></pre></div></div>
+
+<h3 id="database-connection-pooling">Database Connection Pooling</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/database.yml</span>
+<span class="na">production</span><span class="pi">:</span>
+  <span class="na">adapter</span><span class="pi">:</span> <span class="s">postgresql</span>
+  <span class="na">pool</span><span class="pi">:</span> <span class="s">&lt;%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %&gt;</span>
+  <span class="na">timeout</span><span class="pi">:</span> <span class="m">5000</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="monitoring">Monitoring</h2>
+
+<h3 id="health-checks">Health Checks</h3>
+
+<p>Gutter Press includes a health check endpoint:</p>
+
+<pre><code>GET /up
+</code></pre>
+
+<p>Returns <code>200 OK</code> when the application is healthy.</p>
+
+<h3 id="logging">Logging</h3>
+
+<p>Configure structured logging for production:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/environments/production.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">log_level</span> <span class="o">=</span> <span class="ss">:info</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">log_tags</span> <span class="o">=</span> <span class="p">[</span><span class="ss">:request_id</span><span class="p">]</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">logger</span> <span class="o">=</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Logger</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">STDOUT</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<div class="cta-box">
+  <h3>Need more help?</h3>
+  <p>Check out the source code or open an issue on GitHub.</p>
+  <a href="https://github.com/BillyRuffian/gutter_press" class="button button-primary">View on GitHub →</a>
+</div>
+
+    </div>
+  </div>
+</article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">Gutter Press</div>
+      <p class="footer-tagline">"All the Content That's Fit to Publish"</p>
+      <div class="footer-links">
+        <a href="/">Documentation</a>
+        <a href="https://github.com/BillyRuffian/gutter_press">Source Code</a>
+        <a href="https://github.com/BillyRuffian/gutter_press/issues">Report an Issue</a>
+      </div>
+      <p class="footer-copyright">
+        © 2026 Gutter Press. Built with Ruby on Rails.<br>
+        Released under the MIT License.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

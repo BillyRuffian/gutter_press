@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content editing — Gutter Press</title>
+  <meta name="description" content="Gutter Press - A beautiful, modern content management system for writers and publishers">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/styles.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>">
+</head>
+<body>
+  <!-- Masthead -->
+  <header class="masthead">
+    <p class="masthead-date">Wednesday, January 07, 2026</p>
+    <h1 class="masthead-title"><a href="/">Gutter Press</a></h1>
+    <p class="masthead-tagline">The Authoritative Guide to Modern Publishing</p>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/getting-started" class="nav-link">Getting Started</a>
+      <a href="/features" class="nav-link">Features</a>
+      <a href="/content-editing" class="nav-link">Content Editing</a>
+      <a href="/themes" class="nav-link">Styling</a>
+      <a href="/deployment" class="nav-link">Deployment</a>
+      <a href="https://github.com/BillyRuffian/gutter_press" class="nav-link">GitHub ↗</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <article class="documentation">
+  <aside class="doc-sidebar">
+    <h4>Documentation</h4>
+    <ul class="doc-nav">
+      <li><a href="/getting-started">Getting Started</a></li>
+      <li><a href="/features">Features</a></li>
+      <li><a href="/content-editing">Content Editing</a></li>
+      <li><a href="/themes">Styling</a></li>
+      <li><a href="/deployment">Deployment</a></li>
+    </ul>
+  </aside>
+  <div class="doc-content">
+    <header class="doc-header">
+      <h1 class="doc-title">Content editing</h1>
+    </header>
+    <div class="doc-body">
+      <p>The Lexxy editor in Gutter Press provides a powerful, intuitive content creation experience. This guide covers everything you need to know to create beautiful content.</p>
+
+<h2 id="the-editor-interface">The Editor Interface</h2>
+
+<p>When you create or edit a post, you’ll see the Lexxy editor with its toolbar at the top:</p>
+
+<h3 id="toolbar-overview">Toolbar Overview</h3>
+
+<p>The toolbar is organized into logical groups:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Group</th>
+      <th>Tools</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Text Formatting</strong></td>
+      <td>Bold, Italic, Underline, Strikethrough</td>
+    </tr>
+    <tr>
+      <td><strong>Headings</strong></td>
+      <td>H1, H2, H3, H4, H5, H6</td>
+    </tr>
+    <tr>
+      <td><strong>Lists</strong></td>
+      <td>Bullet list, Numbered list, Task list</td>
+    </tr>
+    <tr>
+      <td><strong>Blocks</strong></td>
+      <td>Blockquote, Code block, Horizontal rule</td>
+    </tr>
+    <tr>
+      <td><strong>Media</strong></td>
+      <td>Image upload, Link</td>
+    </tr>
+    <tr>
+      <td><strong>Tables</strong></td>
+      <td>Insert table, Table controls</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="text-formatting">Text Formatting</h2>
+
+<h3 id="basic-formatting">Basic Formatting</h3>
+
+<p>Select text and click the appropriate button, or use keyboard shortcuts:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Format</th>
+      <th>Shortcut</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Bold</strong></td>
+      <td><code>Ctrl/Cmd + B</code></td>
+    </tr>
+    <tr>
+      <td><em>Italic</em></td>
+      <td><code>Ctrl/Cmd + I</code></td>
+    </tr>
+    <tr>
+      <td><u>Underline</u></td>
+      <td><code>Ctrl/Cmd + U</code></td>
+    </tr>
+    <tr>
+      <td><del>Strikethrough</del></td>
+      <td><code>Ctrl/Cmd + Shift + X</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="headings">Headings</h3>
+
+<p>Structure your content with headings. Use the dropdown or keyboard shortcuts:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Heading</th>
+      <th>Shortcut</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Heading 1</td>
+      <td><code>Ctrl/Cmd + Alt + 1</code></td>
+    </tr>
+    <tr>
+      <td>Heading 2</td>
+      <td><code>Ctrl/Cmd + Alt + 2</code></td>
+    </tr>
+    <tr>
+      <td>Heading 3</td>
+      <td><code>Ctrl/Cmd + Alt + 3</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="lists">Lists</h2>
+
+<h3 id="bullet-lists">Bullet Lists</h3>
+
+<p>Create unordered lists for items without a specific sequence:</p>
+
+<ul>
+  <li>First item</li>
+  <li>Second item</li>
+  <li>Third item with nested content
+    <ul>
+      <li>Nested item</li>
+      <li>Another nested item</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="numbered-lists">Numbered Lists</h3>
+
+<p>Use numbered lists for sequential steps or ranked items:</p>
+
+<ol>
+  <li>First step</li>
+  <li>Second step</li>
+  <li>Third step</li>
+</ol>
+
+<h3 id="task-lists">Task Lists</h3>
+
+<p>Create interactive checklists:</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Incomplete task</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Completed task</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Another task</li>
+</ul>
+
+<hr />
+
+<h2 id="images">Images</h2>
+
+<h3 id="uploading-images">Uploading Images</h3>
+
+<p>You can add images in several ways:</p>
+
+<ol>
+  <li><strong>Click the image button</strong> in the toolbar</li>
+  <li><strong>Drag and drop</strong> an image directly into the editor</li>
+  <li><strong>Paste</strong> an image from your clipboard</li>
+</ol>
+
+<h3 id="image-handling">Image Handling</h3>
+
+<p>Gutter Press automatically:</p>
+
+<ul>
+  <li>Converts images to efficient formats</li>
+  <li>Creates responsive variants</li>
+  <li>Optimizes for web delivery</li>
+  <li>Stores in your configured storage service</li>
+</ul>
+
+<hr />
+
+<h2 id="tables">Tables</h2>
+
+<p>Tables are perfect for structured data. Here’s how to work with them:</p>
+
+<h3 id="creating-a-table">Creating a Table</h3>
+
+<ol>
+  <li>Click the table button in the toolbar</li>
+  <li>Select the initial grid size</li>
+  <li>Click to insert</li>
+</ol>
+
+<h3 id="table-controls">Table Controls</h3>
+
+<p>Once you have a table, you can:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>How</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Add row above</td>
+      <td>Right-click → Insert row above</td>
+    </tr>
+    <tr>
+      <td>Add row below</td>
+      <td>Right-click → Insert row below</td>
+    </tr>
+    <tr>
+      <td>Add column left</td>
+      <td>Right-click → Insert column left</td>
+    </tr>
+    <tr>
+      <td>Add column right</td>
+      <td>Right-click → Insert column right</td>
+    </tr>
+    <tr>
+      <td>Delete row</td>
+      <td>Right-click → Delete row</td>
+    </tr>
+    <tr>
+      <td>Delete column</td>
+      <td>Right-click → Delete column</td>
+    </tr>
+    <tr>
+      <td>Delete table</td>
+      <td>Right-click → Delete table</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="table-styling">Table Styling</h3>
+
+<p>Tables automatically receive styling from your theme, including:</p>
+
+<ul>
+  <li>Alternating row colors</li>
+  <li>Header row highlighting</li>
+  <li>Responsive behavior on mobile</li>
+</ul>
+
+<hr />
+
+<h2 id="code-blocks">Code Blocks</h2>
+
+<h3 id="inline-code">Inline Code</h3>
+
+<p>Wrap text in backticks for <code>inline code</code>.</p>
+
+<h3 id="code-blocks-1">Code Blocks</h3>
+
+<p>For multi-line code, use the code block tool:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_rich_text</span> <span class="ss">:content</span>
+  
+  <span class="n">validates</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+  <span class="n">validates</span> <span class="ss">:slug</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">uniqueness: </span><span class="kp">true</span>
+  
+  <span class="n">before_validation</span> <span class="ss">:generate_slug</span>
+  
+  <span class="kp">private</span>
+  
+  <span class="k">def</span> <span class="nf">generate_slug</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nf">slug</span> <span class="o">||=</span> <span class="n">title</span><span class="p">.</span><span class="nf">parameterize</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h3 id="supported-languages">Supported Languages</h3>
+
+<p>Lexxy supports syntax highlighting for:</p>
+
+<div class="columns-three">
+  <div>
+    <ul>
+      <li>Ruby</li>
+      <li>JavaScript</li>
+      <li>TypeScript</li>
+      <li>Python</li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>SQL</li>
+      <li>JSON</li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li>Bash</li>
+      <li>YAML</li>
+      <li>Markdown</li>
+      <li>And more...</li>
+    </ul>
+  </div>
+</div>
+
+<hr />
+
+<h2 id="blockquotes">Blockquotes</h2>
+
+<p>Use blockquotes to highlight important quotes or callouts:</p>
+
+<blockquote>
+  <p>“The best content management system is the one that gets out of your way and lets you write.”</p>
+
+  <p>— A wise developer</p>
+</blockquote>
+
+<hr />
+
+<h2 id="links">Links</h2>
+
+<h3 id="adding-links">Adding Links</h3>
+
+<ol>
+  <li>Select the text to link</li>
+  <li>Click the link button (or press <code>Ctrl/Cmd + K</code>)</li>
+  <li>Enter the URL</li>
+  <li>Click save</li>
+</ol>
+
+<h3 id="link-types">Link Types</h3>
+
+<ul>
+  <li><strong>External links</strong>: <code>https://example.com</code></li>
+  <li><strong>Internal links</strong>: <code>/getting-started</code></li>
+  <li><strong>Anchor links</strong>: <code>#section-name</code></li>
+  <li><strong>Email links</strong>: <code>mailto:hello@example.com</code></li>
+</ul>
+
+<hr />
+
+<h2 id="keyboard-shortcuts-reference">Keyboard Shortcuts Reference</h2>
+
+<p>Master these shortcuts for efficient editing:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>Windows/Linux</th>
+      <th>macOS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bold</td>
+      <td><code>Ctrl + B</code></td>
+      <td><code>Cmd + B</code></td>
+    </tr>
+    <tr>
+      <td>Italic</td>
+      <td><code>Ctrl + I</code></td>
+      <td><code>Cmd + I</code></td>
+    </tr>
+    <tr>
+      <td>Underline</td>
+      <td><code>Ctrl + U</code></td>
+      <td><code>Cmd + U</code></td>
+    </tr>
+    <tr>
+      <td>Link</td>
+      <td><code>Ctrl + K</code></td>
+      <td><code>Cmd + K</code></td>
+    </tr>
+    <tr>
+      <td>Undo</td>
+      <td><code>Ctrl + Z</code></td>
+      <td><code>Cmd + Z</code></td>
+    </tr>
+    <tr>
+      <td>Redo</td>
+      <td><code>Ctrl + Shift + Z</code></td>
+      <td><code>Cmd + Shift + Z</code></td>
+    </tr>
+    <tr>
+      <td>Save</td>
+      <td><code>Ctrl + S</code></td>
+      <td><code>Cmd + S</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<div class="cta-box">
+  <h3>Looking to customize the appearance?</h3>
+  <p>Learn how to theme your Gutter Press installation.</p>
+  <a href="/themes" class="button button-primary">Themes Guide →</a>
+</div>
+
+    </div>
+  </div>
+</article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">Gutter Press</div>
+      <p class="footer-tagline">"All the Content That's Fit to Publish"</p>
+      <div class="footer-links">
+        <a href="/">Documentation</a>
+        <a href="https://github.com/BillyRuffian/gutter_press">Source Code</a>
+        <a href="https://github.com/BillyRuffian/gutter_press/issues">Report an Issue</a>
+      </div>
+      <p class="footer-copyright">
+        © 2026 Gutter Press. Built with Ruby on Rails.<br>
+        Released under the MIT License.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

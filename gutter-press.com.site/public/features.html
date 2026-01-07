@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features — Gutter Press</title>
+  <meta name="description" content="Gutter Press - A beautiful, modern content management system for writers and publishers">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/styles.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>">
+</head>
+<body>
+  <!-- Masthead -->
+  <header class="masthead">
+    <p class="masthead-date">Wednesday, January 07, 2026</p>
+    <h1 class="masthead-title"><a href="/">Gutter Press</a></h1>
+    <p class="masthead-tagline">The Authoritative Guide to Modern Publishing</p>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/getting-started" class="nav-link">Getting Started</a>
+      <a href="/features" class="nav-link">Features</a>
+      <a href="/content-editing" class="nav-link">Content Editing</a>
+      <a href="/themes" class="nav-link">Styling</a>
+      <a href="/deployment" class="nav-link">Deployment</a>
+      <a href="https://github.com/BillyRuffian/gutter_press" class="nav-link">GitHub ↗</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <article class="documentation">
+  <aside class="doc-sidebar">
+    <h4>Documentation</h4>
+    <ul class="doc-nav">
+      <li><a href="/getting-started">Getting Started</a></li>
+      <li><a href="/features">Features</a></li>
+      <li><a href="/content-editing">Content Editing</a></li>
+      <li><a href="/themes">Styling</a></li>
+      <li><a href="/deployment">Deployment</a></li>
+    </ul>
+  </aside>
+  <div class="doc-content">
+    <header class="doc-header">
+      <h1 class="doc-title">Features</h1>
+    </header>
+    <div class="doc-body">
+      <p>Gutter Press is packed with features designed to make content creation and management a joy. Here’s what you get out of the box.</p>
+
+<h2 id="rich-text-editing-with-lexxy">Rich Text Editing with Lexxy</h2>
+
+<p>At the heart of Gutter Press is <strong>Lexxy</strong>, a powerful WYSIWYG editor that makes content creation intuitive and beautiful.</p>
+
+<div class="columns-three">
+  <div class="feature-card">
+    <h4>📄 Rich Text</h4>
+    <p>Headings, paragraphs, bold, italic, underline, strikethrough, and more.</p>
+  </div>
+  <div class="feature-card">
+    <h4>📋 Lists</h4>
+    <p>Bullet lists, numbered lists, and task lists with checkboxes.</p>
+  </div>
+  <div class="feature-card">
+    <h4>📊 Tables</h4>
+    <p>Full-featured tables with headers, alignment, and styling options.</p>
+  </div>
+  <div class="feature-card">
+    <h4>🖼️ Images</h4>
+    <p>Drag-and-drop image uploads with automatic optimization.</p>
+  </div>
+  <div class="feature-card">
+    <h4>💻 Code Blocks</h4>
+    <p>Syntax-highlighted code in dozens of languages.</p>
+  </div>
+  <div class="feature-card">
+    <h4>💬 Blockquotes</h4>
+    <p>Beautiful pullquotes and citations.</p>
+  </div>
+</div>
+
+<hr />
+
+<h2 id="post-management">Post Management</h2>
+
+<p>Gutter Press provides a complete content management workflow:</p>
+
+<h3 id="draft--publish">Draft &amp; Publish</h3>
+
+<ul>
+  <li><strong>Draft mode</strong>: Work on content privately before it’s ready</li>
+  <li><strong>Scheduled publishing</strong>: Set a future publish date</li>
+  <li><strong>Instant publish</strong>: Go live immediately</li>
+</ul>
+
+<h3 id="organization">Organization</h3>
+
+<ul>
+  <li><strong>Slugs</strong>: SEO-friendly URLs generated automatically</li>
+  <li><strong>Search</strong>: Full-text search across all content</li>
+  <li><strong>Pagination</strong>: Efficient handling of large content libraries</li>
+</ul>
+
+<hr />
+
+<h2 id="active-storage-integration">Active Storage Integration</h2>
+
+<p>Gutter Press leverages Rails Active Storage for robust media handling. Images are automatically processed into multiple sizes:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">post</span><span class="p">.</span><span class="nf">featured_image</span><span class="p">.</span><span class="nf">variant</span><span class="p">(</span><span class="ss">:thumb</span><span class="p">)</span>   <span class="c1"># 100x100</span>
+<span class="n">post</span><span class="p">.</span><span class="nf">featured_image</span><span class="p">.</span><span class="nf">variant</span><span class="p">(</span><span class="ss">:medium</span><span class="p">)</span>  <span class="c1"># 500x500</span>
+<span class="n">post</span><span class="p">.</span><span class="nf">featured_image</span><span class="p">.</span><span class="nf">variant</span><span class="p">(</span><span class="ss">:large</span><span class="p">)</span>   <span class="c1"># 1200x1200</span>
+</code></pre></div></div>
+
+<h3 id="supported-formats">Supported Formats</h3>
+
+<ul>
+  <li><strong>Images</strong>: JPEG, PNG, GIF, WebP, AVIF</li>
+  <li><strong>Documents</strong>: PDF (for download links)</li>
+  <li><strong>Storage</strong>: Local disk, Amazon S3, Google Cloud, Azure</li>
+</ul>
+
+<hr />
+
+<h2 id="built-in-authentication">Built-in Authentication</h2>
+
+<p>Gutter Press includes a complete authentication system out of the box:</p>
+
+<ul>
+  <li><strong>User registration</strong> - Sign up new users</li>
+  <li><strong>Session management</strong> - Secure login/logout</li>
+  <li><strong>Password reset</strong> - Email-based password recovery</li>
+  <li><strong>Session security</strong> - Automatic session expiration</li>
+</ul>
+
+<p>Since you own the code, you can easily swap in Devise, Rodauth, or any other authentication system if you prefer.</p>
+
+<hr />
+
+<h2 id="modern-rails-architecture">Modern Rails Architecture</h2>
+
+<p>Gutter Press is a complete Rails 8 application with:</p>
+
+<ul>
+  <li><strong>Hotwire &amp; Turbo</strong> - Fast, SPA-like experience</li>
+  <li><strong>Stimulus</strong> - Modest JavaScript sprinkles</li>
+  <li><strong>Importmaps</strong> - No build step required</li>
+  <li><strong>Solid Queue</strong> - Background job processing</li>
+  <li><strong>SQLite</strong> - Zero-config database (production ready!)</li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:posts</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<hr />
+
+<div class="cta-box">
+  <h3>Ready to dive deeper?</h3>
+  <p>Learn how to create beautiful content with our content editing guide.</p>
+  <a href="/content-editing" class="button button-primary">Content Editing Guide →</a>
+</div>
+
+    </div>
+  </div>
+</article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">Gutter Press</div>
+      <p class="footer-tagline">"All the Content That's Fit to Publish"</p>
+      <div class="footer-links">
+        <a href="/">Documentation</a>
+        <a href="https://github.com/BillyRuffian/gutter_press">Source Code</a>
+        <a href="https://github.com/BillyRuffian/gutter_press/issues">Report an Issue</a>
+      </div>
+      <p class="footer-copyright">
+        © 2026 Gutter Press. Built with Ruby on Rails.<br>
+        Released under the MIT License.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

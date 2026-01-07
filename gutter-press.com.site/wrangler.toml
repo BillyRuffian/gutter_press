@@ -1,0 +1,5 @@
+[vars]
+SKIP_DEPENDENCY_INSTALL = "true"
+
+[build]
+command = "gem install jackdaw && jackdaw build"
