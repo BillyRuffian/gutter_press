@@ -1235,6 +1235,38 @@ body.bg-light .nav-link {
   }
 }
 
+/* Lexxy toolbar fixes for Bootstrap compatibility */
+lexxy-toolbar {
+  align-items: center;
+
+  .lexxy-editor__toolbar-button {
+    display: grid;
+    place-items: center;
+    padding: 0;
+    line-height: 1;
+
+    svg {
+      display: block;
+      vertical-align: middle;
+    }
+  }
+
+  /* Hide dropdown markers */
+  summary {
+    list-style: none;
+
+    &::marker,
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  /* Ensure dropdowns align properly */
+  .lexxy-editor__toolbar-dropdown {
+    display: flex;
+    align-items: center;
+  }
+}
 
 ol.lexxy-prompt-menu,
 ul.lexxy-prompt-menu {
