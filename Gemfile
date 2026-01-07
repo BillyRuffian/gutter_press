@@ -63,16 +63,19 @@ group :development do
 end
 
 group :test do
+  # Use system testing [https://guides.rubyonrails.org/testiml#system-testing]
+  gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'rails-controller-testing'
 end
 
-gem 'lexxy', '~> 0.1.4'
+gem 'lexxy', '~> 0.1.4.beta'
 
-gem 'haml-rails', '~> 3.0'
+gem 'haml-rails', '~> 2.1'
 gem 'html2haml', '~> 2.3'
 
-gem 'pagy', '~> 9.0'
+gem 'pagy'
 
 # Multi-factor authentication
 gem 'rotp', '~> 6.3'      # TOTP generation and verification
-gem 'rqrcode', '~> 3.1'   # QR code generation
+gem 'rqrcode', '~> 2.2'   # QR code generation

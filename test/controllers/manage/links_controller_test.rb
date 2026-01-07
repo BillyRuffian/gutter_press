@@ -110,8 +110,8 @@ class Manage::LinksControllerTest < ActionDispatch::IntegrationTest
     # Should contain lexxy-prompt-item elements
     assert_includes response.body, '<lexxy-prompt-item'
     assert_includes response.body, 'search='
-    assert_includes response.body, '<template type="menu">'
-    assert_includes response.body, '<template type="editor">'
+    assert_includes response.body, "<template type='menu'>"
+    assert_includes response.body, "<template type='editor'>"
     assert_includes response.body, @post.title
   end
 
