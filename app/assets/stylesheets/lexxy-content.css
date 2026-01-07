@@ -45,8 +45,18 @@
     font-weight: bold;
   }
 
+  .lexxy-content__strikethrough {
+    text-decoration: line-through;
+  }
+
   .lexxy-content__underline {
     text-decoration: underline;
+  }
+
+  mark,
+  .lexxy-content__highlight {
+    background-color: transparent;
+    color: inherit;
   }
 
   blockquote {
@@ -58,6 +68,10 @@
 
   p:empty {
     display: none;
+  }
+
+  a {
+    color: var(--lexxy-color-link);
   }
 
   img,
@@ -97,6 +111,14 @@
     }
   }
 
+  li.lexxy-nested-listitem {
+    list-style-type: none;
+
+    ol, ul {
+      margin: 0;
+    }
+  }
+
   > :last-child {
     margin-block-end: 0;
   }
@@ -113,7 +135,6 @@
   .code-token__property,
   .token.boolean,
   .token.constant,
-  .token.deleted,
   .token.number,
   .token.property,
   .token.symbol,
@@ -126,6 +147,7 @@
   .token.builtin,
   .token.char,
   .token.inserted,
+  .token.line,
   .token.selector,
   .token.string {
     color: var(--lexxy-color-code-token-selector);
@@ -143,9 +165,11 @@
 
   /* Operators and symbolic entities */
   .code-token__operator,
+  .token.deleted,
   .token.entity,
   .token.operator,
-  .token.url {
+  .token.url,
+  code[data-language="diff"] .code-token__operator + .code-token__selector {
     color: var(--lexxy-color-code-token-operator);
   }
 
@@ -170,6 +194,42 @@
   .code-token__punctuation,
   .token.punctuation {
     color: var(--lexxy-color-code-token-punctuation);
+  }
+
+  /* Tables */
+  :where(.lexxy-content__table-wrapper) {
+    margin-block: 1ch;
+    overflow-x: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    inline-size: calc(100% - 0.5ch);
+    margin: 0.25ch;
+
+    th,
+    td {
+      border: 1px solid var(--lexxy-color-ink-lighter);
+      padding: 1ch;
+      text-align: start;
+      word-break: normal;
+      
+      *:last-child {
+        margin-block-end: 0;
+      }
+
+      &.lexxy-content__table-cell--header {
+        background-color: var(--lexxy-color-ink-lightest);
+        font-weight: bold;
+      }
+
+      *:is(code, pre) {
+        hyphens: auto;
+        text-wrap: wrap;
+        white-space: pre-wrap;
+      }
+    }
   }
 }
 
@@ -203,11 +263,14 @@
   color: var(--lexxy-color-text-subtle);
   font-size: var(--lexxy-text-small);
 
-  input {
-    color: inherit;
+  textarea {
+    background: var(--lexxy-color-canvas);
     border: none;
+    color: inherit;
+    font-family: inherit;
     inline-size: 100%;
     max-inline-size: 100%;
+    resize: none;
     text-align: center;
 
     &:focus {
@@ -326,6 +389,20 @@
   .attachment--xlsx
 ) {
   --lexxy-attachment-icon-color: var(--lexxy-color-green);
+}
+
+/* Horizontal divider */
+:where(.horizontal-divider) {
+  margin: 0;
+  margin-block-end: .5em;
+  padding: 1.5em 0 .5em;
+
+  hr {
+    border: 0;
+    border-block-end: 1px solid currentColor;
+    inline-size: 20%;
+    margin: 0;
+  }
 }
 
 /* Custom attachments such as mentions, etc. */
