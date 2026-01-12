@@ -81,4 +81,4 @@ gem 'pagy'
 
 # Multi-factor authentication
 gem 'rotp', '~> 6.3'      # TOTP generation and verification
-gem 'rqrcode', '~> 2.2'   # QR code generation
+gem 'rqrcode', '~> 3.2'   # QR code generation
