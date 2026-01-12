@@ -47,7 +47,7 @@ group :development, :test do
   gem 'debug', platforms: %i[ mri windows ], require: 'debug/prelude'
 
   # Lock minitest to 5.x until Rails is compatible with 6.x
-  gem 'minitest', '~> 5.0'
+  gem 'minitest', '~> 6.0'
 
   # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)
   gem 'bundler-audit', require: false
