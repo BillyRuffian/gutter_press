@@ -72,7 +72,7 @@ group :test do
   gem 'rails-controller-testing'
 end
 
-gem 'lexxy', '~> 0.1.26.beta'
+gem 'lexxy', '~> 0.7.2.beta'
 
 gem 'haml-rails', '~> 2.1'
 gem 'html2haml', '~> 2.3'
