@@ -115,7 +115,7 @@ Gutter Press includes a production-ready Dockerfile:
 
 ```dockerfile
 # Dockerfile
-FROM ruby:3.4-slim
+FROM ruby:4.0.1-slim
 
 WORKDIR /rails
 

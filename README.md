@@ -46,7 +46,7 @@ A modern, slug-based blogging platform built with Rails 8.1 featuring rich text 
 
 ### Prerequisites
 
-- Ruby 3.3.5+
+- Ruby 4.0.1
 - Node.js 18+ and Yarn
 - SQLite3 (development) or PostgreSQL (production)
 
@@ -257,7 +257,7 @@ config.hosts = [
 
 ```dockerfile
 # Dockerfile included in repository
-FROM ruby:3.3.5
+FROM ruby:4.0.1
 # ... (see Dockerfile for complete configuration)
 ```
 
