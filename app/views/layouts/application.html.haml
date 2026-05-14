@@ -21,6 +21,7 @@
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
     = stylesheet_link_tag "lexxy"
     = javascript_importmap_tags
+    = render 'shared/favicon'
   %body{"data-controller" => "scroll dark-mode"}
     %nav.navbar.navbar-expand-lg.navbar-dark{class: content_for?(:hero_section) ? "bg-transparent position-absolute w-100" : "bg-dark", style: content_for?(:hero_section) ? "z-index: 1030;" : ""}
       .container
