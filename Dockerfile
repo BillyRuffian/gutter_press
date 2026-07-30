@@ -10,6 +10,7 @@
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
 ARG RUBY_VERSION=4.0.1
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
+ARG LIBVIPS_MIN_VERSION=8.13
 
 # Rails app lives here
 WORKDIR /rails
@@ -17,6 +18,11 @@ WORKDIR /rails
 # Install base packages
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
+    LIBVIPS_VERSION="$(dpkg-query --show --showformat='${Version}\n' 'libvips[0-9]*' | sort -V | tail -n 1)" && \
+    if [ -z "$LIBVIPS_VERSION" ] || ! dpkg --compare-versions "$LIBVIPS_VERSION" ge "$LIBVIPS_MIN_VERSION"; then \
+      echo "libvips ${LIBVIPS_VERSION} is older than required ${LIBVIPS_MIN_VERSION}" >&2; \
+      exit 1; \
+    fi && \
     ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
